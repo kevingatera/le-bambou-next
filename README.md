@@ -15,18 +15,6 @@ If you are not familiar with the different technologies used in this project, pl
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-## Project Overview
-
-We are building a website for [Le Bambou Gorilla Lodge](https://lebambougorillalodge.com/), a mid-range accommodation located near the Volcanoes National Park in Rwanda. The website will showcase the lodge's facilities, rooms, activities, and provide an easy way for guests to book their stay.
-
-### Features
-
-- **Rooms & Cottages**: Detailed information about the different types of rooms available.
-- **Activities & Attractions**: Information on local activities and attractions, including gorilla trekking.
-- **Gallery**: A photo gallery showcasing the lodge and its surroundings.
-- **Booking System**: An integrated booking system for guests to reserve their stay.
-- **Contact Information**: Easy access to contact details and a contact form.
-
 ## Learn More
 
 To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
