@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { NavigationBar } from "./_components/NavigationBar";
+import { Footer } from "./_components/Footer";
 
 export const metadata: Metadata = {
   title: "Le Bambou Gorilla Lodge",
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className="body-2">
         <NavigationBar />
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Footer />
       </body>
     </html>
   );
