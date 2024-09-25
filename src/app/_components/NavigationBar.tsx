@@ -75,7 +75,7 @@ export const NavigationBar = () => {
               </a>
               <link rel="prefetch" href="/stay" />
               <div className="dropdown-icon w-embed">
-                <DropdownArrow />
+                <DropdownArrow isOpen={stayDropdownOpen} />
               </div>
             </div>
             <nav
@@ -116,7 +116,7 @@ export const NavigationBar = () => {
                 <div className="rnavbar-link-text">Explore</div>
               </a>
               <div className="dropdown-icon w-embed">
-                <DropdownArrow />
+                <DropdownArrow isOpen={exploreDropdownOpen} />
               </div>
             </div>
             <nav
