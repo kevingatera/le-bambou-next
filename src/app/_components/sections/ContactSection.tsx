@@ -43,7 +43,6 @@ export const ContactSection = () => {
                 <Image src="/images/DSC_3662.webp"
                   loading="lazy"
                   sizes="(max-width: 479px) 100vw, (max-width: 767px) 96vw, 44vw"
-                  // srcSet="images/DSC_3662-p-500.webp 500w, images/DSC_3662-p-800.webp 800w, images/DSC_3662-p-1080.webp 1080w, images/DSC_3662-p-1600.webp 1600w, images/DSC_3662-p-2000.webp 2000w, images/DSC_3662-p-2600.webp 2600w, images/DSC_3662.webp 3008w"
                   alt="Contact image"
                   className="contact-image"
                   width={3008}

@@ -5,6 +5,10 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    imageSizes: [500, 800, 1080, 1600, 2000, 2600],
+  },
+};
 
 export default config;
