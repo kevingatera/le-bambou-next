@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+import "~/styles/le-bambou-gorilla-lodge.webflow.css"
+import "~/styles/normalize.css";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

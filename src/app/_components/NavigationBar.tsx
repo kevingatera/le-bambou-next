@@ -4,9 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DropdownArrow } from '~/app/_components/icons/DropDownArrow';
 import Image from 'next/image';
 
-import "~/styles/le-bambou-gorilla-lodge.webflow.css"
-import "~/styles/normalize.css";
-
 export const NavigationBar = () => {
   const [stayDropdownOpen, setStayDropdownOpen] = useState(false);
   const [exploreDropdownOpen, setExploreDropdownOpen] = useState(false);
