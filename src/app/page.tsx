@@ -3,7 +3,10 @@ import Link from "next/link";
 import { LatestPost } from "~/app/_components/post";
 import { api, HydrateClient } from "~/trpc/server";
 import { HeroSection } from "./_components/sections/HeroSection";
+import { HotelDescriptionSection } from "./_components/sections/HotelDescriptionSection";
 import { TestimonialSection } from "./_components/sections/TestimonialSection";
+import { BookingCallToActionSection } from "./_components/sections/BookingCallToActionSection";
+import { DiscoverRoomsSection } from "./_components/sections/DiscoverRoomsSection";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -14,6 +17,9 @@ export default async function Home() {
     <HydrateClient>
       <main>
         <HeroSection />
+        <HotelDescriptionSection />
+        <BookingCallToActionSection />
+        <DiscoverRoomsSection />
         <TestimonialSection />
       </main>
       {/* <main className="flex flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
