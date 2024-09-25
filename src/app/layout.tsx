@@ -20,7 +20,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`} suppressHydrationWarning={true}>
-      <body>
+      <body className="body-2">
         <NavigationBar />
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
