@@ -35,7 +35,7 @@ export const NavigationBar = () => {
                 <DropdownArrow isOpen={false} />
               </div>
             </div>
-            <nav className="absolute left-0 transform translate-y-20 opacity-0 bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out p-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
+            <nav className="absolute left-0 top-full transform translate-y-20 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out p-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
               <a href="/stay#Amenities" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Amenities
               </a>
@@ -56,7 +56,7 @@ export const NavigationBar = () => {
                 <DropdownArrow isOpen={false} />
               </div>
             </div>
-            <nav className="absolute left-0 transform translate-y-20 opacity-0 bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out p-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
+            <nav className="absolute left-0 top-full transform translate-y-20 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out p-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
               <a href="/explore#Kinigi-journey" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Journey
               </a>
