@@ -490,30 +490,6 @@ strong {
   display: none;
 }
 
-.navbar-dropdown-link {
-  color: #2c2c2c;
-  padding: .5rem 1.5rem;
-  font-family: Varela Round, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-}
-
-.navbar-dropdown-link:hover {
-  background-color: #d7dfde;
-}
-
-.navbar-dropdown-link.w--current {
-  color: #000;
-}
-
-.navbar-dropdown-list.w--open {
-  background-color: #b9c5c4;
-  border: 1px solid rgba(0, 0, 0, .76);
-  padding: 8px 2px 8px 3px;
-  position: absolute;
-}
-
 .rnavbar-link-text {
   color: #2c2c2c;
   text-transform: none;
@@ -655,6 +631,21 @@ strong {
 
 .body {
   display: block;
+}
+
+.w-button {
+  display: inline-block;
+  padding: 9px 15px;
+  background-color: #3898EC;
+  color: white;
+  border: 0;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+input.w-button {
+  -webkit-appearance: button;
 }
 
 .bookingwidget {

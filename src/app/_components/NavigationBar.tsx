@@ -1,43 +1,10 @@
-'use client'
-
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { DropdownArrow } from '~/app/_components/icons/DropDownArrow';
 import Image from 'next/image';
 
 export const NavigationBar = () => {
-  const [stayDropdownOpen, setStayDropdownOpen] = useState(false);
-  const [exploreDropdownOpen, setExploreDropdownOpen] = useState(false);
-  const stayDropdownRef = useRef(null);
-  const exploreDropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (stayDropdownRef.current && !(stayDropdownRef.current as HTMLElement).contains(event.target as Node)) {
-        setStayDropdownOpen(false);
-      }
-      if (exploreDropdownRef.current && !(exploreDropdownRef.current as HTMLElement).contains(event.target as Node)) {
-        setExploreDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div
-      data-animation="over-left"
-      className="navbar w-nav"
-      data-easing2="ease"
-      fs-scrolldisable-element="smart-nav"
-      data-easing="ease"
-      data-collapse="medium"
-      // data-w-id="7a7cb080-2523-a875-f3c4-67132ef3e9bc"
-      role="banner"
-      data-duration={400}
-    >
+    <div className="navbar w-nav" role="banner">
       <div className="navbar-container">
         <div className="navbar-menu-button w-nav-button">
           <div className="menu-icon">
@@ -55,87 +22,48 @@ export const NavigationBar = () => {
               className="navbar-logo"
               width={100}
               height={100}
+              priority={true}
             />
           </a>
-          <div
-            ref={stayDropdownRef}
-            data-hover="true"
-            data-delay={200}
-            data-w-id="7a7cb080-2523-a875-f3c4-67132ef3e9c4"
-            className={`navbar-menu-dropdown w-dropdown ${stayDropdownOpen ? 'w--open' : ''}`}
-            onMouseEnter={() => setStayDropdownOpen(true)}
-            onMouseLeave={() => setStayDropdownOpen(false)}
-          >
-            <div className="navbar-dropdown-toggle w-dropdown-toggle">
+          <div className="group relative">
+            <div className="navbar-dropdown-toggle w-dropdown-toggle flex items-center">
               <a href="stay" className="link-block-2 w-inline-block">
                 <div className="rnavbar-link-text">Stay</div>
               </a>
               <link rel="prefetch" href="/stay" />
-              <div className="dropdown-icon w-embed">
-                <DropdownArrow isOpen={stayDropdownOpen} />
+              <div className="dropdown-icon w-embed ml-1">
+                <DropdownArrow isOpen={false} />
               </div>
             </div>
-            <nav
-              data-w-id="7a7cb080-2523-a875-f3c4-67132ef3e9ca"
-              className={`navbar-dropdown-list w-dropdown-list ${stayDropdownOpen ? 'w--open' : ''}`}
-            >
-              <a
-                href="/lebambou/stay#Amenities"
-                className="navbar-dropdown-link w-dropdown-link"
-              >
+            <nav className="absolute left-0 transform translate-y-20 opacity-0 bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out p-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
+              <a href="/stay#Amenities" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Amenities
               </a>
-              <a
-                href="/lebambou/stay#Rooms"
-                className="navbar-dropdown-link w-dropdown-link"
-              >
+              <a href="/stay#Rooms" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Room&nbsp;Types
               </a>
-              <a
-                href="/lebambou/stay#Hotel-Gallery"
-                className="navbar-dropdown-link w-dropdown-link"
-              >
+              <a href="/stay#Hotel-Gallery" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Hotel&nbsp;Gallery
               </a>
             </nav>
           </div>
-          <div
-            ref={exploreDropdownRef}
-            data-hover="true"
-            data-delay={200}
-            data-w-id="7a7cb080-2523-a875-f3c4-67132ef3e9d3"
-            className={`navbar-menu-dropdown w-dropdown ${exploreDropdownOpen ? 'w--open' : ''}`}
-            onMouseEnter={() => setExploreDropdownOpen(true)}
-            onMouseLeave={() => setExploreDropdownOpen(false)}
-          >
-            <div className="navbar-dropdown-toggle w-dropdown-toggle">
+          <div className="group relative">
+            <div className="navbar-dropdown-toggle w-dropdown-toggle flex items-center">
               <a href="explore" className="link-block-3 w-inline-block">
                 <div className="rnavbar-link-text">Explore</div>
               </a>
-              <div className="dropdown-icon w-embed">
-                <DropdownArrow isOpen={exploreDropdownOpen} />
+              <div className="dropdown-icon w-embed ml-1">
+                <DropdownArrow isOpen={false} />
               </div>
             </div>
-            <nav
-              data-w-id="7a7cb080-2523-a875-f3c4-67132ef3e9d9"
-              className={`navbar-dropdown-list w-dropdown-list ${exploreDropdownOpen ? 'w--open' : ''}`}
-            >
-              <a
-                href="/lebambou/explore#Kinigi-journey"
-                className="navbar-dropdown-link w-dropdown-link"
-              >
+            <nav className="absolute left-0 transform translate-y-20 opacity-0 bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out p-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
+              <a href="/explore#Kinigi-journey" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Journey
               </a>
-              <a
-                href="/lebambou/explore#Inside-volcanoes-park"
-                className="navbar-dropdown-link w-dropdown-link"
-              >
+              <a href="/explore#Inside-volcanoes-park" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Inside The Park
               </a>
-              <a
-                href="/lebambou/explore#outside-volcanoes-park"
-                className="navbar-dropdown-link w-dropdown-link"
-              >
+              <a href="/explore#outside-volcanoes-park" className="navbar-dropdown-link w-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] font-['Varela_Round',sans-serif] text-base font-normal leading-6">
                 Outside The Park
               </a>
             </nav>
@@ -164,7 +92,7 @@ export const NavigationBar = () => {
         <a
           href="contact"
           className="navbarbutton align-end"
-          // className="w-button navbarbutton align-end"
+        // className="w-button navbarbutton align-end"
         >
           Book Now
         </a>
