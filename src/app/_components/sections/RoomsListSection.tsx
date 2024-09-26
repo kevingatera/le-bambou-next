@@ -1,0 +1,50 @@
+import Image from "next/image";
+import React from "react";
+
+export const RoomsListSection = () => {
+    return <section className="room-section wf-section">
+        <div id="Rooms" className="rooms-container w-container">
+            <div className="roomcentered-title-900">
+                <h2 id="Room-Selection">Discover Your Perfect Retreat: Our Diverse Room Selection</h2>
+            </div>
+            <div className="room-flex-row">
+                <div className="room-wrapped-card spaced">
+                    <a href="#" className="w-inline-block">
+                        <Image src="/images/double-bed-room.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                    </a>
+                    <div className="room-details">
+                        <p className="rooms-sub-paragraph rooms-margin-bottom-1rem">Double Bed Room</p>
+                        <p className="rooms-paragraph">Indulge in the comfort and charm of our recently decorated Double Bed Room, tucked away in the serene northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities for your convenience, and a welcoming chimney that creates a warm and inviting ambiance. Immerse yourself in picturesque views of the majestic Sabyinyo Mountain Volcano, adding an extra touch of natural beauty to your stay.</p>
+                    </div>
+                </div>
+                <div className="room-wrapped-card spaced">
+                    <a href="#" className="w-inline-block">
+                        <Image src="/images/single-bed-room.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                    </a>
+                    <div className="room-details">
+                        <p className="rooms-sub-paragraph rooms-margin-bottom-1rem">Single Bed Room</p>
+                        <p className="rooms-paragraph">Experience comfort and tranquility in our beautifully decorated Single Bed Room, nestled in the peaceful southern wing of our property. This cozy retreat offers a private en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Step outside and enjoy the serene beauty of our wonderful gardens, creating a serene and refreshing atmosphere.</p>
+                    </div>
+                </div>
+                <div className="room-wrapped-card spaced">
+                    <a href="#" className="w-inline-block">
+                        <Image src="/images/1340973158.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                    </a>
+                    <div className="room-details">
+                        <p className="rooms-sub-paragraph rooms-margin-bottom-1rem">Triple Bed Room</p>
+                        <p className="rooms-paragraph">Indulge in the comfort and space of our beautifully decorated Triple Bed Room, located in the peaceful northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. From the windows, behold stunning views of the majestic Sabyinyo Mountain Volcano, allowing you to connect with nature&#x27;s grandeur during your stay.</p>
+                    </div>
+                </div>
+                <div className="room-wrapped-card spaced">
+                    <a href="#" className="w-inline-block">
+                        <Image src="/images/1340975342.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                    </a>
+                    <div className="room-details">
+                        <p className="rooms-sub-paragraph rooms-margin-bottom-1rem">Twin Bed Room</p>
+                        <p className="rooms-paragraph">Experience comfort and flexibility in our beautifully decorated Double Twin Bed Room, located in the serene northern wing of our property. This cozy retreat offers two comfortable twin beds, perfect for friends or family traveling together. Enjoy the convenience of an en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Admire the picturesque views of our wonderful gardens, creating a tranquil and refreshing atmosphere for your stay.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>;
+};
