@@ -6,7 +6,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        sans: ["'Varela Round'", ...fontFamily.sans],
+      },
+      colors: {
+        button: "#566c6a",
       },
     },
   },

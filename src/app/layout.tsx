@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { Varela_Round } from 'next/font/google';
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { NavigationBar } from "./_components/NavigationBar";
@@ -16,11 +17,17 @@ export const metadata: Metadata = {
 import "~/styles/le-bambou-gorilla-lodge.webflow.css"
 import "~/styles/normalize.css";
 
+const varelaRound = Varela_Round({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-varela-round',
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`} suppressHydrationWarning={true}>
+    <html lang="en" className={`${varelaRound.variable} font-sans`} suppressHydrationWarning={true}>
       <body className="body-2">
         <NavigationBar />
         <TRPCReactProvider>{children}</TRPCReactProvider>
