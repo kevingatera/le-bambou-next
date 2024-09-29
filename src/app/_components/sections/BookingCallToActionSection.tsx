@@ -6,7 +6,7 @@ export const BookingCallToActionSection = () => {
     <section className="section bookingsection home-page wf-section">
       <div>
         <div className="bookingwidget-child outside-child">
-          <a href="/stay" className="book-now-text w-button">
+          <a href="/booking" className="book-now-text w-button">
             Book A Room Now
           </a>
         </div>
