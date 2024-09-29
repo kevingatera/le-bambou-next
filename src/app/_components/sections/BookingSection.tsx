@@ -17,28 +17,71 @@ const steps = [
 type Step = typeof steps[number];
 
 interface BookingSectionProps {
-  initialRoomType: RoomType | null;
-  onClose: () => void;
+  initialRoomType?: RoomType | null;
+  onClose?: () => void;
+  initialCheckIn?: string;
+  initialCheckOut?: string;
+  initialAdults?: number;
+  initialChildren05?: number;
+  initialChildren616?: number;
 }
 
-export const BookingSection: React.FC<BookingSectionProps> = ({ initialRoomType, onClose }) => {
+interface FormFieldProps {
+  label: string;
+  id: string;
+  type: string;
+  value: string | number;
+  onChange: (value: string) => void;
+  required?: boolean;
+  error?: string;
+}
+
+const FormField: React.FC<FormFieldProps> = ({ label, id, type, value, onChange, required = false, error }) => {
+  return (
+    <div className="mb-4">
+      <label htmlFor={id} className="block mb-1 font-medium">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+      <input
+        type={type}
+        id={id}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`w-full px-3 py-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]`}
+        required={required}
+      />
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    </div>
+  );
+};
+
+export const BookingSection: React.FC<BookingSectionProps> = ({
+  initialRoomType = null,
+  onClose = () => { },
+  initialCheckIn = '',
+  initialCheckOut = '',
+  initialAdults = 1,
+  initialChildren05 = 0,
+  initialChildren616 = 0
+}) => {
   const [roomSelections, setRoomSelections] = useState<RoomSelection[]>(
     initialRoomType ? [{ type: initialRoomType, count: 1 }] : [{ type: "Double", count: 1 }]
   );
-  const [checkIn, setCheckIn] = useState('')
-  const [checkOut, setCheckOut] = useState('')
+  const [checkIn, setCheckIn] = useState(initialCheckIn)
+  const [checkOut, setCheckOut] = useState(initialCheckOut)
   const [isFlexibleDates, setIsFlexibleDates] = useState(false)
   const [guestName, setGuestName] = useState('')
   const [guestEmail, setGuestEmail] = useState('')
-  const [adults, setAdults] = useState(1)
-  const [children05, setChildren05] = useState(0)
-  const [children616, setChildren616] = useState(0)
+  const [adults, setAdults] = useState(initialAdults)
+  const [children05, setChildren05] = useState(initialChildren05)
+  const [children616, setChildren616] = useState(initialChildren616)
   const [isEastAfricanResident, setIsEastAfricanResident] = useState(false)
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [currentStep, setCurrentStep] = useState<Step>("Dates & Guests")
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const totalGuests = adults + children05 + children616
 
@@ -151,9 +194,30 @@ export const BookingSection: React.FC<BookingSectionProps> = ({ initialRoomType,
     });
   };
 
+  const validateStep = (step: Step): boolean => {
+    const newErrors: { [key: string]: string } = {};
+
+    switch (step) {
+      case "Dates & Guests":
+        if (!checkIn) newErrors.checkIn = "Check-in date is required";
+        if (!checkOut) newErrors.checkOut = "Check-out date is required";
+        if (!adults || adults < 1) newErrors.adults = "At least one adult is required";
+        break;
+      case "Guest Details":
+        if (!guestName.trim()) newErrors.guestName = "Guest name is required";
+        if (!guestEmail.trim()) newErrors.guestEmail = "Guest email is required";
+        else if (!/\S+@\S+\.\S+/.test(guestEmail)) newErrors.guestEmail = "Invalid email format";
+        break;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleNext = () => {
+    console.log('currentStep', currentStep, 'errors', errors)
     const currentIndex = steps.indexOf(currentStep);
-    if (currentIndex < steps.length - 1) {
+    if (currentIndex < steps.length - 1 && validateStep(currentStep)) {
       const nextStep = steps[currentIndex + 1];
       if (nextStep) {
         setCurrentStep(nextStep);
@@ -193,6 +257,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({ initialRoomType,
               setChildren05={setChildren05}
               children616={children616}
               setChildren616={setChildren616}
+              errors={errors}
             />
             <button
               type="button"
@@ -266,6 +331,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({ initialRoomType,
               setGuestEmail={setGuestEmail}
               isEastAfricanResident={isEastAfricanResident}
               setIsEastAfricanResident={setIsEastAfricanResident}
+              errors={errors}
             />
             <div className="mt-4 flex justify-between">
               <button
@@ -379,34 +445,35 @@ const DateAndGuestsForm: React.FC<{
   setChildren05: (value: number) => void;
   children616: number;
   setChildren616: (value: number) => void;
+  errors: { [key: string]: string };
 }> = ({
   checkIn, setCheckIn, checkOut, setCheckOut, isFlexibleDates, setIsFlexibleDates,
-  adults, setAdults, children05, setChildren05, children616, setChildren616
+  adults, setAdults, children05, setChildren05, children616, setChildren616, errors
 }) => {
     return (
       <div className="space-y-4">
         {/* Date selection fields */}
         <div className="flex space-x-4">
           <div className="flex-1">
-            <label htmlFor="checkIn" className="block mb-1 font-medium">Check-in Date</label>
-            <input
-              type="date"
+            <FormField
+              label="Check-in Date"
               id="checkIn"
+              type="date"
               value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
+              onChange={setCheckIn}
               required
+              error={errors.checkIn}
             />
           </div>
           <div className="flex-1">
-            <label htmlFor="checkOut" className="block mb-1 font-medium">Check-out Date</label>
-            <input
-              type="date"
+            <FormField
+              label="Check-out Date"
               id="checkOut"
+              type="date"
               value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
+              onChange={setCheckOut}
               required
+              error={errors.checkOut}
             />
           </div>
         </div>
@@ -426,37 +493,34 @@ const DateAndGuestsForm: React.FC<{
           <label className="block mb-1 font-medium">Number of Guests</label>
           <div className="flex space-x-4">
             <div>
-              <label htmlFor="adults" className="block">Adults</label>
-              <input
-                type="number"
+              <FormField
+                label="Adults"
                 id="adults"
+                type="number"
                 value={adults}
-                onChange={(e) => setAdults(parseInt(e.target.value))}
-                min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
+                onChange={(value) => setAdults(parseInt(value))}
                 required
+                error={errors.adults}
               />
             </div>
             <div>
-              <label htmlFor="children05" className="block">Children 0 - 5 years</label>
-              <input
-                type="number"
+              <FormField
+                label="Children 0 - 5 years"
                 id="children05"
+                type="number"
                 value={children05}
-                onChange={(e) => setChildren05(parseInt(e.target.value))}
-                min="0"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
+                onChange={(value) => setChildren05(parseInt(value))}
+                error={errors.children05}
               />
             </div>
             <div>
-              <label htmlFor="children616" className="block">Children 6 - 16 years</label>
-              <input
-                type="number"
+              <FormField
+                label="Children 6 - 16 years"
                 id="children616"
+                type="number"
                 value={children616}
-                onChange={(e) => setChildren616(parseInt(e.target.value))}
-                min="0"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
+                onChange={(value) => setChildren616(parseInt(value))}
+                error={errors.children616}
               />
             </div>
           </div>
@@ -472,34 +536,31 @@ const GuestDetailsForm: React.FC<{
   setGuestEmail: (value: string) => void;
   isEastAfricanResident: boolean;
   setIsEastAfricanResident: (value: boolean) => void;
+  errors: { [key: string]: string };
 }> = ({
   guestName, setGuestName, guestEmail, setGuestEmail,
-  isEastAfricanResident, setIsEastAfricanResident
+  isEastAfricanResident, setIsEastAfricanResident, errors
 }) => {
     return (
       <div className="space-y-4">
-        <div>
-          <label htmlFor="guestName" className="block mb-1 font-medium">Guest Name</label>
-          <input
-            type="text"
-            id="guestName"
-            value={guestName}
-            onChange={(e) => setGuestName(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="guestEmail" className="block mb-1 font-medium">Guest Email</label>
-          <input
-            type="email"
-            id="guestEmail"
-            value={guestEmail}
-            onChange={(e) => setGuestEmail(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]"
-            required
-          />
-        </div>
+        <FormField
+          label="Guest Name"
+          id="guestName"
+          type="text"
+          value={guestName}
+          onChange={setGuestName}
+          required
+          error={errors.guestName}
+        />
+        <FormField
+          label="Guest Email"
+          id="guestEmail"
+          type="email"
+          value={guestEmail}
+          onChange={setGuestEmail}
+          required
+          error={errors.guestEmail}
+        />
         <div>
           <label className="block mb-1 font-medium">Citizenship</label>
           <div className="flex items-center">
@@ -563,7 +624,7 @@ const RoomSelectionForm: React.FC<{
             onClick={() => handleAddRoom(type)}
             className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300"
           >
-            Add {type} Room
+            +1 {type} Room
           </button>
         ))}
       </div>
