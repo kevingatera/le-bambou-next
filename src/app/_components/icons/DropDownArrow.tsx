@@ -2,10 +2,17 @@ import React from 'react';
 
 interface DropdownArrowProps {
   className?: string;
-  isOpen?: boolean;
+  direction?: 'up' | 'down' | 'left' | 'right';
 }
 
-export const DropdownArrow: React.FC<DropdownArrowProps> = ({ className, isOpen }) => {
+export const DropdownArrow: React.FC<DropdownArrowProps> = ({ className, direction = 'down' }) => {
+  const rotation = {
+    up: 'rotate(0deg)',
+    down: 'rotate(180deg)',
+    left: 'rotate(90deg)',
+    right: 'rotate(-90deg)',
+  };
+
   return (
     <svg
       width="100%"
@@ -14,7 +21,7 @@ export const DropdownArrow: React.FC<DropdownArrowProps> = ({ className, isOpen 
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
+      style={{ transform: rotation[direction], transition: 'transform 0.3s ease' }}
     >
       <path
         fillRule="evenodd"
