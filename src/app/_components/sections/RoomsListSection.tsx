@@ -90,7 +90,7 @@ export const RoomsListSection = () => {
             </div>
             {isBookingModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                    <div className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto">
                         <button
                             onClick={closeBookingModal}
                             className="float-right text-4xl"

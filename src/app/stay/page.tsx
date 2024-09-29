@@ -10,6 +10,7 @@ export default async function Home() {
     <HydrateClient>
       <main>
         <StayBannerSection />
+        <div className="h-[120px] min-h-[7.5rem] bg-[#566c6a] py-[60px]"></div>
         <RoomsListSection />
         <RoomAmenitiesSection />
         <GallerySection />

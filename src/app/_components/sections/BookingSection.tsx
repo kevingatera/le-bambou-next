@@ -276,7 +276,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               handleAddRoom={handleAddRoom}
               handleRemoveRoom={handleRemoveRoom}
             />
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
                 type="button"
                 onClick={handlePrevious}
@@ -303,7 +303,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               message={message}
               setMessage={setMessage}
             />
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
                 type="button"
                 onClick={handlePrevious}
@@ -333,7 +333,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               setIsEastAfricanResident={setIsEastAfricanResident}
               errors={errors}
             />
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
                 type="button"
                 onClick={handlePrevious}
@@ -368,7 +368,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               selectedServices={selectedServices}
               message={message}
             />
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
                 type="button"
                 onClick={handlePrevious}
@@ -391,7 +391,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
   return (
     <section className="booking-section">
-      <div className="container mx-auto px-4 py-8 max-w-[80rem]">
+      <div className="container mx-auto px-2 py-2 max-w-[80rem]">
         <h2 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">Book Your Stay</h2>
         <Breadcrumbs steps={steps} currentStep={currentStep} onStepClick={handleStepClick} />
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -414,19 +414,26 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
 const Breadcrumbs: React.FC<{ steps: readonly string[], currentStep: string, onStepClick: (step: Step) => void }> = ({ steps, currentStep, onStepClick }) => {
   return (
-    <nav className="mb-6">
-      <ol className="flex items-center space-x-2 text-sm">
-        {steps.map((step, index) => (
-          <React.Fragment key={step}>
-            {index > 0 && <span className="text-gray-300">/</span>}
-            <li
-              className={`${currentStep === step ? 'text-button font-semibold cursor-pointer' : 'text-gray-500'} ${index < steps.indexOf(currentStep) ? 'hover:text-button' : ''}`}
-              onClick={() => index < steps.indexOf(currentStep) && onStepClick(step as Step)}
-            >
-              {step}
-            </li>
-          </React.Fragment>
-        ))}
+    <nav className="mb-6 overflow-x-auto">
+      <ol className="flex items-center space-x-2 text-sm whitespace-nowrap min-w-max px-1">
+        {steps.map((step, index) => {
+          const isCompleted = index < steps.indexOf(currentStep);
+          const isCurrent = step === currentStep;
+          return (
+            <React.Fragment key={step}>
+              {index > 0 && <span className="text-gray-300 mx-2">/</span>}
+              <li
+                className={`
+                  ${isCurrent ? 'text-button font-semibold' : isCompleted ? 'text-gray-600 cursor-pointer hover:text-button' : 'text-gray-400'}
+                  transition duration-300
+                `}
+                onClick={() => isCompleted && onStepClick(step as Step)}
+              >
+                {step}
+              </li>
+            </React.Fragment>
+          );
+        })}
       </ol>
     </nav>
   );
@@ -453,7 +460,7 @@ const DateAndGuestsForm: React.FC<{
     return (
       <div className="space-y-4">
         {/* Date selection fields */}
-        <div className="flex space-x-4">
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <div className="flex-1">
             <FormField
               label="Check-in Date"
@@ -491,8 +498,8 @@ const DateAndGuestsForm: React.FC<{
         {/* Guest number fields */}
         <div>
           <label className="block mb-1 font-medium">Number of Guests</label>
-          <div className="flex space-x-4">
-            <div>
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+            <div className="flex-1">
               <FormField
                 label="Adults"
                 id="adults"
@@ -503,7 +510,7 @@ const DateAndGuestsForm: React.FC<{
                 error={errors.adults}
               />
             </div>
-            <div>
+            <div className="flex-1">
               <FormField
                 label="Children 0 - 5 years"
                 id="children05"
@@ -513,7 +520,7 @@ const DateAndGuestsForm: React.FC<{
                 error={errors.children05}
               />
             </div>
-            <div>
+            <div className="flex-1">
               <FormField
                 label="Children 6 - 16 years"
                 id="children616"
@@ -588,7 +595,7 @@ const RoomSelectionForm: React.FC<{
       <label className="block mb-1 font-medium">Room Selection</label>
       <div className="space-y-2">
         {roomSelections.map((room) => (
-          <div key={room.type} className="flex items-center space-x-2 p-2 bg-gray-50 rounded-md">
+          <div key={room.type} className="flex flex-wrap items-center space-x-2 p-2 bg-gray-50 rounded-md">
             <span className="flex-grow px-3 py-2">{room.type} Bed Room</span>
             <div className="flex items-center space-x-2">
               <button

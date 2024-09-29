@@ -13,7 +13,6 @@ export const StayBannerSection = () => {
           </div>
         </div>
       </section>
-      <div className="divider-section stay-page wf-section"></div>
     </>
   )
 }
