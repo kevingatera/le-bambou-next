@@ -28,11 +28,11 @@ export const NavigationBar = () => {
         <a href="/" aria-current="page" className="navbar-logo-link w-nav-brand w--current md:hidden">
           <Image
             src="/images/Asset-34x.png"
-            loading="lazy"
             width={75}
             height={75}
             alt=""
             className="navbar-logo"
+            priority={true}
           />
         </a>
 
@@ -54,7 +54,7 @@ export const NavigationBar = () => {
                   <DropdownArrow direction={hoveredDropdown === 'stay' ? 'down' : 'up'} />
                 </div>
               </div>
-              <nav className="absolute left-0 top-full transform translate-y-2 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
+              <nav className="absolute left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
                 <a
                   href="/stay#Amenities"
                   className="navbar-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] text-base"
@@ -90,7 +90,7 @@ export const NavigationBar = () => {
                   <DropdownArrow direction={hoveredDropdown === 'explore' ? 'down' : 'up'} />
                 </div>
               </div>
-              <nav className="absolute w-[185px] left-0 top-full transform translate-y-2 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
+              <nav className="absolute w-[185px] left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible">
                 <a
                   href="/explore#Kinigi-journey"
                   className="navbar-dropdown-link block px-6 py-2 text-[#2c2c2c] hover:bg-[#d7dfde] text-base"
@@ -127,7 +127,7 @@ export const NavigationBar = () => {
             <a href="/" aria-current="page" className="navbar-logo-link w-nav-brand w--current hidden md:block">
               <Image
                 src="/images/Asset-34x.png"
-                loading="lazy"
+                priority={true}
                 width={100}
                 height={100}
                 alt=""

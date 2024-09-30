@@ -20,6 +20,17 @@ export const RoomsListSection = () => {
         }
     }, []);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") closeBookingModal();
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
+
     const openBookingModal = (roomType: RoomType) => {
         setSelectedRoomType(roomType);
         setStoredBookingData({ roomSelections: [{ type: roomType, count: 1 }] });
@@ -101,8 +112,8 @@ export const RoomsListSection = () => {
                 </div>
             </div>
             {isBookingModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={closeBookingModal}>
+                    <div className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                         <button
                             onClick={closeBookingModal}
                             className="float-right text-4xl"

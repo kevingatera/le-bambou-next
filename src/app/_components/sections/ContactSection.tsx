@@ -2,9 +2,10 @@
 
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { dynamicBlurDataUrl } from '~/app/_utils/ImageUtils'
 import { api } from '~/trpc/react'
 
-export const ContactSection = () => {
+export const ContactSection = async () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
@@ -115,6 +116,8 @@ export const ContactSection = () => {
               className="w-full h-[45rem] object-cover rounded-lg"
               width={3008}
               height={2000}
+              blurDataURL={await dynamicBlurDataUrl('/images/DSC_3662.webp')}
+              placeholder="blur"
             />
           </div>
         </div>

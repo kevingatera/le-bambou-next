@@ -1,16 +1,18 @@
 import React from 'react'
 import Image from 'next/image'
+import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 
-export const DiscoverRoomsSection = () => {
+export const DiscoverRoomsSection = async () => {
   return (
     <section className="discover-rooms-section flex items-center mb-2.5 pt-[140px] font-sans relative">
       <Image
         src="/images/DSC_3572.jpg"
         alt="Discover Rooms Background"
         layout="fill"
-        objectFit="cover"
+        className="opacity-70 object-cover"
         loading="lazy"
-        className="z-0"
+        blurDataURL={await dynamicBlurDataUrl('/images/DSC_3572.jpg')}
+        placeholder="blur"
       />
       <div className="absolute inset-0 bg-[rgba(44,44,44,0.21)] z-10"></div>
       <div className="discover-rooms-container centered-content w-container relative z-20">

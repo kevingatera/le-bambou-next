@@ -1,15 +1,17 @@
 import React from 'react'
 import Image from 'next/image'
+import { dynamicBlurDataUrl } from '~/app/_utils/ImageUtils'
 
-export const HeroSection = () => {
+export const HeroSection = async () => {
   return (
     <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
       <Image 
         src="/images/DSC_3675.jpg" 
         alt="Le Bambou Gorilla Lodge" 
-        layout="fill" 
-        objectFit="cover" 
-        className="opacity-70"
+        layout="fill"
+        className="opacity-70 object-cover"
+        blurDataURL={await dynamicBlurDataUrl('/images/DSC_3675.jpg')}
+        placeholder="blur"
         quality={100}
         priority={true}
       />

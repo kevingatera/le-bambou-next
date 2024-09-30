@@ -8,8 +8,7 @@ export const StayBannerSection = () => {
         src="/images/Rooms---Aerial-view.JPG" 
         alt="Background Image" 
         layout="fill" 
-        objectFit="cover" 
-        className="opacity-70 object-top"
+        className="opacity-70 object-cover"
         quality={100}
         priority={true}
       />

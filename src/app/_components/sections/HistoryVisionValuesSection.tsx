@@ -1,7 +1,8 @@
 import Image from "next/image";
 import React from "react";
+import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 
-export const HistoryVisionValuesSection = () => {
+export const HistoryVisionValuesSection = async () => {
     return (
         <section className="history-vision-values-section wf-section">
             <div className="about-description-container w-container">
@@ -14,6 +15,8 @@ export const HistoryVisionValuesSection = () => {
                         className="rounded-image"
                         width={708}
                         height={472}
+                        blurDataURL={await dynamicBlurDataUrl('/images/Smiling-Worker.jpg')}
+                        placeholder="blur"
                     />
                     <div className="about-flexed-rows about-max-width-row grid-rows-2 gap-y-4">
                         <div>

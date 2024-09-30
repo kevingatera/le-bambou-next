@@ -7,7 +7,7 @@ import { DropdownArrow } from '../icons/DropDownArrow'
 import { dynamicBlurDataUrl } from '~/app/_utils/ImageUtils'
 
 // Modal component for image previews
-const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selectedImage: { src: string; alt: string; width: number; height: number }, onClose: () => void, onPrev: () => void, onNext: () => void, isLoading: boolean }) => {
+const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selectedImage: { src: string; alt: string; width: number; height: number; blurDataURL: string }, onClose: () => void, onPrev: () => void, onNext: () => void, isLoading: boolean }) => {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose();
     if (e.key === 'ArrowLeft') onPrev();
@@ -39,6 +39,8 @@ const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selected
             alt={selectedImage.alt}
             width={selectedImage.width}
             height={selectedImage.height}
+            placeholder="blur"
+            blurDataURL={selectedImage.blurDataURL}
             priority
             className="object-contain"
             style={{ maxHeight: 'calc(100dvh - 100px)', maxWidth: 'calc(100dvw - 100px)' }}
@@ -56,7 +58,7 @@ const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selected
 }
 
 export const GallerySection = () => {
-  const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null)
+  const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string, blurDataURL: string } | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -96,7 +98,7 @@ export const GallerySection = () => {
     loadBlurPlaceholders();
   }, []);
 
-  const handleImageClick = (image: { src: string, alt: string }, index: number) => {
+  const handleImageClick = (image: { src: string, alt: string, blurDataURL: string }, index: number) => {
     setIsLoading(true)
     setSelectedImage(image)
     setCurrentIndex(index)
@@ -105,14 +107,14 @@ export const GallerySection = () => {
   const handlePrev = () => {
     const newIndex = (currentIndex - 1 + images.length) % images.length
     setIsLoading(true)
-    setSelectedImage(images[newIndex] || null)
+    setSelectedImage(imagesWithBlur[newIndex] || null)
     setCurrentIndex(newIndex)
   }
 
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % images.length
     setIsLoading(true)
-    setSelectedImage(images[newIndex] || null)
+    setSelectedImage(imagesWithBlur[newIndex] || null)
     setCurrentIndex(newIndex)
   }
 
@@ -171,6 +173,7 @@ export const GallerySection = () => {
             alt: selectedImage.alt,
             width: images[currentIndex]?.width || 500,
             height: images[currentIndex]?.height || 500,
+            blurDataURL: selectedImage.blurDataURL,
           }}
           onClose={() => setSelectedImage(null)}
           onPrev={handlePrev}
