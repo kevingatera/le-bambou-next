@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { bookings } from "~/server/db/schema";
+import { sendBookingConfirmationEmails } from "~/server/utils/emailUtils";
 
 const roomTypeEnum = z.enum(["Double", "Single", "Triple", "Twin"]);
 
@@ -24,22 +25,30 @@ export const bookingRouter = createTRPCRouter({
       message: z.string(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const booking = await ctx.db.insert(bookings).values({
-        roomSelections: input.roomSelections,
-        checkIn: input.checkIn,
-        checkOut: input.checkOut,
-        isFlexibleDates: input.isFlexibleDates,
-        guestName: input.guestName,
-        guestEmail: input.guestEmail,
-        adults: input.adults,
-        children05: input.children05,
-        children616: input.children616,
-        isEastAfricanResident: input.isEastAfricanResident,
-        selectedServices: input.selectedServices,
-        message: input.message,
-      }).returning();
+      try {
+        const booking = await ctx.db.insert(bookings).values({
+          roomSelections: input.roomSelections,
+          checkIn: input.checkIn,
+          checkOut: input.checkOut,
+          isFlexibleDates: input.isFlexibleDates,
+          guestName: input.guestName,
+          guestEmail: input.guestEmail,
+          adults: input.adults,
+          children05: input.children05,
+          children616: input.children616,
+          isEastAfricanResident: input.isEastAfricanResident,
+          selectedServices: input.selectedServices,
+          message: input.message,
+        }).returning();
 
-      return booking[0];
+        // Send confirmation emails
+        await sendBookingConfirmationEmails(booking[0]);
+
+        return booking[0];
+      } catch (error) {
+        console.error('Error creating booking', error);
+        throw new Error('Error creating booking');
+      }
     }),
 
   getAvailableRooms: publicProcedure

@@ -167,7 +167,11 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       setIsEastAfricanResident(false)
       setSelectedServices([])
       setMessage('')
-      setTimeout(() => setSubmitStatus('idle'), 5000)
+      // Close the booking section
+      setTimeout(() => {
+        setSubmitStatus('idle')
+        onClose();
+      }, 5000)
     },
     onError: () => {
       setSubmitStatus('error')
@@ -418,7 +422,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                 Previous
               </button>
               <button
-                type="submit"
+                type="button"
+                onClick={handleSubmit}
                 disabled={isSubmitting}
                 className="px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300 disabled:opacity-50"
               >
