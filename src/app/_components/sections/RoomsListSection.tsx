@@ -1,16 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BookingSection } from "./BookingSection";
 import { RoomType } from "~/types/booking";
+import { getStoredBookingData, setStoredBookingData } from "~/app/_utils/localStorage";
 
 export const RoomsListSection = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
     const [selectedRoomType, setSelectedRoomType] = useState<RoomType | null>(null);
 
+    useEffect(() => {
+        const storedData = getStoredBookingData();
+        if (storedData && storedData.roomSelections && storedData.roomSelections.length > 0) {
+            const roomSelection = storedData.roomSelections[0];
+            if (roomSelection) {
+                setSelectedRoomType(roomSelection.type);
+            }
+        }
+    }, []);
+
     const openBookingModal = (roomType: RoomType) => {
         setSelectedRoomType(roomType);
+        setStoredBookingData({ roomSelections: [{ type: roomType, count: 1 }] });
         setIsBookingModalOpen(true);
     };
 

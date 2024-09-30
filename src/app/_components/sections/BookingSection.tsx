@@ -89,6 +89,45 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     adjustRoomSelections()
   }, [adults, children05, children616])
 
+  useEffect(() => {
+    // Load saved data from localStorage when component mounts
+    const savedData = localStorage.getItem('bookingFormData');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      setRoomSelections(parsedData.roomSelections || [{ type: "Double", count: 1 }]);
+      setCheckIn(parsedData.checkIn || '');
+      setCheckOut(parsedData.checkOut || '');
+      setIsFlexibleDates(parsedData.isFlexibleDates || false);
+      setGuestName(parsedData.guestName || '');
+      setGuestEmail(parsedData.guestEmail || '');
+      setAdults(parsedData.adults || 1);
+      setChildren05(parsedData.children05 || 0);
+      setChildren616(parsedData.children616 || 0);
+      setIsEastAfricanResident(parsedData.isEastAfricanResident || false);
+      setSelectedServices(parsedData.selectedServices || []);
+      setMessage(parsedData.message || '');
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save form data to localStorage whenever it changes
+    const formData = {
+      roomSelections,
+      checkIn,
+      checkOut,
+      isFlexibleDates,
+      guestName,
+      guestEmail,
+      adults,
+      children05,
+      children616,
+      isEastAfricanResident,
+      selectedServices,
+      message
+    };
+    localStorage.setItem('bookingFormData', JSON.stringify(formData));
+  }, [roomSelections, checkIn, checkOut, isFlexibleDates, guestName, guestEmail, adults, children05, children616, isEastAfricanResident, selectedServices, message]);
+
   const adjustRoomSelections = () => {
     let remainingGuests = totalGuests
     let newSelections: RoomSelection[] = []
@@ -113,6 +152,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     onSuccess: () => {
       setSubmitStatus('success')
       setIsSubmitting(false)
+      // Clear localStorage when booking is successful
+      localStorage.removeItem('bookingFormData');
       // Reset form fields
       setRoomSelections([{ type: "Double", count: 1 }])
       setCheckIn('')
