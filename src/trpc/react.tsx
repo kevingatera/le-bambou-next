@@ -6,6 +6,7 @@ import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { useState } from "react";
 import SuperJSON from "superjson";
+import { useReportWebVitals } from "next/web-vitals";
 
 import { type AppRouter } from "~/server/api/root";
 import { createQueryClient } from "./query-client";
@@ -59,6 +60,23 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
       ],
     })
   );
+
+  // Report web vitals in development mode only if metrics are too high
+  useReportWebVitals((metric) => {
+    if (process.env.NODE_ENV === "development") {
+      const threshold = {
+        FCP: 2000,  // First Contentful Paint
+        LCP: 2500,  // Largest Contentful Paint
+        CLS: 0.1,   // Cumulative Layout Shift
+        FID: 100,   // First Input Delay
+        TTFB: 600,  // Time to First Byte
+      };
+
+      if (metric.value > threshold[metric.name as keyof typeof threshold]) {
+        console.warn(`Web Vital ${metric.name} exceeded threshold:`, metric);
+      }
+    }
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
