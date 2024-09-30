@@ -23,6 +23,19 @@ export const BookingCallToActionWithReservationSection = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isBookingModalOpen) {
+        closeBookingModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isBookingModalOpen]);
+
   const handleBookNow = (e: React.FormEvent) => {
     e.preventDefault()
     setStoredBookingData({ checkIn, checkOut, adults, children05, children616 });
@@ -31,15 +44,15 @@ export const BookingCallToActionWithReservationSection = () => {
   }
 
   const closeBookingModal = () => {
-    setIsBookingModalOpen(false)
-    document.body.classList.remove('overflow-hidden')
+    setIsBookingModalOpen(false);
+    document.body.classList.remove('overflow-hidden');
   }
 
   return (
     <section className="bg-[rgba(121,98,90,.89)]">
       <div className="container mx-auto px-4">
         <form onSubmit={handleBookNow} className="rounded-lg p-6 pb-7 max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-4">
+          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-4">
             <div className="col-span-2 md:col-span-2">
               <label htmlFor="checkIn" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Check-in</label>
               <input
@@ -62,7 +75,7 @@ export const BookingCallToActionWithReservationSection = () => {
                 required
               />
             </div>
-            <div>
+            <div className="col-span-1 md:col-span-2 lg:col-span-1">
               <label htmlFor="adults" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Adults</label>
               <input
                 type="number"
@@ -74,7 +87,7 @@ export const BookingCallToActionWithReservationSection = () => {
                 required
               />
             </div>
-            <div>
+            <div className="col-span-1 md:col-span-2 lg:col-span-1">
               <label htmlFor="children05" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Kids 0-5</label>
               <input
                 type="number"
@@ -85,7 +98,7 @@ export const BookingCallToActionWithReservationSection = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#2c2c2c] focus:border-transparent"
               />
             </div>
-            <div>
+            <div className="col-span-1 md:col-span-2 lg:col-span-1">
               <label htmlFor="children616" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Kids 6-16</label>
               <input
                 type="number"
@@ -96,7 +109,7 @@ export const BookingCallToActionWithReservationSection = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#2c2c2c] focus:border-transparent"
               />
             </div>
-            <div className="text-center content-end col-span-2 md:col-span-2">
+            <div className="text-center content-end col-span-1 md:col-span-2">
               <button type="submit" className="w-full px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300">
                 Book
               </button>
@@ -105,8 +118,14 @@ export const BookingCallToActionWithReservationSection = () => {
         </form>
       </div>
       {isBookingModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={closeBookingModal}
+        >
+          <div
+            className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={closeBookingModal}
               className="float-right text-4xl"

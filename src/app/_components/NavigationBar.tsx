@@ -22,8 +22,8 @@ export const NavigationBar = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <div className="navbar w-nav" role="banner">
-      <div className="navbar-container flex items-center justify-between px-4 md:px-8">
+    <div className="flex items-center min-h-[7rem] bg-[#b9c5c4] border border-black px-1 md:px-10 lg:px-[95px]">
+      <div className="navbar-container flex items-center justify-between w-full">
         {/* Logo - visible on mobile, hidden on desktop */}
         <a href="/" aria-current="page" className="navbar-logo-link w-nav-brand w--current md:hidden">
           <Image
