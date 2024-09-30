@@ -11,6 +11,8 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    ZOHO_EMAIL_PASSWORD: z.string(),
+    SITEGROUND_EMAIL_PASSWORD: z.string(),
   },
 
   /**
@@ -30,6 +32,8 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    ZOHO_EMAIL_PASSWORD: process.env.ZOHO_EMAIL_PASSWORD,
+    SITEGROUND_EMAIL_PASSWORD: process.env.SITEGROUND_EMAIL_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
