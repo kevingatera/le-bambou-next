@@ -32,8 +32,12 @@ export const HotelPoliciesSection = () => {
                             heading="Payment Options"
                             content={<>
                                 We accept:<br />
-                                <strong>Visa<br />MasterCard<br />Wire Transfer</strong> (to the company's bank account)<br />
-                                <strong>Cash</strong>
+                                <ul className="list-disc">
+                                    <li><strong>Visa</strong></li>
+                                    <li><strong>MasterCard</strong></li>
+                                    <li><strong>Wire Transfer</strong></li>
+                                    <li><strong>Cash</strong></li>
+                                </ul>
                             </>}
                         />
 
