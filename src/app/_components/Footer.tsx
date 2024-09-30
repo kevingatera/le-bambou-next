@@ -73,10 +73,10 @@ export const Footer = () => {
                                 Contact
                             </a>
                             <a
-                                href="/bookings-cancellations"
+                                href="/hotel-policies"
                                 className="footer-button light-button w-button"
                             >
-                                Bookings &amp; Cancellations
+                                Bookings & Cancellations
                             </a>
                         </div>
                     </div>
