@@ -29,9 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${varelaRound.variable} font-sans`} suppressHydrationWarning={true}>
       <body className="body-2">
-        <NavigationBar />
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-        <Footer />
+        <TRPCReactProvider>
+          <NavigationBar />
+          {children}
+          <Footer />
+        </TRPCReactProvider>
       </body>
     </html>
   );
