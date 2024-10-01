@@ -1,7 +1,14 @@
-const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : process.env.NEXT_PUBLIC_DOMAIN ? process.env.NEXT_PUBLIC_DOMAIN : window.location.origin;
+const baseUrl = (() => {
+  if (typeof window === 'undefined') {
+    // Server-side
+    return process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://lebambougorillalodge.com';
+  } else {
+    // Client-side
+    return window.location.origin;
+  }
+})();
 
 export async function dynamicBlurDataUrl(url: string) {
   // Remove leading slash if present
