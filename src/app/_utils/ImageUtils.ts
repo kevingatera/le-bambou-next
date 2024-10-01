@@ -1,12 +1,12 @@
 const baseUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : process.env.NEXT_PUBLIC_DOMAIN;
+    : process.env.NEXT_PUBLIC_DOMAIN ? process.env.NEXT_PUBLIC_DOMAIN : window.location.origin;
 
 export async function dynamicBlurDataUrl(url: string) {
   // Remove leading slash if present
   const imagePath = url.startsWith('/') ? url.slice(1) : url;
-  
+
   const base64str = await fetch(`${baseUrl}/${imagePath}`)
     .then(async (res) => {
       const arrayBuffer = await res.arrayBuffer();
