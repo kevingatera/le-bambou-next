@@ -8,7 +8,7 @@ export const CommunitySection = async () => {
       <div className="contentcontainer attractions-page w-container">
         <div className="content-width">
           <h1 id="Kinigi-journey" className="hotel-description">
-            <em className="italic-text">Journey into Kinigi: A Tapestry of Adventure, Nature, and Culture in Rwanda's Enchanting Landscapes</em>
+            <em className="italic-text">Journey into Kinigi: A Tapestry of Adventure, Nature, and Culture in Rwanda&apos;s Enchanting Landscapes</em>
           </h1>
           <div className="attraction-text pt-4 pb-8">Immerse yourself in the enchanting allure of Kinigi...</div>
           <div className="small-space"></div>
@@ -46,7 +46,7 @@ export const CommunitySection = async () => {
               />
             </div>
             <div className="community-inner-card-bottom last">
-              <h3 className="ommunity-heading-regular"><strong className="bold-text">Iby'iwacu Cultural Village</strong></h3>
+              <h3 className="ommunity-heading-regular"><strong className="bold-text">Iby&apos;iwacu Cultural Village</strong></h3>
             </div>
           </div>
         </div>

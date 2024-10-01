@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { bookings } from "~/server/db/schema";
-import { sendBookingConfirmationEmails } from "~/server/utils/emailUtils";
+import { type BookingEmailData, sendBookingConfirmationEmails } from "~/server/utils/emailUtils";
 
 const roomTypeEnum = z.enum(["Double", "Single", "Triple", "Twin"]);
 
@@ -42,7 +42,7 @@ export const bookingRouter = createTRPCRouter({
         }).returning();
 
         // Send confirmation emails
-        await sendBookingConfirmationEmails(booking[0]);
+        await sendBookingConfirmationEmails(booking[0] as BookingEmailData);
 
         return booking[0];
       } catch (error) {
@@ -56,7 +56,7 @@ export const bookingRouter = createTRPCRouter({
       checkIn: z.string(),
       checkOut: z.string(),
     }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx }) => {
       // TODO: Simplified query. Later need to check against existing bookings.
       const availableRooms = await ctx.db.query.rooms.findMany({
         where: (rooms, { gt }) => gt(rooms.availableCount, 0),

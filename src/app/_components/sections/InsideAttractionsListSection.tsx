@@ -40,9 +40,9 @@ export const InsideAttractionsListSection = () => {
                 <div className="image-wrapper">
                   <Image loading="lazy" src="/images/Digitgrave.jpg" alt="" className="uui-team04_image" width={100} height={100} />
                 </div>
-                <div className="attraction-text"><strong>Dian Fossey's Tomb:</strong></div>
+                <div className="attraction-text"><strong>Dian Fossey&apos;s Tomb:</strong></div>
                 <div className="small-space"></div>
-                <div className="attraction-text">Visit Dian Fossey's burial site in the park to honor her conservation legacy.<br />Fee of $75 USD per person, payable to the Rwanda Development Board</div>
+                <div className="attraction-text">Visit Dian Fossey&apos;s burial site in the park to honor her conservation legacy.<br />Fee of $75 USD per person, payable to the Rwanda Development Board</div>
               </div>
             </div>
           </div>

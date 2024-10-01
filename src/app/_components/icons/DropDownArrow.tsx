@@ -15,8 +15,8 @@ export const DropdownArrow: React.FC<DropdownArrowProps> = ({ className, directi
 
   return (
     <svg
-      width="100%"
-      height="100%"
+      width="1rem"
+      height="1rem"
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

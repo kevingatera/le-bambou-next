@@ -25,11 +25,11 @@ export const HotelDescriptionSection = () => {
             private cottages, each adorned with its own cozy fireplace. Designed
             to provide the utmost comfort, our rooms have been meticulously
             crafted using environmentally friendly materials, including locally
-            sourced bamboo. Our lodge's allure lies not only in its comfort,
+            sourced bamboo. Our lodge&apos;s allure lies not only in its comfort,
             affordability, and convenience, but also in its dedication to
             sustainability. We work closely with the local community, creating job
             opportunities and fostering cultural exchange. To delight our guests,
-            a local cultural dancing troupe showcases Rwanda's vibrant lifestyle
+            a local cultural dancing troupe showcases Rwanda&apos;s vibrant lifestyle
             and rich heritage, promoting sustainable tourism and authentic
             cultural experiences.
           </p>

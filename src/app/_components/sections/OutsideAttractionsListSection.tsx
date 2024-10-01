@@ -9,14 +9,14 @@ export const OutsideAttractionsListSection = () => {
           <div className="verticle-padding outside-the-park">
             <div className="attraction-max-width-heading">
               <h2 className="attraction-heading"><strong id="Outside-volcanoes-park" className="bold-text-4">Outside Volcanoes National Park</strong></h2>
-              <div className="attractions-text py-8">Beyond the Park's Borders: Discovering Exquisite Delights in the Surrounding Environs</div>
+              <div className="attractions-text py-8">Beyond the Park&apos;s Borders: Discovering Exquisite Delights in the Surrounding Environs</div>
             </div>
             <div className="grid gap-16 bg-[#b9c5c4] rounded-lg p-8 grid-cols-3">
               <div className="attractions-item">
                 <div className="image-wrapper">
                   <Image loading="lazy" src="/images/iba.png" alt="" className="uui-team04_image" width={100} height={100} />
                 </div>
-                <div className="attraction-text"><strong>Iby'Iwacu Cultural Village:</strong></div>
+                <div className="attraction-text"><strong>Iby&apos;Iwacu Cultural Village:</strong></div>
                 <div className="small-space"></div>
                 <div className="attraction-text">Immerse yourself in the vibrant culture of a nearby village, where you can witness traditional dances, engage with local communities, and discover Rwandan customs, music, and crafts.</div>
               </div>
@@ -48,9 +48,9 @@ export const OutsideAttractionsListSection = () => {
                 <div className="image-wrapper">
                   <Image loading="lazy" src="/images/Kings-Palace-Museum-in-Rwanda.jpg" alt="" className="uui-team04_image" width={100} height={100} />
                 </div>
-                <div className="attraction-text"><strong>Iby'Iwacu Community Center:</strong></div>
+                <div className="attraction-text"><strong>Iby&apos;Iwacu Community Center:</strong></div>
                 <div className="small-space"></div>
-                <div className="attraction-text">Engage with the local community at the Iby'Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performance</div>
+                <div className="attraction-text">Engage with the local community at the Iby&apos;Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performance</div>
               </div>
               <div className="attractions-item">
                 <div className="image-wrapper">
@@ -58,7 +58,7 @@ export const OutsideAttractionsListSection = () => {
                 </div>
                 <div className="attraction-text"><strong>Intore dancers:</strong></div>
                 <div className="small-space"></div>
-                <div className="attraction-text">Engage with the local community at the Iby'Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performance</div>
+                <div className="attraction-text">Engage with the local community at the Iby&apos;Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performance</div>
               </div>
             </div>
           </div>

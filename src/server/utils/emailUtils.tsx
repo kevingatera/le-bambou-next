@@ -27,9 +27,9 @@ const transporter = nodemailer.createTransport(
         }
 );
 
-interface BookingEmailData {
+export interface BookingEmailData {
     id: number;
-    roomSelections: RoomSelection[] | unknown;
+    roomSelections: RoomSelection[];
     checkIn: string;
     checkOut: string;
     isFlexibleDates: boolean;
@@ -39,7 +39,7 @@ interface BookingEmailData {
     children05: number;
     children616: number;
     isEastAfricanResident: boolean; 
-    selectedServices: string[] | unknown;
+    selectedServices: string[];
     message: string | null;
     createdAt: Date;
     updatedAt: Date | null;
@@ -134,9 +134,9 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
                             <li><strong>Booking ID:</strong> ${booking.id}</li>
                             <li><strong>Check-in:</strong> ${booking.checkIn}</li>
                             <li><strong>Check-out:</strong> ${booking.checkOut}</li>
-                            <li><strong>Room(s):</strong> ${(booking.roomSelections as RoomSelection[]).map(r => `${r.count} ${r.type}`).join(', ')}</li>
+                            <li><strong>Room(s):</strong> ${(booking.roomSelections).map(r => `${r.count} ${r.type}`).join(', ')}</li>
                             <li><strong>Guests:</strong> ${booking.adults} adults${booking.children05 > 0 || booking.children616 > 0 ? `, ${booking.children05} children (0-5), ${booking.children616} children (6-16)` : ''}</li>
-                            <li><strong>Selected Services:</strong> ${(booking.selectedServices as string[]).map(serviceId => {
+                            <li><strong>Selected Services:</strong> ${(booking.selectedServices).map(serviceId => {
                                 const service = additionalServices.find(s => s.id === serviceId);
                                 return service ? service.name : serviceId;
                             }).join(', ')}</li>
@@ -169,14 +169,14 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
         <li>Guest Email: ${booking.guestEmail}</li>
         <li>Check-in: ${booking.checkIn}</li>
         <li>Check-out: ${booking.checkOut}</li>
-        <li>Room(s): ${(booking.roomSelections as RoomSelection[]).map(r => `${r.count} ${r.type}`).join(', ')}</li>
+        <li>Room(s): ${(booking.roomSelections).map(r => `${r.count} ${r.type}`).join(', ')}</li>
         <li>Guests: ${booking.adults} adults${booking.children05 > 0 || booking.children616 > 0 ? `, ${booking.children05} children (0-5), ${booking.children616} children (6-16)` : ''}</li>
         <li>East African Resident: ${booking.isEastAfricanResident ? 'Yes' : 'No'}</li>
-        <li>Selected Services: ${(booking.selectedServices as string[]).map(serviceId => {
+        <li>Selected Services: ${(booking.selectedServices).map(serviceId => {
             const service = additionalServices.find(s => s.id === serviceId);
             return service ? service.name : serviceId; // Display service name
         }).join(', ')}</li>
-        <li>Message: ${booking.message || 'No message provided'}</li>
+        <li>Message: ${booking.message ?? 'No message provided'}</li>
       </ul>
     `,
     };

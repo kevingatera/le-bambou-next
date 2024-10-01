@@ -8,7 +8,7 @@ export const TestimonialSection = () => {
         <div className="testimonial-center-heading">
           <h1 className="testimonial-heading-no-margins">
             <em className="italic-text">
-              Testimonials: "Hear What Our Guests Have to Say"
+              Testimonials: &quot;Hear What Our Guests Have to Say&quot;
             </em>
           </h1>
         </div>
@@ -26,12 +26,12 @@ export const TestimonialSection = () => {
               height={150}
             />
             <div className="testimonial-paragraph">
-              "Le Bambou Gorilla Lodge enveloped us in pure comfort and coziness.
+              &quot;Le Bambou Gorilla Lodge enveloped us in pure comfort and coziness.
               The evenings were made even more enchanting as they lit fires,
               casting a warm glow that invited relaxation and storytelling. The
               thoughtful touch of hot water bottles placed on the bed ensured that
-              we drifted off to sleep in ultimate comfort. It's the little details
-              like these that made our stay truly unforgettable."
+              we drifted off to sleep in ultimate comfort. It&apos;s the little details
+              like these that made our stay truly unforgettable.&quot;
               <br />
             </div>
             <div className="name-wrap-testimonial">
@@ -51,10 +51,10 @@ export const TestimonialSection = () => {
               height={150}
             />
             <div className="testimonial-paragraph">
-              "Le Bambou Gorilla Lodge provided us with a magical retreat amidst
-              Rwanda's natural wonders. From the warm hospitality to the stunning
+              &quot;Le Bambou Gorilla Lodge provided us with a magical retreat amidst
+              Rwanda&apos;s natural wonders. From the warm hospitality to the stunning
               mountain vistas outside our window, every moment was pure bliss. We
-              highly recommend this haven for an unforgettable Rwandan getaway."
+              highly recommend this haven for an unforgettable Rwandan getaway.&quot;
               <br />
               <br />
             </div>
@@ -75,12 +75,12 @@ export const TestimonialSection = () => {
               height={150}
             />
             <div className="testimonial-paragraph">
-              "My experience at Le Bambou Gorilla Lodge was truly extraordinary.
+              &quot;My experience at Le Bambou Gorilla Lodge was truly extraordinary.
               &nbsp;I thoroughly enjoyed the delicious dining options and
               appreciated the clean, fresh room thanks to daily housekeeping. The
-              staff's insightful local area suggestions added richness to my stay,
-              especially the vibrant Kinigi market visit. I'm eagerly anticipating
-              my return to this exceptional sanctuary."
+              staff&apos;s insightful local area suggestions added richness to my stay,
+              especially the vibrant Kinigi market visit. I&apos;m eagerly anticipating
+              my return to this exceptional sanctuary.&quot;
             </div>
             <div className="name-wrap-testimonial">
               <div className="heading-no-margins">Michael and Sophia D.</div>

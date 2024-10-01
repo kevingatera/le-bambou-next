@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { type BookingEmailData } from '~/server/utils/emailUtils';
 import { api } from '~/trpc/react'
-import { RoomType, RoomSelection, additionalServices } from '~/types/booking'
+import { type RoomType, type RoomSelection, additionalServices } from '~/types/booking'
 
 const roomTypes = ["Double", "Single", "Triple", "Twin"] as const;
 
@@ -57,7 +58,9 @@ const FormField: React.FC<FormFieldProps> = ({ label, id, type, value, onChange,
 
 export const BookingSection: React.FC<BookingSectionProps> = ({
   initialRoomType = null,
-  onClose = () => { },
+  onClose = () => {
+    // Intentionally empty: default no-op function for onClose
+  },
   initialCheckIn = '',
   initialCheckOut = '',
   initialAdults = 1,
@@ -81,31 +84,28 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [currentStep, setCurrentStep] = useState<Step>("Dates & Guests")
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const totalGuests = adults + children05 + children616
 
-  useEffect(() => {
-    adjustRoomSelections()
-  }, [adults, children05, children616])
 
   useEffect(() => {
     // Load saved data from localStorage when component mounts
     const savedData = localStorage.getItem('bookingFormData');
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      setRoomSelections(parsedData.roomSelections || [{ type: "Double", count: 1 }]);
-      setCheckIn(parsedData.checkIn || '');
-      setCheckOut(parsedData.checkOut || '');
-      setIsFlexibleDates(parsedData.isFlexibleDates || false);
-      setGuestName(parsedData.guestName || '');
-      setGuestEmail(parsedData.guestEmail || '');
-      setAdults(parsedData.adults || 1);
-      setChildren05(parsedData.children05 || 0);
-      setChildren616(parsedData.children616 || 0);
-      setIsEastAfricanResident(parsedData.isEastAfricanResident || false);
-      setSelectedServices(parsedData.selectedServices || []);
-      setMessage(parsedData.message || '');
+      const parsedData = JSON.parse(savedData) as Partial<BookingEmailData>;
+      setRoomSelections(parsedData.roomSelections ?? [{ type: "Double", count: 1 }]);
+      setCheckIn(parsedData.checkIn ?? '');
+      setCheckOut(parsedData.checkOut ?? '');
+      setIsFlexibleDates(parsedData.isFlexibleDates ?? false);
+      setGuestName(parsedData.guestName ?? '');
+      setGuestEmail(parsedData.guestEmail ?? '');
+      setAdults(parsedData.adults ?? 1);
+      setChildren05(parsedData.children05 ?? 0);
+      setChildren616(parsedData.children616 ?? 0);
+      setIsEastAfricanResident(parsedData.isEastAfricanResident ?? false);
+      setSelectedServices(parsedData.selectedServices ?? []);
+      setMessage(parsedData.message ?? '');
     }
   }, []);
 
@@ -128,9 +128,9 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     localStorage.setItem('bookingFormData', JSON.stringify(formData));
   }, [roomSelections, checkIn, checkOut, isFlexibleDates, guestName, guestEmail, adults, children05, children616, isEastAfricanResident, selectedServices, message]);
 
-  const adjustRoomSelections = () => {
+  const adjustRoomSelections = useCallback(() => {
     let remainingGuests = totalGuests
-    let newSelections: RoomSelection[] = []
+    const newSelections: RoomSelection[] = []
 
     while (remainingGuests > 0) {
       if (remainingGuests >= 3) {
@@ -146,7 +146,11 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     }
 
     setRoomSelections(newSelections)
-  }
+  }, [totalGuests])
+
+  useEffect(() => {
+    adjustRoomSelections()
+  }, [adjustRoomSelections])
 
   const bookRoomMutation = api.booking.create.useMutation({
     onSuccess: () => {
@@ -209,14 +213,6 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     )
   }
 
-  const handleRoomTypeChange = (index: number, newType: RoomType) => {
-    const newSelections = [...roomSelections]
-    if (newSelections[index]) {
-      newSelections[index].type = newType
-    }
-    setRoomSelections(newSelections)
-  }
-
   const handleAddRoom = (type: RoomType) => {
     setRoomSelections(prev => {
       const existingRoom = prev.find(room => room.type === type);
@@ -240,7 +236,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   };
 
   const validateStep = (step: Step): boolean => {
-    const newErrors: { [key: string]: string } = {};
+    const newErrors: Record<string, string> = {};
 
     switch (step) {
       case "Dates & Guests":
@@ -498,7 +494,7 @@ const DateAndGuestsForm: React.FC<{
   setChildren05: (value: number) => void;
   children616: number;
   setChildren616: (value: number) => void;
-  errors: { [key: string]: string };
+  errors: Record<string, string>;
 }> = ({
   checkIn, setCheckIn, checkOut, setCheckOut, isFlexibleDates, setIsFlexibleDates,
   adults, setAdults, children05, setChildren05, children616, setChildren616, errors
@@ -538,7 +534,7 @@ const DateAndGuestsForm: React.FC<{
             onChange={(e) => setIsFlexibleDates(e.target.checked)}
             className="mr-2"
           />
-          <label htmlFor="isFlexibleDates">I'm flexible with these dates</label>
+          <label htmlFor="isFlexibleDates">I&apos;m flexible with these dates</label>
         </div>
 
         {/* Guest number fields */}
@@ -589,7 +585,7 @@ const GuestDetailsForm: React.FC<{
   setGuestEmail: (value: string) => void;
   isEastAfricanResident: boolean;
   setIsEastAfricanResident: (value: boolean) => void;
-  errors: { [key: string]: string };
+  errors: Record<string, string>;
 }> = ({
   guestName, setGuestName, guestEmail, setGuestEmail,
   isEastAfricanResident, setIsEastAfricanResident, errors

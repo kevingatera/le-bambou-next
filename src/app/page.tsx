@@ -1,7 +1,4 @@
-import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
-import { api, HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
 import { HeroSection } from "./_components/sections/HeroSection";
 import { HotelDescriptionSection } from "./_components/sections/HotelDescriptionSection";
 import { BookingCallToActionWithReservationSection } from "./_components/sections/BookingCallToActionWithReservationSection";

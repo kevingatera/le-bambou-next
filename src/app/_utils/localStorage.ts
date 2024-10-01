@@ -1,4 +1,4 @@
-import { RoomSelection } from '~/types/booking';
+import { type RoomSelection } from '~/types/booking';
 
 interface BookingFormData {
   roomSelections: RoomSelection[];
@@ -18,12 +18,12 @@ interface BookingFormData {
 export const getStoredBookingData = (): BookingFormData | null => {
   if (typeof window === 'undefined') return null;
   const savedData = localStorage.getItem('bookingFormData');
-  return savedData ? JSON.parse(savedData) : null;
+  return savedData ? (JSON.parse(savedData) as BookingFormData) : null;
 };
 
 export const setStoredBookingData = (data: Partial<BookingFormData>) => {
   if (typeof window === 'undefined') return;
-  const currentData = getStoredBookingData() || {};
+  const currentData = getStoredBookingData() ?? {};
   const updatedData = { ...currentData, ...data };
   localStorage.setItem('bookingFormData', JSON.stringify(updatedData));
 };

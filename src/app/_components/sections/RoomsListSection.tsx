@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { BookingSection } from "./BookingSection";
-import { RoomType } from "~/types/booking";
+import { type RoomType } from "~/types/booking";
 import { getStoredBookingData, setStoredBookingData } from "~/app/_utils/localStorage";
 
 export const RoomsListSection = () => {
@@ -12,11 +12,8 @@ export const RoomsListSection = () => {
 
     useEffect(() => {
         const storedData = getStoredBookingData();
-        if (storedData && storedData.roomSelections && storedData.roomSelections.length > 0) {
-            const roomSelection = storedData.roomSelections[0];
-            if (roomSelection) {
-                setSelectedRoomType(roomSelection.type);
-            }
+        if (storedData?.roomSelections?.[0]) {
+            setSelectedRoomType(storedData.roomSelections[0].type);
         }
     }, []);
 

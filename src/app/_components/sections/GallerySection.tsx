@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { DropdownArrow } from '../icons/DropDownArrow'
 import { dynamicBlurDataUrl } from '~/app/_utils/ImageUtils'
@@ -62,7 +62,7 @@ export const GallerySection = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const images = [
+  const images = useMemo(() => [
     { src: '/images/Single-room-Entrance-door.jpg', alt: 'Single room entrance door', width: 4608, height: 3072 },
     { src: '/images/Single-Room-Exterior-View.jpg', alt: 'Single room exterior view', width: 2592, height: 1728 },
     { src: '/images/DSC_3622.jpg', alt: 'DSC 3622', width: 4512, height: 3008 },
@@ -74,7 +74,7 @@ export const GallerySection = () => {
     { src: '/images/DSC_3572.jpg', alt: 'DSC 3572', width: 4512, height: 3008 },
     { src: '/images/DSC_3563.jpg', alt: 'DSC 3563', width: 4512, height: 3008 },
     { src: '/images/lobby----Le-Bambou-Gorilla-Lodge.jpg', alt: 'Lobby at Le Bambou Gorilla Lodge', width: 1594, height: 1063 },
-  ]
+  ], [])
 
   const [imagesWithBlur, setImagesWithBlur] = useState<Array<{
     src: string;
@@ -95,8 +95,8 @@ export const GallerySection = () => {
       setImagesWithBlur(imagesWithBlurData);
     };
 
-    loadBlurPlaceholders();
-  }, []);
+    void loadBlurPlaceholders();
+  }, [images]);
 
   const handleImageClick = (image: { src: string, alt: string, blurDataURL: string }, index: number) => {
     setIsLoading(true)
@@ -107,14 +107,14 @@ export const GallerySection = () => {
   const handlePrev = () => {
     const newIndex = (currentIndex - 1 + images.length) % images.length
     setIsLoading(true)
-    setSelectedImage(imagesWithBlur[newIndex] || null)
+    setSelectedImage(imagesWithBlur[newIndex] ?? null)
     setCurrentIndex(newIndex)
   }
 
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % images.length
     setIsLoading(true)
-    setSelectedImage(imagesWithBlur[newIndex] || null)
+    setSelectedImage(imagesWithBlur[newIndex] ?? null)
     setCurrentIndex(newIndex)
   }
 
@@ -171,8 +171,8 @@ export const GallerySection = () => {
           selectedImage={{
             src: selectedImage.src,
             alt: selectedImage.alt,
-            width: images[currentIndex]?.width || 500,
-            height: images[currentIndex]?.height || 500,
+            width: images[currentIndex]?.width ?? 500,
+            height: images[currentIndex]?.height ?? 500,
             blurDataURL: selectedImage.blurDataURL,
           }}
           onClose={() => setSelectedImage(null)}
