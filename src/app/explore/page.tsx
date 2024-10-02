@@ -15,7 +15,7 @@ export default async function Home() {
         <InsideAttractionsListSection />
         <div className="learn-more-padding">
             <div className="learn-more-container-smalller">
-              <div className="pb-12">
+              <div className="py-12">
                 <div className="align-text-center">
                   <a href="https://visitrwandabookings.rdb.rw/rdbportal/web/rdb/home" target="_blank" className="link-block-4 w-inline-block">
                     <h1 className="learn-more-heading">Learn More</h1>

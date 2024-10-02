@@ -3,63 +3,31 @@ import React from 'react'
 
 export const OutsideAttractionsListSection = () => {
   return (
-    <section className="attractionslist-section">
-      <div className="attraction-page-padding">
+    <section className="mx-auto max-w-[calc(100vw-4rem)]">
+      <div className="px-4 md:px-8 lg:px-16">
         <div className="attraction-container">
           <div className="verticle-padding outside-the-park">
             <div className="attraction-max-width-heading">
-              <h2 className="attraction-heading"><strong id="Outside-volcanoes-park" className="bold-text-4">Outside Volcanoes National Park</strong></h2>
-              <div className="attractions-text py-8">Beyond the Park&apos;s Borders: Discovering Exquisite Delights in the Surrounding Environs</div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl"><strong id="Outside-volcanoes-park" className="font-bold">Outside Volcanoes National Park</strong></h2>
+              <div className="py-8 text-sm md:text-base lg:text-lg">Beyond the Park's Borders: Discovering Exquisite Delights in the Surrounding Environs</div>
             </div>
-            <div className="grid gap-16 bg-[#b9c5c4] rounded-lg p-8 grid-cols-3">
-              <div className="attractions-item">
-                <div className="image-wrapper">
-                  <Image loading="lazy" src="/images/iba.png" alt="" className="uui-team04_image" width={100} height={100} />
+            <div className="grid gap-8 md:gap-12 lg:gap-16 bg-[#b9c5c4] rounded-lg p-4 md:p-6 lg:p-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {attractions.map((attraction, index) => (
+                <div key={index} className="attractions-item">
+                  <div className="image-wrapper aspect-w-16 aspect-h-9 mb-4">
+                    <Image 
+                      loading="lazy" 
+                      src={attraction.image} 
+                      alt={attraction.title} 
+                      className="object-cover rounded-lg"
+                      fill={true}
+                    />
+                  </div>
+                  <div className="text-lg md:text-xl lg:text-xl mt-4"><strong>{attraction.title}</strong></div>
+                  <div className="mt-2"></div>
+                  <div className="text-sm md:text-base">{attraction.description}</div>
                 </div>
-                <div className="attraction-text"><strong>Iby&apos;Iwacu Cultural Village:</strong></div>
-                <div className="small-space"></div>
-                <div className="attraction-text">Immerse yourself in the vibrant culture of a nearby village, where you can witness traditional dances, engage with local communities, and discover Rwandan customs, music, and crafts.</div>
-              </div>
-              <div className="attractions-item">
-                <div className="image-wrapper">
-                  <Image loading="lazy" src="/images/DwiI_I7WkAATzND.jpg" alt="" className="uui-team04_image" width={100} height={100} />
-                </div>
-                <div className="attraction-text"><strong>Musanze Caves:</strong></div>
-                <div className="small-space"></div>
-                <div className="attraction-text">Explore the Musanze Caves, a network of lava tubes located a short distance from Kinigi. Marvel at the geological formations and learn about the volcanic history of the region.</div>
-              </div>
-              <div className="attractions-item">
-                <div className="image-wrapper">
-                  <Image loading="lazy" src="/images/Twin-Lakes-of-Burera-and-Ruhondo-750x450.jpg" alt="" className="uui-team04_image" width={100} height={100} />
-                </div>
-                <div className="attraction-text"><strong>Twin Lakes:</strong></div>
-                <div className="small-space"></div>
-                <div className="attraction-text">Visit the picturesque Twin Lakes of Burera and Ruhondo near Kinigi. Enjoy scenic boat rides, birdwatching, and picnics while soaking in the tranquil atmosphere and stunning views.</div>
-              </div>
-              <div className="attractions-item">
-                <div className="image-wrapper">
-                  <Image loading="lazy" src="/images/buhanga-eco-park.jpg" alt="" className="uui-team04_image" width={100} height={100} />
-                </div>
-                <div className="attraction-text"><strong>Buhanga Eco-Park:</strong></div>
-                <div className="small-space"></div>
-                <div className="attraction-text">Discover the Buhanga Eco-Park, located in Musanze District. Explore the forest reserve, guided by locals, and learn about traditional rituals, cultural practices, and medicinal plants.</div>
-              </div>
-              <div className="attractions-item">
-                <div className="image-wrapper">
-                  <Image loading="lazy" src="/images/Kings-Palace-Museum-in-Rwanda.jpg" alt="" className="uui-team04_image" width={100} height={100} />
-                </div>
-                <div className="attraction-text"><strong>Iby&apos;Iwacu Community Center:</strong></div>
-                <div className="small-space"></div>
-                <div className="attraction-text">Engage with the local community at the Iby&apos;Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performance</div>
-              </div>
-              <div className="attractions-item">
-                <div className="image-wrapper">
-                  <Image loading="lazy" src="/images/intore-dancers-performance-visit-rwanda_2x3.jpg" alt="" className="uui-team04_image" width={100} height={100} />
-                </div>
-                <div className="attraction-text"><strong>Intore dancers:</strong></div>
-                <div className="small-space"></div>
-                <div className="attraction-text">Engage with the local community at the Iby&apos;Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performance</div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -67,3 +35,36 @@ export const OutsideAttractionsListSection = () => {
     </section>
   )
 }
+
+const attractions = [
+  {
+    title: "Iby'Iwacu Cultural Village:",
+    image: "/images/iba.png",
+    description: "Immerse yourself in the vibrant culture of a nearby village, where you can witness traditional dances, engage with local communities, and discover Rwandan customs, music, and crafts."
+  },
+  {
+    title: "Musanze Caves:",
+    image: "/images/DwiI_I7WkAATzND.jpg",
+    description: "Explore the Musanze Caves, a network of lava tubes located a short distance from Kinigi. Marvel at the geological formations and learn about the volcanic history of the region."
+  },
+  {
+    title: "Twin Lakes:",
+    image: "/images/Twin-Lakes-of-Burera-and-Ruhondo-750x450.jpg",
+    description: "Visit the picturesque Twin Lakes of Burera and Ruhondo near Kinigi. Enjoy scenic boat rides, birdwatching, and picnics while soaking in the tranquil atmosphere and stunning views."
+  },
+  {
+    title: "Buhanga Eco-Park:",
+    image: "/images/buhanga-eco-park.jpg",
+    description: "Discover the Buhanga Eco-Park, located in Musanze District. Explore the forest reserve, guided by locals, and learn about traditional rituals, cultural practices, and medicinal plants."
+  },
+  {
+    title: "Iby'Iwacu Community Center:",
+    image: "/images/Kings-Palace-Museum-in-Rwanda.jpg",
+    description: "Engage with the local community at the Iby'Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performances."
+  },
+  {
+    title: "Intore dancers:",
+    image: "/images/intore-dancers-performance-visit-rwanda_2x3.jpg",
+    description: "Experience the vibrant and energetic performances of Intore dancers, showcasing traditional Rwandan dance and culture through their captivating routines and colorful costumes."
+  }
+];

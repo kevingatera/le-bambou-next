@@ -552,24 +552,6 @@ strong {
   padding: 0;
 }
 
-.navbar-container {
-  width: 100%;
-  height: 100%;
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr max-content 1fr;
-  grid-auto-columns: 1fr;
-  justify-content: space-between;
-  align-items: center;
-  justify-items: stretch;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 5px;
-  padding-right: 5px;
-  display: grid;
-}
-
 .navbar {
   min-height: 7rem;
   background-color: #b9c5c4;
@@ -657,19 +639,6 @@ input.w-button {
   max-width: 100%;
 }
 
-.contentcontainer {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 64px;
-  padding-right: 64px;
-  position: relative;
-}
-
-.contentcontainer.attractions-page {
-  padding-top: 40px;
-}
-
 .content-section {
   width: 100%;
   padding: 20px 64px 10px;
@@ -691,15 +660,6 @@ input.w-button {
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.4;
-}
-
-.content-section h1 {
-  color: #000;
-  margin-bottom: 2rem;
-  font-family: Varela Round, sans-serif;
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 1.1;
 }
 
 .content-section h2 {
@@ -826,34 +786,6 @@ input.w-button {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   align-items: start;
   position: relative;
-}
-
-.community-container {
-  z-index: 2;
-  width: 100%;
-  max-width: 1480px;
-  flex: none;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 60px;
-  padding-left: 20px;
-  padding-right: 20px;
-  position: relative;
-}
-
-.community-section-text-block {
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-}
-
-.bold-text {
-  text-align: center;
-  font-family: Varela Round, sans-serif;
-  font-size: 32px;
-  font-weight: 400;
-}
-
-.bold-text-2, .bold-text-3, .text-block-2, .text-block-3 {
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
 
 .discover-button {
@@ -1889,17 +1821,6 @@ input.w-button {
   font-size: 18px;
   line-height: 1.5;
 }
-
-.attraction-heading {
-  color: #101828;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Oxygen, Fira Sans, Droid Sans, sans-serif;
-  font-size: 2.25rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
 .attraction-max-width-heading {
   width: 100%;
   max-width: 48rem;
@@ -1929,20 +1850,6 @@ input.w-button {
 .attractionslist-section {
   padding-left: 64px;
   padding-right: 64px;
-}
-
-.bold-text-4 {
-  color: #2c2c2c;
-  font-family: Varela Round, sans-serif;
-  font-size: 38px;
-  font-weight: 400;
-}
-
-.bold-text-5 {
-  color: #2c2c2c;
-  font-family: Varela Round, sans-serif;
-  font-size: 20px;
-  font-weight: 400;
 }
 
 .spark-button {
@@ -2138,81 +2045,6 @@ input.w-button {
 
 ._900-width.spark-margin-bottom-104px {
   margin-bottom: 104px;
-}
-
-.about-description-container {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-}
-
-.history-vision-values-section {
-  width: 100%;
-  padding: 60px 64px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Oxygen, Fira Sans, Droid Sans, sans-serif;
-  position: relative;
-}
-
-.history-vision-values-section h5 {
-  font-size: 36px;
-  font-weight: 400;
-  line-height: 1.3;
-}
-
-.history-vision-values-section h4 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.history-vision-values-section h1 {
-  margin-bottom: 1rem;
-  font-size: 4rem;
-  font-weight: 600;
-  line-height: 1.1;
-}
-
-.history-vision-values-section h2 {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 42px;
-  font-weight: 400;
-  line-height: 1.2;
-}
-
-.history-vision-values-section h3 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.history-vision-values-section h6 {
-  margin-top: 1.5rem;
-  margin-bottom: .5rem;
-  font-size: .8125rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.history-vision-values-section p {
-  font-family: Varela Round, sans-serif;
-  font-size: 18px;
-}
-
-.history-vision-values-section ul {
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-  padding-left: 14px;
-}
-
-.history-vision-values-section li {
-  margin-bottom: .5rem;
 }
 
 .contact-image {
@@ -2726,23 +2558,6 @@ input.w-button {
   padding-bottom: 120px;
 }
 
-.bold-text-6 {
-  font-weight: 400;
-}
-
-.bold-text-7 {
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-weight: 400;
-}
-
-.bold-text-8, .bold-text-9 {
-  font-weight: 400;
-}
-
-.body-2 {
-  background-color: #d7dfde;
-}
-
 .link-block {
   text-decoration: none;
 }
@@ -2802,10 +2617,6 @@ input.w-button {
   text-decoration: none;
 }
 
-.bold-text-10 {
-  font-weight: 400;
-}
-
 .div-block {
   background-color: #b9c5c4;
 }
@@ -2819,9 +2630,6 @@ input.w-button {
   font-weight: 400;
 }
 
-.bold-text-11 {
-  color: #2c2c2c;
-}
 
 .utility-page-wrap {
   width: 100vw;
@@ -3009,11 +2817,6 @@ input.w-button {
     background-color: rgba(0, 0, 0, 0);
   }
 
-  .navbar-container {
-    grid-auto-columns: 1fr;
-    display: grid;
-  }
-
   .navbar {
     padding-left: 20px;
     padding-right: 20px;
@@ -3024,9 +2827,6 @@ input.w-button {
     padding-right: .4375rem;
   }
 
-  .contentcontainer.attractions-page {
-    padding-top: 0;
-  }
 
   .content-section {
     padding-top: 104px;
@@ -3034,17 +2834,9 @@ input.w-button {
     padding-right: 32px;
   }
 
-  .content-section.attractions-page {
-    padding-top: 60px;
-  }
 
   .community-main-grid {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .community-container {
-    width: auto;
-    flex: 0 auto;
   }
 
   .discover-rooms-section {
@@ -3202,12 +2994,6 @@ input.w-button {
     max-width: 100%;
   }
 
-  .history-vision-values-section {
-    padding-top: 104px;
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
   .contact-grid-component {
     min-height: auto;
     grid-column-gap: 3rem;
@@ -3238,17 +3024,9 @@ input.w-button {
     min-height: 4rem;
   }
 
-  .contentcontainer {
-    width: 100%;
-  }
-
   .content-section {
     padding-top: 88px;
     padding-bottom: 88px;
-  }
-
-  .content-section h1 {
-    color: #2c2c2c;
   }
 
   .ommunity-heading-regular {
@@ -3262,11 +3040,6 @@ input.w-button {
   .community-main-grid {
     grid-column-gap: 1em;
     grid-row-gap: 2em;
-  }
-
-  .community-container {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   .discover-flex-row {
@@ -3456,11 +3229,6 @@ input.w-button {
     font-size: 1rem;
   }
 
-  .attraction-heading {
-    font-size: 1.75rem;
-    line-height: 1.4;
-  }
-
   .verticle-padding {
     padding-top: 4rem;
     padding-bottom: 0;
@@ -3499,15 +3267,6 @@ input.w-button {
 
   .about-section h1 {
     font-size: 32px;
-  }
-
-  .about-description-container {
-    width: 100%;
-  }
-
-  .history-vision-values-section {
-    padding-top: 88px;
-    padding-bottom: 88px;
   }
 
   .contact-form-button {
@@ -3640,19 +3399,9 @@ input.w-button {
   .navbar {
     padding-right: 10px;
   }
-
-  .contentcontainer.attractions-page {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
+  
   .content-section {
     padding: 64px 20px;
-  }
-
-  .content-section h1 {
-    padding-left: 20px;
-    font-size: 3rem;
   }
 
   .content-section h2 {
@@ -3689,18 +3438,6 @@ input.w-button {
 
   .community-inner-card-bottom.last {
     padding-bottom: 45px;
-  }
-
-
-  .community-container {
-    width: 100%;
-    flex: 0 auto;
-    padding-bottom: 0;
-  }
-
-  .bold-text {
-    font-size: 28px;
-    display: flex;
   }
 
   .discover-flex-row {
@@ -3914,22 +3651,6 @@ input.w-button {
 
   ._900-width.spark-margin-bottom-104px {
     margin-bottom: 64px;
-  }
-
-  .history-vision-values-section {
-    padding: 64px 20px;
-  }
-
-  .history-vision-values-section h1 {
-    font-size: 3rem;
-  }
-
-  .history-vision-values-section h2 {
-    font-size: 2.5rem;
-  }
-
-  .history-vision-values-section p {
-    font-size: 16px;
   }
 
   .contact-grid-component {

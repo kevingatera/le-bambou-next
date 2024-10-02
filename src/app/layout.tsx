@@ -28,7 +28,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${varelaRound.variable} font-sans`} suppressHydrationWarning={true}>
-      <body className="body-2">
+      <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
           <NavigationBar />
           {children}

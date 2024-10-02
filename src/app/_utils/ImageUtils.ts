@@ -22,17 +22,13 @@ export async function dynamicBlurDataUrl(url: string) {
     });
 
   const blurSvg = `
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-      <defs>
-        <filter id='b' color-interpolation-filters='sRGB'>
-          <feGaussianBlur stdDeviation='3' />
-        </filter>
-        <clipPath id='c'>
-          <circle cx='50' cy='50' r='50' />
-        </clipPath>
-      </defs>
-      <image preserveAspectRatio='xMidYMid slice' filter='url(#b)' x='0' y='0' height='100%' width='100%' 
-             clip-path='url(#c)' href='data:image/jpeg;base64,${base64str}' />
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'>
+      <filter id='b' color-interpolation-filters='sRGB'>
+        <feGaussianBlur stdDeviation='1' />
+      </filter>
+
+      <image preserveAspectRatio='none' filter='url(#b)' x='0' y='0' height='100%' width='100%' 
+      href='data:image/jpeg;base64,${base64str}' />
     </svg>
   `;
 

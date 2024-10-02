@@ -23,7 +23,7 @@ export const NavigationBar = () => {
 
   return (
     <div className="flex items-center min-h-[7rem] bg-[#b9c5c4] border border-black px-1 md:px-10 lg:px-[95px]">
-      <div className="navbar-container flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full">
         {/* Logo - visible on mobile, hidden on desktop */}
         <a href="/" aria-current="page" className="navbar-logo-link w-nav-brand w--current md:hidden">
           <Image
@@ -147,7 +147,7 @@ export const NavigationBar = () => {
 
         {/* Mobile Hamburger Menu */}
         <button
-          className="md:hidden text-gray-700 focus:outline-none"
+          className="md:hidden text-gray-700 focus:outline-none px-4"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
