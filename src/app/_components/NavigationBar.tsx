@@ -164,7 +164,7 @@ export const NavigationBar = () => {
 
       {/* Mobile Navigation Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-0 left-0 w-full h-screen bg-white z-50 flex flex-col p-4 overflow-y-auto">
+        <div className="md:hidden absolute top-0 left-0 w-full h-dvh bg-white z-50 flex flex-col p-4 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             {/* Logo */}
             <a href="/" aria-current="page" className="navbar-logo-link w-nav-brand w--current">
@@ -257,7 +257,7 @@ export const NavigationBar = () => {
                 </a>
               </div>
             </div>
-            <div className="flex items-center justify-end flex-1 md:hidden mt-6">
+            <div className="flex items-end justify-end flex-1 md:hidden mt-6">
               {/* Book Now Button */}
               <a href="booking" className="navbarbutton w-full text-center py-2 bg-button text-white rounded block">
                 Book Now

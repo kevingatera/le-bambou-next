@@ -3,8 +3,8 @@ import React from 'react'
 
 export const OutsideAttractionsListSection = () => {
   return (
-    <section className="mx-auto max-w-[calc(100vw-4rem)]">
-      <div className="px-4 md:px-8 lg:px-16">
+    <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)]">
+      <div className="px-0 sm:px-4 md:px-8 lg:px-16">
         <div className="attraction-container">
           <div className="verticle-padding outside-the-park">
             <div className="attraction-max-width-heading">

@@ -4,14 +4,14 @@ import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 
 export const HistoryVisionValuesSection = async () => {
     return (
-        <section className="mx-auto max-w-[calc(100vw-4rem)] py-12">
-            <div className="px-4 md:px-8 lg:px-16">
+        <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)] py-12">
+            <div className="px-0 sm:px-4 md:px-8 lg:px-16">
 
                 <div className="">
                     <h2 className="text-2xl md:text-3xl lg:text-4xl "><strong id="Kinigi-journey" className="font-[400]">Our commitment to exceptional service, sustainable practices, and embracing the natural beauty of Volcanoes National Park sets us apart.</strong></h2>
                     <div className="small-space"></div>
                 </div>
-                <div className="bg-[#b9c5c4] flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-16 rounded-lg items-center p-10">
+                <div className="bg-[#b9c5c4] flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-16 rounded-lg items-center p-4 sm:p-8 md:p-10">
                     <div className="w-full md:w-2/3 flex items-center mx-2 max-w-sm">
                         <Image
                             src="/images/Smiling-Worker.jpg"

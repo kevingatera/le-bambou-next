@@ -12,8 +12,8 @@ export const StayBannerSection = () => {
         quality={100}
         priority={true}
       />
-      <div className="max-w-[calc(100vw-rem)] mx-auto relative">
-        <div className="max-w-[900px] text-center bg-[rgba(121,98,90,.89)] rounded-lg flex flex-col justify-center items-center py-4">
+      <div className="max-w-[calc(100vw-2rem)] mx-auto relative">
+        <div className="max-w-[900px] text-center bg-[rgba(121,98,90,.89)] rounded-lg flex flex-col justify-center items-center py-4 px-3">
           <h1 className="text-[#ebf8f7] mt-0 mb-8 pt-5 text-[38px] font-normal leading-[1.1]">Rooms Available</h1>
           <p className="text-[#ebf8f7] mb-0 px-5 pb-5 text-[18px]">
             Indulge in a selection of exquisite rooms designed to exceed your expectations. 
