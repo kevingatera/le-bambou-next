@@ -8,7 +8,7 @@ export const HeroSection = async () => {
       <Image 
         src="/images/DSC_3675.jpg" 
         alt="Le Bambou Gorilla Lodge" 
-        layout="fill"
+        fill={true}
         className="opacity-70 object-cover"
         blurDataURL={await dynamicBlurDataUrl('/images/DSC_3675.jpg')}
         placeholder="blur"

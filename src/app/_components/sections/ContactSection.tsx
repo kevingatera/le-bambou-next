@@ -5,8 +5,8 @@ import { ContactForm } from '../ContactForm'
 
 export const ContactSection = async () => {
   return (
-    <section className="contact-section">
-      <div className="container mx-auto px-4 py-16 max-w-[80rem]">
+    <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)] py-12">
+      <div className="container mx-auto md:px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="contact-form flex flex-col justify-center">
             <h2 className="text-[#2c2c2c] mt-0 mb-0 text-3xl font-normal leading-snug">Contact us</h2>
@@ -20,7 +20,7 @@ export const ContactSection = async () => {
             <Image
               src="/images/DSC_3662.webp"
               alt="Contact image"
-              className="w-full h-[45rem] object-cover rounded-lg"
+              className="w-full h-[30rem] md:h-[45rem] object-cover rounded-lg"
               width={3008}
               height={2000}
               blurDataURL={await dynamicBlurDataUrl('/images/DSC_3662.webp')}

@@ -8,7 +8,7 @@ export const DiscoverRoomsSection = async () => {
       <Image
         src="/images/DSC_3572.jpg"
         alt="Discover Rooms Background"
-        layout="fill"
+        fill={true}
         className="opacity-70 object-cover"
         loading="lazy"
         blurDataURL={await dynamicBlurDataUrl('/images/DSC_3572.jpg')}

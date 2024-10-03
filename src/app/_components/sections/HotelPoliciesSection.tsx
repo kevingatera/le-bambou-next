@@ -4,8 +4,8 @@ import React, { useState } from "react";
 
 export const HotelPoliciesSection = () => {
     return (
-        <section className="faq-container">
-            <div className="inner-padding">
+        <section className="homepage wf-section pt-12 pb-16">
+            <div className="container mx-auto px-4">
                 <div className="center-text">
                     <div className="max-width-text align-center">
                         <h2 className="policy-heading">Hotel Policy</h2>
@@ -95,7 +95,7 @@ const PolicyAccordion: React.FC<PolicyAccordionProps> = ({ heading, content, isL
             <div
                 className={`policy-answer overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
             >
-                <div className="answer-text">{content}</div>
+                <div className="text-md leading-6">{content}</div>
                 <div className="medium-space"></div>
             </div>
         </div>

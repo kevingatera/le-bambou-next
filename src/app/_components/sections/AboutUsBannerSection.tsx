@@ -8,7 +8,7 @@ export const AboutUsBannerSection = async () => {
             <Image
                 src="/images/DSC_3494.jpg"
                 alt="Background Image"
-                layout="fill"
+                fill={true}
                 className=" opacity-70 object-cover"
                 quality={100}
                 priority={true}
