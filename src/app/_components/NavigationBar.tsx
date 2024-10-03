@@ -35,7 +35,7 @@ export const NavigationBar = () => {
   useEffect(() => {
     // Check if the current pathname matches any of the dropdowns
     const activeDropdown = ['stay', 'explore'].find(dropdown => isActive(`/${dropdown}`));
-    setMobileSubMenuOpen(activeDropdown || null);
+    setMobileSubMenuOpen(activeDropdown ?? null);
   }, [pathname]);
 
   return (

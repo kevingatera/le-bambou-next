@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { FacebookIcon } from './icons/social/FacebookIcon'
 import Image from 'next/image'
 import Link from 'next/link'
