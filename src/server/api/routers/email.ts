@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport(
             },
         }
         : {
-            host: "smtp.siteground.com",
+            host: "mail.lebambougorillalodge.com",
             port: 465,
             secure: true,
             auth: {
