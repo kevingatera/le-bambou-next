@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 
 import "~/styles/le-bambou-gorilla-lodge.webflow.css"
 import "~/styles/normalize.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const varelaRound = Varela_Round({
   weight: '400',
@@ -33,6 +34,7 @@ export default function RootLayout({
           <NavigationBar />
           {children}
           <Footer />
+          <Analytics />
         </TRPCReactProvider>
       </body>
     </html>
