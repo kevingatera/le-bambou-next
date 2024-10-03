@@ -7,6 +7,8 @@ import { Varela_Round } from 'next/font/google';
 import { TRPCReactProvider } from "~/trpc/react";
 import { NavigationBar } from "./_components/NavigationBar";
 import { Footer } from "./_components/Footer";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Le Bambou Gorilla Lodge",
@@ -16,7 +18,6 @@ export const metadata: Metadata = {
 
 import "~/styles/le-bambou-gorilla-lodge.webflow.css"
 import "~/styles/normalize.css";
-import { Analytics } from "@vercel/analytics/react";
 
 const varelaRound = Varela_Round({
   weight: '400',
@@ -34,8 +35,9 @@ export default function RootLayout({
           <NavigationBar />
           {children}
           <Footer />
-          <Analytics />
         </TRPCReactProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
