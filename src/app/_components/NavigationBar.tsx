@@ -55,21 +55,17 @@ export const NavigationBar = () => {
   const CustomLink = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
+      router.push(href);
       if (href.includes('#')) {
-        const [path, hash] = href.split('#');
-        if (path) {
-          router.push(path);
-          scrollToHash(`#${hash}`);
-        }
-      } else {
-        router.push(href);
+        const [_, hash] = href.split('#');
+        scrollToHash(`#${hash}`);
       }
     };
 
     return (
-      <a href={href} onClick={handleClick} className={className}>
+      <Link href={href} onClick={handleClick} className={className} scroll={false}>
         {children}
-      </a>
+      </Link>
     );
   };
 
@@ -197,9 +193,9 @@ export const NavigationBar = () => {
           {/* Right side navigation items */}
           <div className="flex items-center justify-end flex-1">
             {/* Book Now Button */}
-            <a href="booking" className="navbarbutton align-end">
+            <CustomLink href="/stay#Rooms" className="navbarbutton align-end">
               Book Now
-            </a>
+            </CustomLink>
           </div>
         </nav>
 
@@ -341,9 +337,9 @@ export const NavigationBar = () => {
             </div>
             <div className="flex items-end justify-end flex-1 md:hidden mt-6">
               {/* Book Now Button */}
-              <Link href="booking" className="navbarbutton w-full text-center py-2 bg-button text-white rounded block">
+              <CustomLink href="/stay#Rooms" className="navbarbutton w-full text-center py-2 bg-button text-white rounded block">
                 Book Now
-              </Link>
+              </CustomLink>
             </div>
           </nav>
         </div>
