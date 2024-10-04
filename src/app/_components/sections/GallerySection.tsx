@@ -25,9 +25,8 @@ const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selected
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="relative bg-[#d7dfde] p-5 rounded-lg max-h-screen overflow-auto"
+        className="relative bg-[#d7dfde] p-2 sm:p-5 rounded-lg max-h-screen overflow-auto min-w-80 min-h-60 md:min-h-[25rem] sm:min-w-[500px] max-w-[calc(100dvw-5%)]"
         onClick={(e) => e.stopPropagation()} // Prevent click inside modal from closing it
-        style={{ minHeight: '25rem', minWidth: '500px' }} // Ensure modal has a minimum height
       >
         {isLoading ? (
           <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2">
@@ -42,8 +41,7 @@ const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selected
             placeholder="blur"
             blurDataURL={selectedImage.blurDataURL}
             priority
-            className="object-contain"
-            style={{ maxHeight: 'calc(100dvh - 100px)', maxWidth: 'calc(100dvw - 100px)' }}
+            className="object-contain max-h-[calc(100dvh-100px)] max-w-full"
           />
         )}
         <button onClick={onPrev} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full m-2">
@@ -83,25 +81,27 @@ export const GallerySection = () => {
     height: number;
     blurDataURL: string;
   }>>([]);
-
+  
+  const loadBlurPlaceholders = useCallback(async () => {
+    const imagesWithBlurData = await Promise.all(
+      images.map(async (image) => ({
+        ...image,
+        blurDataURL: await dynamicBlurDataUrl(image.src),
+      }))
+    );
+    setImagesWithBlur(imagesWithBlurData);
+  }, [images]);
+  
   useEffect(() => {
-    const loadBlurPlaceholders = async () => {
-      const imagesWithBlurData = await Promise.all(
-        images.map(async (image) => ({
-          ...image,
-          blurDataURL: await dynamicBlurDataUrl(image.src),
-        }))
-      );
-      setImagesWithBlur(imagesWithBlurData);
-    };
 
     void loadBlurPlaceholders();
   }, [images]);
 
   const handleImageClick = (image: { src: string, alt: string, blurDataURL: string }, index: number) => {
-    setIsLoading(true)
-    setSelectedImage(image)
-    setCurrentIndex(index)
+    setIsLoading(true);
+    setSelectedImage(image);
+    setCurrentIndex(index);
+    window.location.hash = `image-${index}`;
   }
 
   const handlePrev = () => {
@@ -109,13 +109,16 @@ export const GallerySection = () => {
     setIsLoading(true)
     setSelectedImage(imagesWithBlur[newIndex] ?? null)
     setCurrentIndex(newIndex)
+    window.location.hash = `image-${newIndex}`;
   }
+
 
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % images.length
     setIsLoading(true)
     setSelectedImage(imagesWithBlur[newIndex] ?? null)
     setCurrentIndex(newIndex)
+    window.location.hash = `image-${newIndex}`;
   }
 
   useEffect(() => {
@@ -126,41 +129,59 @@ export const GallerySection = () => {
     }
   }, [selectedImage])
 
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#image-')) {
+      const index = parseInt(hash.replace('#image-', ''), 10);
+      if (index >= 0 && index < imagesWithBlur.length) {
+        setSelectedImage(imagesWithBlur[index] ?? null);
+        setCurrentIndex(index);
+      }
+    }
+  }, [imagesWithBlur]);
+
   return (
     <section className="gallery-section">
       <div className="padding">
-        <div className="gallery-container">
-          <div className="section-padding">
+        <div className="bg-[#b9c5c4] rounded-lg p-4">
+          <div className="">
             <div className="gallery-container-inner">
-              <div className="gallery-heading-wrapper">
+              <div className="text-center">
                 <div className="spacing-block"></div>
-                <h2 id="Hotel-Gallery" className="gallery-heading">Immerse Yourself in the Splendor: Our Hotel Gallery</h2>
+                <h2 id="Hotel-Gallery" className="gallery-heading">Immerse Yourself in the Splendor:<br />Our Hotel Gallery</h2>
               </div>
               <div className="large-spacing-block"></div>
-              <div className="gallery-grid columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                {imagesWithBlur.map((image, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="gallery-link w-full break-inside-avoid"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleImageClick(image, index)
-                    }}
-                  >
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      loading="lazy"
-                      sizes="(max-width: 479px) 86vw, (max-width: 767px) 82vw, (max-width: 991px) 26vw, 25vw"
-                      className="gallery-image w-full object-cover mb-4"
-                      width={image.width}
-                      height={image.height}
-                      placeholder="blur"
-                      blurDataURL={image.blurDataURL}
-                    />
-                  </a>
-                ))}
+              <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 mt-4 sm:space-y-4">
+                {imagesWithBlur.length === 0 && !isLoading ? (
+                  // Show skeleton loaders while loading
+                  Array.from({ length: images.length }).map((_, index) => (
+                    <div key={index} className="animate-pulse bg-gray-400 rounded-lg h-60 w-full mb-4"></div>
+                  ))
+                ) : (
+                  imagesWithBlur.map((image, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      className="gallery-link w-full break-inside-avoid"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleImageClick(image, index)
+                      }}
+                    >
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        loading="lazy"
+                        sizes="(max-width: 479px) 86vw, (max-width: 767px) 82vw, (max-width: 991px) 26vw, 25vw"
+                        className="gallery-image w-full object-cover mb-4"
+                        width={image.width}
+                        height={image.height}
+                        placeholder="blur"
+                        blurDataURL={image.blurDataURL}
+                      />
+                    </a>
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -175,7 +196,10 @@ export const GallerySection = () => {
             height: images[currentIndex]?.height ?? 500,
             blurDataURL: selectedImage.blurDataURL,
           }}
-          onClose={() => setSelectedImage(null)}
+          onClose={() => {
+            setSelectedImage(null);
+            window.location.hash = '#Hotel-Gallery';
+          }}
           onPrev={handlePrev}
           onNext={handleNext}
           isLoading={isLoading}
