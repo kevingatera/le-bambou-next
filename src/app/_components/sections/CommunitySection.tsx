@@ -7,7 +7,7 @@ export const CommunitySection = async () => {
     <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)] py-12">
       <div className="px-0 sm:px-4 md:px-8 lg:px-16">
         <div className="">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl "><strong id="Kinigi-journey" className="font-[400]">Journey into Kinigi: A Tapestry of Adventure, Nature, and Culture in Rwanda&apos;s Enchanting Landscapes</strong></h2>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl py-4"><strong id="Kinigi-journey" className="font-[400]">Journey into Kinigi: A Tapestry of Adventure, Nature, and Culture in Rwanda&apos;s Enchanting Landscapes</strong></h2>
           <div className="py-8 text-sm md:text-base lg:text-lg">Immerse yourself in the enchanting allure of Kinigi...</div>
           <div className="small-space"></div>
         </div>

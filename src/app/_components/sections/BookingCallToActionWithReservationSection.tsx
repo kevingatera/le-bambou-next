@@ -49,7 +49,7 @@ export const BookingCallToActionWithReservationSection = () => {
   }
 
   return (
-    <section className="bg-[rgba(121,98,90,.89)]">
+    <section id="booking-call-to-action-with-reservation-section" className="bg-[rgba(121,98,90,.89)]">
       <div className="container mx-auto md:px-4">
         <form onSubmit={handleBookNow} className="rounded-lg p-6 pb-7 max-w-4xl mx-auto">
           <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-4">
@@ -109,7 +109,7 @@ export const BookingCallToActionWithReservationSection = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#2c2c2c] focus:border-transparent"
               />
             </div>
-            <div className="text-center content-end col-span-4 md:col-span-2 lg:col-span-4">
+            <div className="text-center content-end col-span-4 md:col-span-2 lg:col-span-2">
               <button type="submit" className="w-full px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300">
                 Book
               </button>
