@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { type BookingEmailData } from '~/server/utils/emailUtils';
 import { api } from '~/trpc/react'
 import { type RoomType, type RoomSelection, additionalServices } from '~/types/booking'
@@ -18,6 +18,7 @@ const steps = [
 type Step = typeof steps[number];
 
 interface BookingSectionProps {
+  mode?: "page" | "modal";
   initialRoomType?: RoomType | null;
   onClose?: () => void;
   initialCheckIn?: string;
@@ -57,6 +58,7 @@ const FormField: React.FC<FormFieldProps> = ({ label, id, type, value, onChange,
 };
 
 export const BookingSection: React.FC<BookingSectionProps> = ({
+  mode = "modal",
   initialRoomType = null,
   onClose = () => {
     // Intentionally empty: default no-op function for onClose
@@ -256,7 +258,6 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   };
 
   const handleNext = () => {
-    console.log('currentStep', currentStep, 'errors', errors)
     const currentIndex = steps.indexOf(currentStep);
     if (currentIndex < steps.length - 1 && validateStep(currentStep)) {
       const nextStep = steps[currentIndex + 1];
@@ -432,8 +433,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   };
 
   return (
-    <section className="booking-section">
-      <div className="container mx-auto px-2 py-2 max-w-[80rem]">
+    <section id="booking-section" className={`${mode === "modal" ? "mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)]" : ""}`}>
+      <div className="container mx-auto py-2 max-w-[80rem] px-0 sm:px-4 md:px-8 lg:px-16">
         <h2 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">Book Your Stay</h2>
         <Breadcrumbs steps={steps} currentStep={currentStep} onStepClick={handleStepClick} />
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -455,9 +456,19 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 }
 
 const Breadcrumbs: React.FC<{ steps: readonly string[], currentStep: string, onStepClick: (step: Step) => void }> = ({ steps, currentStep, onStepClick }) => {
+  const currentStepRef = useRef<HTMLLIElement | null>(null);
+
+  useEffect(() => {
+    if (currentStepRef.current) {
+      currentStepRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [currentStep]);
+
+  const isLastStep = currentStep === steps[steps.length - 1];
+
   return (
-    <nav className="mb-6 overflow-x-auto">
-      <ol className="flex items-center space-x-2 text-sm whitespace-nowrap min-w-max px-1">
+    <nav className="mb-6 relative overflow-hidden">
+      <ol className="flex items-center space-x-2 text-sm whitespace-nowrap">
         {steps.map((step, index) => {
           const isCompleted = index < steps.indexOf(currentStep);
           const isCurrent = step === currentStep;
@@ -465,6 +476,7 @@ const Breadcrumbs: React.FC<{ steps: readonly string[], currentStep: string, onS
             <React.Fragment key={step}>
               {index > 0 && <span className="text-gray-300 mx-2">/</span>}
               <li
+                ref={isCurrent ? currentStepRef : null}
                 className={`
                   ${isCurrent ? 'text-button font-semibold' : isCompleted ? 'text-gray-600 cursor-pointer hover:text-button' : 'text-gray-400'}
                   transition duration-300
@@ -477,6 +489,11 @@ const Breadcrumbs: React.FC<{ steps: readonly string[], currentStep: string, onS
           );
         })}
       </ol>
+      {isLastStep ? (
+        <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-[#d7dfde] to-transparent pointer-events-none" />
+      ) : (
+        <div className="absolute -right-4 top-0 h-full w-16 bg-gradient-to-l from-[#d7dfde] to-transparent pointer-events-none" />
+      )}
     </nav>
   );
 };
@@ -665,13 +682,13 @@ const RoomSelectionForm: React.FC<{
           </div>
         ))}
       </div>
-      <div className="mt-2 space-x-2">
+      <div className="mt-3 mb-6 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
         {roomTypes.map((type) => (
           <button
             key={type}
             type="button"
             onClick={() => handleAddRoom(type)}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300"
+            className="py-2 bg-button text-white text-xs sm:text-sm rounded-md hover:bg-[#2c2c2c] transition duration-300"
           >
             +1 {type} Room
           </button>
