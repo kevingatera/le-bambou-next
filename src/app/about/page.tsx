@@ -1,6 +1,29 @@
 import { HydrateClient } from "~/trpc/server";
 import { HistoryVisionValuesSection } from "../_components/sections/HistoryVisionValuesSection";
 import { AboutUsBannerSection } from "../_components/sections/AboutUsBannerSection";
+import { type Metadata } from "next";
+import { sharedMetadata } from "../metadata";
+
+export const metadata: Metadata = {
+  ...sharedMetadata,
+  title: "About Le Bambou Gorilla Lodge | Our Story & Commitment",
+  description: "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
+  keywords: "Le Bambou Gorilla Lodge history, eco-lodge Rwanda, sustainable tourism, conservation efforts",
+  openGraph: {
+    ...sharedMetadata.openGraph,
+    url: "https://lebambougorillalodge.com/about",
+    title: "About Le Bambou Gorilla Lodge | Our Story & Commitment",
+    description: "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
+    images: [
+      {
+        url: "/images/DSC_3494.jpg",
+        width: 4512,
+        height: 3008,
+        alt: "Le Bambou Gorilla Lodge - About Us",
+      },
+    ],
+  },
+};
 
 export default async function Home() {
 
