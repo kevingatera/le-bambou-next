@@ -11,7 +11,6 @@ export const Footer = () => {
 
     const isActive = useCallback((href: string) => {
         if (typeof window !== 'undefined') {
-            console.log(href, pathname + window?.location.hash);
             return href == pathname + window?.location.hash || href == pathname;
         }
         return href == pathname;

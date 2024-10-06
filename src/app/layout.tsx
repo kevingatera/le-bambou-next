@@ -5,8 +5,6 @@ import { type Metadata } from "next";
 import { Varela_Round } from 'next/font/google';
 
 import { TRPCReactProvider } from "~/trpc/react";
-import { NavigationBar } from "./_components/NavigationBar";
-import { Footer } from "./_components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -32,9 +30,7 @@ export default function RootLayout({
     <html lang="en" className={`${varelaRound.variable} font-sans`} suppressHydrationWarning={true}>
       <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
-          <NavigationBar />
           {children}
-          <Footer />
         </TRPCReactProvider>
         <Analytics />
         <SpeedInsights />

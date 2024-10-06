@@ -10,15 +10,15 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <LocalStorageProvider>
-        <main>
-          <HeroSection />
+      <main className="flex flex-col flex-grow min-h-screen">
+        <HeroSection />
+        <LocalStorageProvider>
           <BookingCallToActionWithReservationSection />
           <HotelDescriptionSection />
           <DiscoverRoomsSection />
           <TestimonialSection />
-        </main>
-      </LocalStorageProvider>
+        </LocalStorageProvider>
+      </main>
     </HydrateClient>
   );
 }
