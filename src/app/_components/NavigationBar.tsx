@@ -150,8 +150,8 @@ export const NavigationBar = () => {
                   Journey
                 </CustomLink>
                 <CustomLink
-                  href="/explore#Inside-volcanoes-park"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/explore#Inside-volcanoes-park') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  href="/explore#inside-volcanoes-park"
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/explore#inside-volcanoes-park') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
                     }`}
                 >
                   Inside The Park
@@ -304,8 +304,8 @@ export const NavigationBar = () => {
                       Journey
                     </CustomLink>
                     <CustomLink
-                      href="/explore#Inside-volcanoes-park"
-                      className={`text-gray-600 text-base ${isActive('/explore#Inside-volcanoes-park') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                      href="/explore#inside-volcanoes-park"
+                      className={`text-gray-600 text-base ${isActive('/explore#inside-volcanoes-park') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
                         }`}
                     >
                       Inside The Park

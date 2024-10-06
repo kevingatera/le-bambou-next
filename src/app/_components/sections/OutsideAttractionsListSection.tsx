@@ -8,7 +8,7 @@ export const OutsideAttractionsListSection = () => {
         <div className="attraction-container">
           <div className="verticle-padding outside-the-park">
             <div className="attraction-max-width-heading">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl"><strong id="Outside-volcanoes-park" className="font-bold">Outside Volcanoes National Park</strong></h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl"><strong id="outside-volcanoes-park" className="font-bold">Outside Volcanoes National Park</strong></h2>
               <div className="py-8 text-sm md:text-base lg:text-lg">Beyond the Park&apos;s Borders: Discovering Exquisite Delights in the Surrounding Environs</div>
             </div>
             <div className="grid gap-8 md:gap-12 lg:gap-16 bg-[#b9c5c4] rounded-lg p-4 md:p-6 lg:p-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

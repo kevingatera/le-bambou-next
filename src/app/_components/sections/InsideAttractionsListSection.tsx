@@ -8,7 +8,7 @@ export const InsideAttractionsListSection = () => {
         <div className="">
           <div className="">
             <div className="">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl"><strong id="Inside-volcanoes-park" className="font-bold">Inside Volcanoes National Park</strong></h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl"><strong id="inside-volcanoes-park" className="font-bold">Inside Volcanoes National Park</strong></h2>
               <div className="py-8 text-sm md:text-base lg:text-lg">Unveiling the Wonders: Exploring the Treasures Inside Volcanoes National Park</div>
             </div>
             <div className="grid gap-8 md:gap-12 lg:gap-16 bg-[#b9c5c4] rounded-lg p-4 md:p-6 lg:p-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
