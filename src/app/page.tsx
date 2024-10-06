@@ -10,14 +10,14 @@ import { sharedMetadata } from "./metadata";
 
 export const metadata: Metadata = {
   ...sharedMetadata,
-  title: "Le Bambou Gorilla Lodge | Luxury Eco-Lodge in Rwanda",
-  description: "Experience luxury eco-lodging at Le Bambou Gorilla Lodge, nestled near Volcanoes National Park in Rwanda. Perfect for gorilla trekking and exploring Rwanda's natural beauty.",
-  keywords: "Le Bambou Gorilla Lodge, Rwanda, eco-lodge, gorilla trekking, Volcanoes National Park, luxury accommodation",
+  title: "Le Bambou Gorilla Lodge | #1 Eco-Lodge in Volcanoes National Park",
+  description: "Experience the pinnacle of luxury at Rwanda's top-rated eco-lodge. Nestled in Kinigi, we offer unparalleled access to gorilla trekking and stunning views of the Virunga mountains.",
+  keywords: "best hotel Kinigi, top-rated Volcanoes National Park accommodation, luxury eco-lodge Rwanda, premier gorilla trekking base, Virunga mountains view, sustainable tourism, Rwandan hospitality",
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com",
-    title: "Le Bambou Gorilla Lodge | Luxury Eco-Lodge in Rwanda",
-    description: "Experience luxury eco-lodging at Le Bambou Gorilla Lodge, nestled near Volcanoes National Park in Rwanda. Perfect for gorilla trekking and exploring Rwanda's natural beauty.",
+    title: "Le Bambou Gorilla Lodge | #1 Eco-Lodge in Volcanoes National Park",
+    description: "Discover why we're the top-rated lodge in Kinigi. Unmatched luxury, prime location for gorilla trekking, and breathtaking Virunga views await at Rwanda's finest eco-retreat.",
   },
 };
 

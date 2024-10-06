@@ -7,6 +7,7 @@ import { Varela_Round } from 'next/font/google';
 import { TRPCReactProvider } from "~/trpc/react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Head from 'next/head';
 
 const varelaRound = Varela_Round({
   weight: '400',
@@ -59,9 +60,35 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${varelaRound.variable} font-sans`} suppressHydrationWarning={true}>
-      <head>
+      <Head>
         <link rel="canonical" href="https://lebambougorillalodge.com" />
-      </head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LodgingBusiness",
+              "name": "Le Bambou Gorilla Lodge",
+              "image": "https://lebambougorillalodge.com/images/DSC_3675.jpg",
+              "description": "Experience the pinnacle of luxury at Rwanda's top-rated eco-lodge.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Kinigi",
+                "addressRegion": "Northern Province",
+                "addressCountry": "Rwanda"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "-1.4833",
+                "longitude": "29.6333"
+              },
+              "url": "https://lebambougorillalodge.com",
+              "telephone": "+250 784753415",
+              "priceRange": "$$$"
+            }),
+          }}
+        />
+      </Head>
       <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
           {children}
