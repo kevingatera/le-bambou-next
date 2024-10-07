@@ -9,6 +9,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Head from 'next/head';
+import InitDataDog from "./_components/analytics/InitDataDog";
 
 const varelaRound = Varela_Round({
   weight: '400',
@@ -92,6 +93,7 @@ export default function RootLayout({
       </Head>
       <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
+          <InitDataDog />
           {children}
         </TRPCReactProvider>
         <Analytics />
