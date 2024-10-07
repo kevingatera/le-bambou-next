@@ -93,9 +93,8 @@ export const GallerySection = () => {
   }, [images]);
   
   useEffect(() => {
-
     void loadBlurPlaceholders();
-  }, [images]);
+  }, [loadBlurPlaceholders]);
 
   const handleImageClick = (image: { src: string, alt: string, blurDataURL: string }, index: number) => {
     setIsLoading(true);

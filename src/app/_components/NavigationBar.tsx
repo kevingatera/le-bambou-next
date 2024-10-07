@@ -36,10 +36,10 @@ export const NavigationBar = () => {
     // Check if the current pathname matches any of the dropdowns
     const activeDropdown = ['stay', 'explore'].find(dropdown => isActive(`/${dropdown}`));
     setMobileSubMenuOpen(activeDropdown ?? null);
-  }, [pathname]);
+  }, [pathname, isActive]);
 
   const scrollToHash = useCallback((hash: string) => {
-    setIsMobileMenuOpen(false); // Close mobile menu if open
+    setIsMobileMenuOpen(false);
 
     setTimeout(() => {
       const element = document.getElementById(hash.replace('#', ''));
