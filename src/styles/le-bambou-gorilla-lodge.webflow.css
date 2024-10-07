@@ -1034,10 +1034,6 @@ input.w-button {
   display: flex;
 }
 
-.foreground-secondary {
-  color: rgba(0, 0, 0, .76);
-}
-
 .footer-bold-heading {
   margin-bottom: .5rem;
   font-weight: 600;

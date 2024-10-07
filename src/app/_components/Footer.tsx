@@ -36,7 +36,7 @@ export const Footer = () => {
                                     width={200}
                                     height={200} />
                             </a>
-                            <p className="foreground-secondary">
+                            <p className="text-[rgba(0,0,0,.76)]">
                                 Nestled at the foothills of Volcanoes National Park in Kinigi,
                                 Rwanda, Le Bambou Gorilla Lodge offers a captivating retreat
                                 amidst the majestic home of mountain gorillas.
@@ -51,18 +51,18 @@ export const Footer = () => {
                                 href="mailto:info@lebambougorillalodge.com?subject=Booking!"
                                 className="link-block w-inline-block"
                             >
-                                <p className="foreground-secondary">
+                                <p className="text-[rgba(0,0,0,.76)]">
                                     info@lebambougorillalodge.com
                                 </p>
                             </a>
                             <p className="footer-bold-heading">Location</p>
-                            <p className="foreground-secondary">
+                            <p className="text-[rgba(0,0,0,.76)]">
                                 Kinigi Sector, Musanze District, Northern Province - RWANDA
                             </p>
                             <p className="footer-bold-heading center-of-reservations-header">
                                 Centre of Reservations (COR)
                             </p>
-                            <p className="foreground-secondary">
+                            <p className="text-[rgba(0,0,0,.76)]">
                                 (+250) 784753415 (Reception)
                                 <br />
                                 <br />

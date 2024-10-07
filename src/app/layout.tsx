@@ -7,6 +7,7 @@ import { Varela_Round } from 'next/font/google';
 import { TRPCReactProvider } from "~/trpc/react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import Head from 'next/head';
 
 const varelaRound = Varela_Round({
@@ -96,6 +97,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </body>
+      <GoogleAnalytics gaId="G-7PEH6JNLXW" />
     </html>
   );
 }
