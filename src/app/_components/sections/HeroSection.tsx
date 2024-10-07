@@ -13,7 +13,8 @@ export const HeroSection = async () => {
         blurDataURL={await dynamicBlurDataUrl('/images/DSC_3675.jpg')}
         placeholder="blur"
         quality={75}
-        priority={true}
+        loading="lazy"
+        // priority={true}
       />
       <div className="max-w-[calc(100vw-2rem)] mx-auto relative">
         <div className="max-w-[900px] text-center bg-[rgba(121,98,90,.89)] rounded-lg flex flex-col justify-center items-center p-5">
