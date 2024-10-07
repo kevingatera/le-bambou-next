@@ -10,7 +10,7 @@ export const AttractionsUsBannerSection = async () => {
         alt="Background Image"
         fill={true}
         className="opacity-70 object-cover"
-        quality={100}
+        quality={75}
         priority={true}
         blurDataURL={await dynamicBlurDataUrl('/images/1200px-Sabyinyo_volcanoe_view_from_Kinigi_sector_Musanze_district_Rwanda.jpg')}
         placeholder="blur"

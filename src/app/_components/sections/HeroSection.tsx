@@ -12,7 +12,7 @@ export const HeroSection = async () => {
         className="opacity-70 object-cover"
         blurDataURL={await dynamicBlurDataUrl('/images/DSC_3675.jpg')}
         placeholder="blur"
-        quality={100}
+        quality={75}
         priority={true}
       />
       <div className="max-w-[calc(100vw-2rem)] mx-auto relative">

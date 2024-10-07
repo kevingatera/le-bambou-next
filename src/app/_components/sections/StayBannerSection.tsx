@@ -9,7 +9,7 @@ export const StayBannerSection = () => {
         alt="Background Image" 
         fill={true}
         className="opacity-70 object-cover"
-        quality={100}
+        quality={75}
         priority={true}
       />
       <div className="max-w-[calc(100vw-2rem)] mx-auto relative">

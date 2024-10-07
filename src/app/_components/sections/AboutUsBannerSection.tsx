@@ -10,7 +10,7 @@ export const AboutUsBannerSection = async () => {
                 alt="Background Image"
                 fill={true}
                 className=" opacity-70 object-cover"
-                quality={100}
+                quality={75}
                 priority={true}
                 blurDataURL={await dynamicBlurDataUrl('/images/DSC_3494.jpg')}
                 placeholder="blur"

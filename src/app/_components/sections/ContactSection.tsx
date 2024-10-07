@@ -23,6 +23,7 @@ export const ContactSection = async () => {
               className="w-full h-[30rem] md:h-[45rem] object-cover rounded-lg"
               width={3008}
               height={2000}
+              quality={75}
               blurDataURL={await dynamicBlurDataUrl('/images/DSC_3662.webp')}
               placeholder="blur"
             />
