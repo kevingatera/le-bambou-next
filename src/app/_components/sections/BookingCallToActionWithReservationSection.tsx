@@ -54,7 +54,7 @@ export const BookingCallToActionWithReservationSection = () => {
         <form onSubmit={handleBookNow} className="rounded-lg p-6 pb-7 max-w-4xl mx-auto">
           <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-4">
             <div className="col-span-2 md:col-span-2">
-              <label htmlFor="checkIn" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Check-in</label>
+              <label htmlFor="checkIn" className="block text-sm text-white font-medium mb-1 mx-1">Check-in</label>
               <input
                 type="date"
                 id="checkIn"
@@ -65,7 +65,7 @@ export const BookingCallToActionWithReservationSection = () => {
               />
             </div>
             <div className="col-span-2 md:col-span-2">
-              <label htmlFor="checkOut" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Check-out</label>
+              <label htmlFor="checkOut" className="block text-sm text-white font-medium mb-1 mx-1">Check-out</label>
               <input
                 type="date"
                 id="checkOut"
@@ -76,7 +76,7 @@ export const BookingCallToActionWithReservationSection = () => {
               />
             </div>
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
-              <label htmlFor="adults" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Adults</label>
+              <label htmlFor="adults" className="block text-sm text-white font-medium mb-1 mx-1">Adults</label>
               <input
                 type="number"
                 id="adults"
@@ -88,7 +88,7 @@ export const BookingCallToActionWithReservationSection = () => {
               />
             </div>
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
-              <label htmlFor="children05" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Kids 0-5</label>
+              <label htmlFor="children05" className="block text-sm text-white font-medium mb-1 mx-1">Kids 0-5</label>
               <input
                 type="number"
                 id="children05"
@@ -99,7 +99,7 @@ export const BookingCallToActionWithReservationSection = () => {
               />
             </div>
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
-              <label htmlFor="children616" className="block text-sm text-[#ebf8f7] font-medium  mb-1 mx-1">Kids 6-16</label>
+              <label htmlFor="children616" className="block text-sm text-white font-medium mb-1 mx-1">Kids 6-16</label>
               <input
                 type="number"
                 id="children616"
