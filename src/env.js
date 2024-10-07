@@ -14,14 +14,15 @@ export const env = createEnv({
     ZOHO_EMAIL_PASSWORD: z.string(),
     SITEGROUND_EMAIL_PASSWORD: z.string(),
   },
-
+  
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars. To expose them to the client, prefix them with
    * `NEXT_PUBLIC_`.
-   */
+  */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_DD_CLIENT_APP_ID: z.string(),
+    NEXT_PUBLIC_DD_CLIENT_TOKEN: z.string(),
   },
 
   /**
@@ -34,6 +35,8 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     ZOHO_EMAIL_PASSWORD: process.env.ZOHO_EMAIL_PASSWORD,
     SITEGROUND_EMAIL_PASSWORD: process.env.SITEGROUND_EMAIL_PASSWORD,
+    NEXT_PUBLIC_DD_CLIENT_APP_ID: process.env.NEXT_PUBLIC_DD_CLIENT_APP_ID,
+    NEXT_PUBLIC_DD_CLIENT_TOKEN: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

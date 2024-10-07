@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@datadog/browser-rum':
+        specifier: ^5.28.0
+        version: 5.28.0(@datadog/browser-logs@5.28.0)
       '@next/third-parties':
         specifier: ^14.2.14
         version: 14.2.14(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -120,6 +123,28 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@datadog/browser-core@5.28.0':
+    resolution: {integrity: sha512-aLYXaTkbZQIpyx+mxRGnj3Es6njoac8VhBaGr27KPuvwb/xJlBgAt5K/xdGxAPO135mdfq5evmguWuMpffE4Og==}
+
+  '@datadog/browser-logs@5.28.0':
+    resolution: {integrity: sha512-MdmgRnYgxkqHBYQ6nv9VDGLRQcqPgs68PLV6vj1uR1d36F6ZU2r6Blta8qhw3tWyopipw6y08MRuZ4XR2HLtQQ==}
+    peerDependencies:
+      '@datadog/browser-rum': 5.28.0
+    peerDependenciesMeta:
+      '@datadog/browser-rum':
+        optional: true
+
+  '@datadog/browser-rum-core@5.28.0':
+    resolution: {integrity: sha512-SlYMGgtKhwgSdLVMvY7vMUDCzBvDC3YIjtZuaazIqW5+mPtO/MRXNhq+oXjp4MljiBrf7NYZ3C0lq2qUE5hvYg==}
+
+  '@datadog/browser-rum@5.28.0':
+    resolution: {integrity: sha512-PZPUelUPHWR+TxzvS7PgGudU4QiaMuZLAjTy0q0x5j32+upKbUsKtmSmRyZYxEoWa70ncsRMER+Pk3ky0hE2gQ==}
+    peerDependencies:
+      '@datadog/browser-logs': 5.28.0
+    peerDependenciesMeta:
+      '@datadog/browser-logs':
+        optional: true
 
   '@drizzle-team/brocli@0.10.1':
     resolution: {integrity: sha512-AHy0vjc+n/4w/8Mif+w86qpppHuF3AyXbcWW+R/W7GNA3F5/p2nuhlkCJaTXSLZheB4l1rtHzOfr9A7NwoR/Zg==}
@@ -2211,6 +2236,26 @@ packages:
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
+
+  '@datadog/browser-core@5.28.0': {}
+
+  '@datadog/browser-logs@5.28.0(@datadog/browser-rum@5.28.0)':
+    dependencies:
+      '@datadog/browser-core': 5.28.0
+    optionalDependencies:
+      '@datadog/browser-rum': 5.28.0(@datadog/browser-logs@5.28.0)
+    optional: true
+
+  '@datadog/browser-rum-core@5.28.0':
+    dependencies:
+      '@datadog/browser-core': 5.28.0
+
+  '@datadog/browser-rum@5.28.0(@datadog/browser-logs@5.28.0)':
+    dependencies:
+      '@datadog/browser-core': 5.28.0
+      '@datadog/browser-rum-core': 5.28.0
+    optionalDependencies:
+      '@datadog/browser-logs': 5.28.0(@datadog/browser-rum@5.28.0)
 
   '@drizzle-team/brocli@0.10.1': {}
 
