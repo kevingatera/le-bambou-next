@@ -95,11 +95,11 @@ export default function RootLayout({
         <TRPCReactProvider>
           <InitDataDog />
           {children}
+          <GoogleAnalytics gaId="G-7PEH6JNLXW" />
         </TRPCReactProvider>
         <Analytics />
         <SpeedInsights />
       </body>
-      <GoogleAnalytics gaId="G-7PEH6JNLXW" />
     </html>
   );
 }

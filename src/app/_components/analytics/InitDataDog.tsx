@@ -1,9 +1,15 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useEffect } from "react";
 import { datadogRum } from "@datadog/browser-rum";
 
-export default function InitDataDog() {
+// Lazy load the InitDataDog component
+const InitDataDog = dynamic(() => import('./InitDataDog'), {
+  ssr: false, // Disable server-side rendering for this component
+});
+
+export default function App() {
   useEffect(() => {
     const initDD = () => {
       datadogRum.init({
@@ -11,9 +17,9 @@ export default function InitDataDog() {
         clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN!,
         env: process.env.NEXT_PUBLIC_ENV!,
         site: "datadoghq.com",
-        sessionSampleRate: 100,
+        sessionSampleRate: 1,
         service: "le-bambou-next",
-        sessionReplaySampleRate: 20,
+        sessionReplaySampleRate: 1,
         trackUserInteractions: true,
         trackResources: true,
         trackLongTasks: true,
@@ -22,5 +28,6 @@ export default function InitDataDog() {
     };
     initDD();
   }, []);
-  return <></>;
+  
+  return <InitDataDog />;
 }
