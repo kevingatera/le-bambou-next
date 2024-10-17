@@ -93,7 +93,7 @@ export default function RootLayout({
       </Head>
       <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
-          <InitDataDog />
+          {/* <InitDataDog /> */}
           {children}
           <GoogleAnalytics gaId="G-7PEH6JNLXW" />
         </TRPCReactProvider>

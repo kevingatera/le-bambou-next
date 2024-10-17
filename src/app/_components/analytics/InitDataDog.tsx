@@ -12,6 +12,7 @@ const InitDataDog = dynamic(() => import('./InitDataDog'), {
 export default function App() {
   useEffect(() => {
     const initDD = () => {
+      console.log("Initializing DataDog RUM");
       datadogRum.init({
         applicationId: process.env.NEXT_PUBLIC_DD_CLIENT_APP_ID!,
         clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN!,
