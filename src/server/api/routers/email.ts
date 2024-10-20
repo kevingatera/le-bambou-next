@@ -45,6 +45,7 @@ export const emailRouter = createTRPCRouter({
                 to: isDevelopment
                     ? "kevin@deployitwith.me"
                     : "info@lebambougorillalodge.com",
+                replyTo: email,
                 subject: `New Contact Form Submission from ${name}`,
                 text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
                 html: `

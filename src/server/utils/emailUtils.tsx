@@ -160,6 +160,7 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
             ? "kevin@deployitwith.me"
             : "info@lebambougorillalodge.com",
         subject: `New Booking - ${booking.guestName}`,
+        replyTo: booking.guestEmail,
         html: `
       <h2>New Booking Received</h2>
       <p>A new booking has been made with the following details:</p>
