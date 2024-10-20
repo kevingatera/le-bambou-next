@@ -9,7 +9,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Head from 'next/head';
-import InitDataDog from "./_components/analytics/InitDataDog";
 
 const varelaRound = Varela_Round({
   weight: '400',
@@ -39,7 +38,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://lebambougorillalodge.com",
     siteName: "Le Bambou Gorilla Lodge",
-    title: "Le Bambou Gorilla Lodge | #1 Eco-Lodge in Rwanda",
+    title: "Le Bambou Gorilla Lodge | #1 Eco-Lodge in Kinigi",
     description: "Experience luxury eco-lodging at Le Bambou Gorilla Lodge, nestled near Volcanoes National Park in Rwanda. Perfect for gorilla trekking and exploring Rwanda's natural beauty.",
     images: [
       {
