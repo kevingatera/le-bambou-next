@@ -4,6 +4,7 @@ import { bookings } from "~/server/db/schema";
 import { type BookingEmailData, sendBookingConfirmationEmails } from "~/server/utils/emailUtils";
 
 const roomTypeEnum = z.enum(["Double", "Single", "Triple", "Twin"]);
+const boardTypeEnum = z.enum(["fullBoard", "halfBoard", "bedAndBreakfast"]);
 
 export const bookingRouter = createTRPCRouter({
   create: publicProcedure
@@ -11,6 +12,7 @@ export const bookingRouter = createTRPCRouter({
       roomSelections: z.array(z.object({
         type: roomTypeEnum,
         count: z.number().int().positive(),
+        boardType: boardTypeEnum,
       })),
       checkIn: z.string(),
       checkOut: z.string(),

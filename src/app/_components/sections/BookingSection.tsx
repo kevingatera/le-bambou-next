@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { type BookingEmailData } from '~/server/utils/emailUtils';
 import { api } from '~/trpc/react'
-import { type RoomType, type RoomSelection, additionalServices } from '~/types/booking'
+import { type RoomType, type RoomSelection, additionalServices, roomPrices, BoardType } from '~/types/booking'
 
 const roomTypes = ["Double", "Single", "Triple", "Twin"] as const;
 
@@ -70,7 +70,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   initialChildren616 = 0
 }) => {
   const [roomSelections, setRoomSelections] = useState<RoomSelection[]>(
-    initialRoomType ? [{ type: initialRoomType, count: 1 }] : [{ type: "Double", count: 1 }]
+    initialRoomType ? [{ type: initialRoomType, count: 1, boardType: "fullBoard" }] : [{ type: "Double", count: 1, boardType: "fullBoard" }]
   );
   const [checkIn, setCheckIn] = useState(initialCheckIn)
   const [checkOut, setCheckOut] = useState(initialCheckOut)
@@ -96,7 +96,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     const savedData = localStorage.getItem('bookingFormData');
     if (savedData) {
       const parsedData = JSON.parse(savedData) as Partial<BookingEmailData>;
-      setRoomSelections(parsedData.roomSelections ?? [{ type: "Double", count: 1 }]);
+      setRoomSelections(parsedData.roomSelections ?? [{ type: "Double", count: 1, boardType: "fullBoard" }]);
       setCheckIn(parsedData.checkIn ?? '');
       setCheckOut(parsedData.checkOut ?? '');
       setIsFlexibleDates(parsedData.isFlexibleDates ?? false);
@@ -136,13 +136,13 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
     while (remainingGuests > 0) {
       if (remainingGuests >= 3) {
-        newSelections.push({ type: "Triple", count: 1 })
+        newSelections.push({ type: "Triple", count: 1, boardType: "fullBoard" })
         remainingGuests -= 3
       } else if (remainingGuests === 2) {
-        newSelections.push({ type: "Double", count: 1 })
+        newSelections.push({ type: "Double", count: 1, boardType: "fullBoard" })
         remainingGuests -= 2
       } else {
-        newSelections.push({ type: "Single", count: 1 })
+        newSelections.push({ type: "Single", count: 1, boardType: "fullBoard" })
         remainingGuests -= 1
       }
     }
@@ -161,7 +161,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       // Clear localStorage when booking is successful
       localStorage.removeItem('bookingFormData');
       // Reset form fields
-      setRoomSelections([{ type: "Double", count: 1 }])
+      setRoomSelections([{ type: "Double", count: 1, boardType: "fullBoard" }])
       setCheckIn('')
       setCheckOut('')
       setIsFlexibleDates(false)
@@ -223,7 +223,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
           room.type === type ? { ...room, count: room.count + 1 } : room
         );
       } else {
-        return [...prev, { type, count: 1 }];
+        return [...prev, { type, count: 1, boardType: "fullBoard" }];
       }
     });
   };
@@ -233,7 +233,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       const updatedRooms = prev.map(room =>
         room.type === type ? { ...room, count: room.count - 1 } : room
       ).filter(room => room.count > 0);
-      return updatedRooms.length ? updatedRooms : [{ type: "Double", count: 1 }];
+      return updatedRooms.length ? updatedRooms : [{ type: "Double", count: 1, boardType: "fullBoard" }];
     });
   };
 
@@ -646,52 +646,47 @@ const GuestDetailsForm: React.FC<{
 
 const RoomSelectionForm: React.FC<{
   roomSelections: RoomSelection[];
-  handleAddRoom: (type: RoomType) => void;
+  handleAddRoom: (type: RoomType, boardType: BoardType) => void;
   handleRemoveRoom: (type: RoomType) => void;
 }> = ({ roomSelections, handleAddRoom, handleRemoveRoom }) => {
   return (
     <div>
       <label className="block mb-1 font-medium">Room Selection</label>
-      <div className="space-y-2">
-        {roomSelections.map((room) => (
-          <div key={room.type} className="flex flex-wrap items-center space-x-2 p-2 bg-gray-50 rounded-md">
-            <span className="flex-grow px-3 py-2">{room.type} Bed Room</span>
-            <div className="flex items-center space-x-2">
-              <button
-                type="button"
-                onClick={() => handleRemoveRoom(room.type)}
-                className="p-2 text-red-600 hover:bg-red-100 rounded-md transition duration-300"
+      <div className="space-y-4">
+        {roomSelections.map((room, index) => (
+          <div key={`${room.type}-${index}`} className="flex flex-wrap items-center space-x-2 p-4 bg-gray-50 rounded-md">
+            <span className="flex-grow">{room.type} Bed Room</span>
+            <div className="flex-shrink-0 space-y-2">
+              <select
+                value={room.boardType}
+                onChange={(e) => handleAddRoom(room.type, e.target.value as BoardType)}
+                className="w-full p-2 border rounded"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <span className="py-2 px-3 bg-white border border-gray-300 rounded-md min-w-[40px] text-center">
-                {room.count}
-              </span>
-              <button
-                type="button"
-                onClick={() => handleAddRoom(room.type)}
-                className="p-2 text-green-600 hover:bg-green-100 rounded-md transition duration-300"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                </svg>
-              </button>
+                <option value="fullBoard">Full Board (${roomPrices[room.type].fullBoard})</option>
+                <option value="halfBoard">Half Board (${roomPrices[room.type].halfBoard})</option>
+                <option value="bedAndBreakfast">Bed & Breakfast (${roomPrices[room.type].bedAndBreakfast})</option>
+              </select>
+              <div className="flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => handleRemoveRoom(room.type)}
+                  className="p-2 text-red-600 hover:bg-red-100 rounded-md"
+                >
+                  Remove
+                </button>
+                <span className="py-2 px-3 bg-white border rounded-md">
+                  {room.count}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleAddRoom(room.type, room.boardType)}
+                  className="p-2 text-green-600 hover:bg-green-100 rounded-md"
+                >
+                  Add
+                </button>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-      <div className="mt-3 mb-6 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-        {roomTypes.map((type) => (
-          <button
-            key={type}
-            type="button"
-            onClick={() => handleAddRoom(type)}
-            className="py-2 bg-button text-white text-xs sm:text-sm rounded-md hover:bg-[#2c2c2c] transition duration-300"
-          >
-            +1 {type} Room
-          </button>
         ))}
       </div>
     </div>
@@ -749,6 +744,13 @@ const ReviewBooking: React.FC<{
   selectedServices: string[];
   message: string;
 }> = (props) => {
+  const calculateTotal = () => {
+    return props.roomSelections.reduce((total, room) => {
+      const price = roomPrices[room.type][room.boardType];
+      return total + (price * room.count);
+    }, 0);
+  };
+
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold">Booking Summary</h3>
@@ -767,9 +769,15 @@ const ReviewBooking: React.FC<{
         <p><strong>Room Selection:</strong></p>
         <ul>
           {props.roomSelections.map((room, index) => (
-            <li key={index}>{room.count} x {room.type} Bed Room</li>
+            <li key={index}>
+              {room.count} x {room.type} Bed Room ({room.boardType}) - 
+              ${roomPrices[room.type][room.boardType]} per room
+            </li>
           ))}
         </ul>
+        <p className="mt-4 text-xl font-bold">
+          Total: ${calculateTotal()}
+        </p>
       </div>
       <div>
         <p><strong>Additional Services:</strong></p>

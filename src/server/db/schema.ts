@@ -60,7 +60,11 @@ export const bookings = createTable(
   "booking",
   {
     id: serial("id").primaryKey(),
-    roomSelections: jsonb("room_selections").notNull(),
+    roomSelections: jsonb("room_selections").$type<{
+      type: string;
+      count: number;
+      boardType: string;
+    }[]>().notNull(),
     checkIn: date("check_in").notNull(),
     checkOut: date("check_out").notNull(),
     isFlexibleDates: boolean("is_flexible_dates").notNull(),

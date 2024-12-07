@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { BookingSection } from "./BookingSection";
 import { type RoomType } from "~/types/booking";
 import { getStoredBookingData, setStoredBookingData } from "~/app/_utils/localStorage";
+import { roomPrices } from "~/types/booking";
 
 export const RoomsListSection = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -30,7 +31,7 @@ export const RoomsListSection = () => {
 
     const openBookingModal = (roomType: RoomType) => {
         setSelectedRoomType(roomType);
-        setStoredBookingData({ roomSelections: [{ type: roomType, count: 1 }] });
+        setStoredBookingData({ roomSelections: [{ type: roomType, count: 1, boardType: "fullBoard" }] });
         setIsBookingModalOpen(true);
     };
 
@@ -53,6 +54,14 @@ export const RoomsListSection = () => {
                         <div className="room-details">
                             <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Double Bed Room</h4>
                             <p className="rooms-paragraph">Indulge in the comfort and charm of our recently decorated Double Bed Room, tucked away in the serene northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities for your convenience, and a welcoming chimney that creates a warm and inviting ambiance. Immerse yourself in picturesque views of the majestic Sabyinyo Mountain Volcano, adding an extra touch of natural beauty to your stay.</p>
+                            <div className="mt-4 space-y-2">
+                                <p className="font-semibold">Pricing Options:</p>
+                                <ul className="list-none space-y-1">
+                                    <li>Full Board: ${roomPrices.Double.fullBoard}</li>
+                                    <li>Half Board: ${roomPrices.Double.halfBoard}</li>
+                                    <li>Bed & Breakfast: ${roomPrices.Double.bedAndBreakfast}</li>
+                                </ul>
+                            </div>
                             <button
                                 onClick={() => openBookingModal("Double")}
                                 className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
@@ -68,6 +77,14 @@ export const RoomsListSection = () => {
                         <div className="room-details">
                             <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Single Bed Room</h4>
                             <p className="rooms-paragraph">Experience comfort and tranquility in our beautifully decorated Single Bed Room, nestled in the peaceful southern wing of our property. This cozy retreat offers a private en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Step outside and enjoy the serene beauty of our wonderful gardens, creating a serene and refreshing atmosphere.</p>
+                            <div className="mt-4 space-y-2">
+                                <p className="font-semibold">Pricing Options:</p>
+                                <ul className="list-none space-y-1">
+                                    <li>Full Board: ${roomPrices.Single.fullBoard}</li>
+                                    <li>Half Board: ${roomPrices.Single.halfBoard}</li>
+                                    <li>Bed & Breakfast: ${roomPrices.Single.bedAndBreakfast}</li>
+                                </ul>
+                            </div>
                             <button
                                 onClick={() => openBookingModal("Single")}
                                 className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
@@ -83,6 +100,14 @@ export const RoomsListSection = () => {
                         <div className="room-details">
                             <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Triple Bed Room</h4>
                             <p className="rooms-paragraph">Indulge in the comfort and space of our beautifully decorated Triple Bed Room, located in the peaceful northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. From the windows, behold stunning views of the majestic Sabyinyo Mountain Volcano, allowing you to connect with nature&#x27;s grandeur during your stay.</p>
+                            <div className="mt-4 space-y-2">
+                                <p className="font-semibold">Pricing Options:</p>
+                                <ul className="list-none space-y-1">
+                                    <li>Full Board: ${roomPrices.Triple.fullBoard}</li>
+                                    <li>Half Board: ${roomPrices.Triple.halfBoard}</li>
+                                    <li>Bed & Breakfast: ${roomPrices.Triple.bedAndBreakfast}</li>
+                                </ul>
+                            </div>
                             <button
                                 onClick={() => openBookingModal("Triple")}
                                 className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
@@ -98,6 +123,14 @@ export const RoomsListSection = () => {
                         <div className="room-details">
                             <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Twin Bed Room</h4>
                             <p className="rooms-paragraph">Experience comfort and flexibility in our beautifully decorated Double Twin Bed Room, located in the serene northern wing of our property. This cozy retreat offers two comfortable twin beds, perfect for friends or family traveling together. Enjoy the convenience of an en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Admire the picturesque views of our wonderful gardens, creating a tranquil and refreshing atmosphere for your stay.</p>
+                            <div className="mt-4 space-y-2">
+                                <p className="font-semibold">Pricing Options:</p>
+                                <ul className="list-none space-y-1">
+                                    <li>Full Board: ${roomPrices.Twin.fullBoard}</li>
+                                    <li>Half Board: ${roomPrices.Twin.halfBoard}</li>
+                                    <li>Bed & Breakfast: ${roomPrices.Twin.bedAndBreakfast}</li>
+                                </ul>
+                            </div>
                             <button
                                 onClick={() => openBookingModal("Twin")}
                                 className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
