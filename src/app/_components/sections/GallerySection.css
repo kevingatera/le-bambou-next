@@ -1,0 +1,54 @@
+.my-masonry-grid {
+  display: flex;
+  margin-left: -16px;
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 16px;
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_column > div {
+  margin-bottom: 16px;
+  break-inside: avoid;
+}
+
+/* Aspect ratio specific styles */
+.portrait {
+  max-height: 600px; /* Limit height of portrait images */
+}
+
+.landscape {
+  max-height: 400px; /* Limit height of landscape images */
+}
+
+.square {
+  max-height: 450px; /* Limit height of square-ish images */
+}
+
+/* Ensure images maintain aspect ratio */
+.my-masonry-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Optional: Add hover effect */
+.my-masonry-grid img:hover {
+  transform: scale(1.02);
+}
+
+/* Prevent orphaned images */
+@media (max-width: 700px) {
+  .my-masonry-grid_column {
+    width: calc(50% - 16px) !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .my-masonry-grid_column {
+    width: 100% !important;
+  }
+}

@@ -5,6 +5,8 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { DropdownArrow } from '../icons/DropDownArrow'
 import { dynamicBlurDataUrl } from '~/app/_utils/ImageUtils'
+import Masonry from 'react-masonry-css'
+import './GallerySection.css'
 
 // Modal component for image previews
 const Modal = ({ selectedImage, onClose, onPrev, onNext, isLoading }: { selectedImage: { src: string; alt: string; width: number; height: number; blurDataURL: string }, onClose: () => void, onPrev: () => void, onNext: () => void, isLoading: boolean }) => {
@@ -60,36 +62,85 @@ export const GallerySection = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const images = useMemo(() => [
-    { src: '/images/Single-room-Entrance-door.jpg', alt: 'Single room entrance door', width: 4608, height: 3072 },
-    { src: '/images/Single-Room-Exterior-View.jpg', alt: 'Single room exterior view', width: 2592, height: 1728 },
-    { src: '/images/DSC_3622.jpg', alt: 'DSC 3622', width: 4512, height: 3008 },
-    { src: '/images/DSC_3675.jpg', alt: 'DSC 3675', width: 3008, height: 2000 },
-    { src: '/images/garden-2.jpg', alt: 'Garden', width: 3718, height: 2479 },
-    { src: '/images/thumbnail_PXL_20230612_150622773.jpg', alt: 'Thumbnail PXL', width: 1920, height: 1080 },
-    { src: '/images/DSC_3546.jpg', alt: 'DSC 3546', width: 4512, height: 3008 },
-    { src: '/images/le-bambou-gorilla-lodge.jpg', alt: 'Le Bambou Gorilla Lodge', width: 1100, height: 733 },
-    { src: '/images/DSC_3572.jpg', alt: 'DSC 3572', width: 4512, height: 3008 },
-    { src: '/images/DSC_3563.jpg', alt: 'DSC 3563', width: 4512, height: 3008 },
-    { src: '/images/lobby----Le-Bambou-Gorilla-Lodge.jpg', alt: 'Lobby at Le Bambou Gorilla Lodge', width: 1594, height: 1063 },
-  ], [])
+  const images = useMemo(() => ({
+    hotel: [
+      { src: '/images/Single-room-Entrance-door.jpg', alt: 'Single room entrance door', width: 4608, height: 3072 },
+      { src: '/images/Single-Room-Exterior-View.jpg', alt: 'Single room exterior view', width: 2592, height: 1728 },
+      { src: '/images/DSC_3622.jpg', alt: 'DSC 3622', width: 4512, height: 3008 },
+      { src: '/images/DSC_3675.jpg', alt: 'DSC 3675', width: 3008, height: 2000 },
+      { src: '/images/garden-2.jpg', alt: 'Garden', width: 3718, height: 2479 },
+      { src: '/images/thumbnail_PXL_20230612_150622773.jpg', alt: 'Thumbnail PXL', width: 1920, height: 1080 },
+      { src: '/images/DSC_3546.jpg', alt: 'DSC 3546', width: 4512, height: 3008 },
+      { src: '/images/le-bambou-gorilla-lodge.jpg', alt: 'Le Bambou Gorilla Lodge', width: 1100, height: 733 },
+      { src: '/images/DSC_3572.jpg', alt: 'DSC 3572', width: 4512, height: 3008 },
+      { src: '/images/DSC_3563.jpg', alt: 'DSC 3563', width: 4512, height: 3008 },
+      { src: '/images/lobby----Le-Bambou-Gorilla-Lodge.jpg', alt: 'Lobby at Le Bambou Gorilla Lodge', width: 1594, height: 1063 },
+    ],
+    clients: [
+      { src: '/images/clients_relaxing/IMG_2649.webp', alt: 'Client enjoying the lodge', width: 1920, height: 1080 },
+      { src: '/images/clients_relaxing/IMG_2650.webp', alt: 'Client relaxing in the garden', width: 1920, height: 1080 },
+      { src: '/images/clients_relaxing/IMG_2652.webp', alt: 'Group photo at the lodge', width: 1920, height: 1080 },
+      { src: '/images/clients_relaxing/IMG_2656.webp', alt: 'Guests enjoying dinner', width: 1920, height: 1080 },
+      { src: '/images/clients_relaxing/IMG_2658.webp', alt: 'Happy guests at the lodge', width: 1920, height: 1080 },
+      { src: '/images/clients_relaxing/IMG_2659.webp', alt: 'Guests having fun', width: 1920, height: 1080 },
+    ],
+    checkIn: [
+      { src: '/images/client_checking_in/20240701_175712.webp', alt: 'Clients checking in at the lodge', width: 1920, height: 1080 },
+      { src: '/images/client_checking_in/20240701_175738.webp', alt: 'Clients receiving their keys', width: 1920, height: 1080 },
+      { src: '/images/client_checking_in/20240701_175747.webp', alt: 'Clients at the reception', width: 1920, height: 1080 },
+      { src: '/images/client_checking_in/20240701_175717.webp', alt: 'Clients enjoying welcome drinks', width: 1920, height: 1080 },
+      { src: '/images/client_checking_in/20240701_175744.webp', alt: 'Clients with staff during check-in', width: 1920, height: 1080 },
+    ]
+  }), [])
 
-  const [imagesWithBlur, setImagesWithBlur] = useState<Array<{
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    blurDataURL: string;
-  }>>([]);
+  const [imagesWithBlur, setImagesWithBlur] = useState<{
+    hotel: Array<{
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      blurDataURL: string;
+    }>;
+    clients: Array<{
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      blurDataURL: string;
+    }>;
+    checkIn: Array<{
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      blurDataURL: string;
+    }>;
+  }>({ hotel: [], clients: [], checkIn: [] });
   
   const loadBlurPlaceholders = useCallback(async () => {
-    const imagesWithBlurData = await Promise.all(
-      images.map(async (image) => ({
+    const hotelImagesWithBlur = await Promise.all(
+      images.hotel.map(async (image) => ({
         ...image,
         blurDataURL: await dynamicBlurDataUrl(image.src),
       }))
     );
-    setImagesWithBlur(imagesWithBlurData);
+    const clientImagesWithBlur = await Promise.all(
+      images.clients.map(async (image) => ({
+        ...image,
+        blurDataURL: await dynamicBlurDataUrl(image.src),
+      }))
+    );
+    const checkInImagesWithBlur = await Promise.all(
+      images.checkIn.map(async (image) => ({
+        ...image,
+        blurDataURL: await dynamicBlurDataUrl(image.src),
+      }))
+    );
+    setImagesWithBlur({
+      hotel: hotelImagesWithBlur,
+      clients: clientImagesWithBlur,
+      checkIn: checkInImagesWithBlur,
+    });
   }, [images]);
   
   useEffect(() => {
@@ -104,18 +155,18 @@ export const GallerySection = () => {
   }
 
   const handlePrev = () => {
-    const newIndex = (currentIndex - 1 + images.length) % images.length
+    const newIndex = (currentIndex - 1 + images.hotel.length) % images.hotel.length
     setIsLoading(true)
-    setSelectedImage(imagesWithBlur[newIndex] ?? null)
+    setSelectedImage(imagesWithBlur.hotel[newIndex] ?? null)
     setCurrentIndex(newIndex)
     window.location.hash = `image-${newIndex}`;
   }
 
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % images.length
+    const newIndex = (currentIndex + 1) % images.hotel.length
     setIsLoading(true)
-    setSelectedImage(imagesWithBlur[newIndex] ?? null)
+    setSelectedImage(imagesWithBlur.hotel[newIndex] ?? null)
     setCurrentIndex(newIndex)
     window.location.hash = `image-${newIndex}`;
   }
@@ -132,8 +183,8 @@ export const GallerySection = () => {
     const hash = window.location.hash;
     if (hash.startsWith('#image-')) {
       const index = parseInt(hash.replace('#image-', ''), 10);
-      if (index >= 0 && index < imagesWithBlur.length) {
-        setSelectedImage(imagesWithBlur[index] ?? null);
+      if (index >= 0 && index < imagesWithBlur.hotel.length) {
+        setSelectedImage(imagesWithBlur.hotel[index] ?? null);
         setCurrentIndex(index);
       }
     }
@@ -150,38 +201,21 @@ export const GallerySection = () => {
                 <h2 id="Hotel-Gallery" className="gallery-heading">Immerse Yourself in the Splendor:<br />Our Hotel Gallery</h2>
               </div>
               <div className="large-spacing-block"></div>
-              <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 mt-4 sm:space-y-4">
-                {imagesWithBlur.length === 0 && !isLoading ? (
-                  // Show skeleton loaders while loading
-                  Array.from({ length: images.length }).map((_, index) => (
-                    <div key={index} className="animate-pulse bg-gray-400 rounded-lg h-60 w-full mb-4"></div>
-                  ))
-                ) : (
-                  imagesWithBlur.map((image, index) => (
-                    <a
-                      key={index}
-                      href="#"
-                      className="gallery-link w-full break-inside-avoid"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        handleImageClick(image, index)
-                      }}
-                    >
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        loading="lazy"
-                        sizes="(max-width: 479px) 86vw, (max-width: 767px) 82vw, (max-width: 991px) 26vw, 25vw"
-                        className="gallery-image w-full object-cover mb-4"
-                        width={image.width}
-                        height={image.height}
-                        placeholder="blur"
-                        blurDataURL={image.blurDataURL}
-                      />
-                    </a>
-                  ))
-                )}
+              <GalleryGrid images={imagesWithBlur.hotel} onImageClick={handleImageClick} isLoading={isLoading} />
+
+              <div className="text-center mt-12">
+                <div className="spacing-block"></div>
+                <h2 id="Clients-Gallery" className="gallery-heading">Cherished Moments:<br />Our Happy Guests</h2>
               </div>
+              <div className="large-spacing-block"></div>
+              <GalleryGrid images={imagesWithBlur.clients} onImageClick={handleImageClick} isLoading={isLoading} />
+
+              <div className="text-center mt-12">
+                <div className="spacing-block"></div>
+                <h2 id="Clients-Checking-In" className="gallery-heading">Welcoming Our Guests:<br />Clients Checking In</h2>
+              </div>
+              <div className="large-spacing-block"></div>
+              <GalleryGrid images={imagesWithBlur.checkIn} onImageClick={handleImageClick} isLoading={isLoading} />
             </div>
           </div>
         </div>
@@ -191,8 +225,8 @@ export const GallerySection = () => {
           selectedImage={{
             src: selectedImage.src,
             alt: selectedImage.alt,
-            width: images[currentIndex]?.width ?? 500,
-            height: images[currentIndex]?.height ?? 500,
+            width: images.hotel[currentIndex]?.width ?? 500,
+            height: images.hotel[currentIndex]?.height ?? 500,
             blurDataURL: selectedImage.blurDataURL,
           }}
           onClose={() => {
@@ -207,3 +241,78 @@ export const GallerySection = () => {
     </section>
   )
 }
+
+const GalleryGrid = ({ 
+  images, 
+  onImageClick, 
+  isLoading 
+}: { 
+  images: Array<{ src: string; alt: string; width: number; height: number; blurDataURL: string }>;
+  onImageClick: (image: any, index: number) => void;
+  isLoading: boolean;
+}) => {
+  // Reduce number of columns for better layout
+  const breakpointColumnsObj = {
+    default: 3, // Changed from 4 to 3 for better distribution
+    1100: 3,
+    700: 2,
+    500: 1
+  };
+
+  // Sort images by aspect ratio to better distribute them
+  const sortedImages = [...images].sort((a, b) => {
+    const aspectRatioA = a.width / a.height;
+    const aspectRatioB = b.width / b.height;
+    return aspectRatioB - aspectRatioA; // Sort from widest to tallest
+  });
+
+  return (
+    <div className="w-full">
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="flex w-auto -ml-4"
+        columnClassName="pl-4 bg-clip-padding"
+      >
+        {isLoading && images.length === 0 ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className="animate-pulse bg-gray-400 rounded-lg h-60 w-full mb-4"></div>
+          ))
+        ) : (
+          sortedImages.map((image, index) => {
+            const aspectRatio = image.width / image.height;
+            // Add specific classes based on aspect ratio
+            const imageClasses = `
+              w-full h-auto object-cover rounded-lg
+              ${aspectRatio > 1.2 ? 'landscape' : aspectRatio < 0.8 ? 'portrait' : 'square'}
+            `;
+
+            return (
+              <div key={index} className="mb-4 break-inside-avoid">
+                <a
+                  href="#"
+                  className="block w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onImageClick(image, index)
+                  }}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    sizes="(max-width: 500px) 100vw, (max-width: 700px) 50vw, 33vw"
+                    className={imageClasses}
+                    width={image.width}
+                    height={image.height}
+                    placeholder="blur"
+                    blurDataURL={image.blurDataURL}
+                  />
+                </a>
+              </div>
+            );
+          })
+        )}
+      </Masonry>
+    </div>
+  );
+};
