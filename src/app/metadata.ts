@@ -1,4 +1,4 @@
-import { type Metadata } from "next";
+import { type Metadata, type Viewport } from "next";
 
 export const sharedMetadata: Partial<Metadata> = {
   authors: [{ name: "Le Bambou Gorilla Lodge" }],
@@ -13,7 +13,6 @@ export const sharedMetadata: Partial<Metadata> = {
     { rel: "icon", url: "/favicon.ico" },
     { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
   ],
-  viewport: "width=device-width, initial-scale=1.0",
   twitter: {
     card: "summary_large_image",
     site: "@LeBambouLodge",
@@ -32,4 +31,11 @@ export const sharedMetadata: Partial<Metadata> = {
       },
     ],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
