@@ -12,6 +12,7 @@ export const NavigationBar = () => {
   const [mobileSubMenuOpen, setMobileSubMenuOpen] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
+  const [activeHash, setActiveHash] = useState('');
 
   // Effect to toggle body scroll
   useEffect(() => {
@@ -26,10 +27,9 @@ export const NavigationBar = () => {
   }, [isMobileMenuOpen]);
 
   const isActive = useCallback((href: string) => {
-    if (typeof window !== 'undefined') {
-      return href == pathname + window?.location.hash || href == pathname;
-    }
-    return href == pathname;
+    const [pathname1, hash1 = ''] = href.split('#');
+    const [pathname2, hash2 = ''] = pathname.split('#');
+    return pathname1 === pathname2;
   }, [pathname]);
 
   useEffect(() => {
@@ -37,6 +37,18 @@ export const NavigationBar = () => {
     const activeDropdown = ['stay', 'explore'].find(dropdown => isActive(`/${dropdown}`));
     setMobileSubMenuOpen(activeDropdown ?? null);
   }, [pathname, isActive]);
+
+  useEffect(() => {
+    // Update active hash on client-side only
+    setActiveHash(window.location.hash);
+    
+    const handleHashChange = () => {
+      setActiveHash(window.location.hash);
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const scrollToHash = useCallback((hash: string) => {
     setIsMobileMenuOpen(false);
@@ -105,22 +117,25 @@ export const NavigationBar = () => {
               <nav className="absolute left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible mt-2">
                 <CustomLink
                   href="/stay#Amenities"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/stay#Amenities') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
-                    }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
+                    isActive('/stay#Amenities') && activeHash === '#Amenities' ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  }`}
                 >
                   Amenities
                 </CustomLink>
                 <CustomLink
                   href="/stay#Rooms"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/stay#Rooms') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
-                    }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
+                    isActive('/stay#Rooms') && activeHash === '#Rooms' ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  }`}
                 >
                   Room&nbsp;Types
                 </CustomLink>
                 <CustomLink
                   href="/stay#Hotel-Gallery"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/stay#Hotel-Gallery') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
-                    }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
+                    isActive('/stay#Hotel-Gallery') && activeHash === '#Hotel-Gallery' ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  }`}
                 >
                   Hotel&nbsp;Gallery
                 </CustomLink>
@@ -144,22 +159,25 @@ export const NavigationBar = () => {
               <nav className="absolute w-[185px] left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible mt-2">
                 <CustomLink
                   href="/explore#Kinigi-journey"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/explore#Kinigi-journey') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
-                    }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
+                    isActive('/explore#Kinigi-journey') && activeHash === '#Kinigi-journey' ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  }`}
                 >
                   Journey
                 </CustomLink>
                 <CustomLink
                   href="/explore#inside-volcanoes-park"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/explore#inside-volcanoes-park') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
-                    }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
+                    isActive('/explore#inside-volcanoes-park') && activeHash === '#inside-volcanoes-park' ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  }`}
                 >
                   Inside The Park
                 </CustomLink>
                 <CustomLink
                   href="/explore#outside-volcanoes-park"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive('/explore#outside-volcanoes-park') ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
-                    }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
+                    isActive('/explore#outside-volcanoes-park') && activeHash === '#outside-volcanoes-park' ? 'text-[#2c2c2c] font-bold' : 'text-[#2c2c2c]'
+                  }`}
                 >
                   Outside The Park
                 </CustomLink>
