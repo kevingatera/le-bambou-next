@@ -36,9 +36,10 @@ interface FormFieldProps {
   onChange: (value: string) => void;
   required?: boolean;
   error?: string;
+  min?: string;
 }
 
-const FormField: React.FC<FormFieldProps> = ({ label, id, type, value, onChange, required = false, error }) => {
+const FormField: React.FC<FormFieldProps> = ({ label, id, type, value, onChange, required = false, error, min }) => {
   return (
     <div className="mb-4">
       <label htmlFor={id} className="block mb-1 font-medium">
@@ -49,6 +50,7 @@ const FormField: React.FC<FormFieldProps> = ({ label, id, type, value, onChange,
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        min={min}
         className={`w-full px-3 py-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-4 focus:ring-[rgba(16,24,40,.05)]`}
         required={required}
       />
@@ -187,10 +189,31 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
+    // Validate dates before submitting
+    const today = new Date();
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    
+    if (checkInDate < today) {
+      setErrors(prev => ({ ...prev, checkIn: "Check-in date cannot be in the past" }));
+      setIsSubmitting(false);
+      return;
+    }
+
+    const minCheckOut = new Date(checkInDate);
+    minCheckOut.setDate(minCheckOut.getDate() + 1);
+
+    if (checkOutDate < minCheckOut) {
+      setErrors(prev => ({ ...prev, checkOut: "Check-out date must be at least one day after check-in" }));
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Proceed with mutation if validations pass
     bookRoomMutation.mutate({
       roomSelections,
       checkIn,
@@ -204,8 +227,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       isEastAfricanResident,
       selectedServices,
       message
-    })
-  }
+    });
+  };
 
   const handleServiceChange = (serviceId: string) => {
     setSelectedServices(prev =>
@@ -516,84 +539,89 @@ const DateAndGuestsForm: React.FC<{
   checkIn, setCheckIn, checkOut, setCheckOut, isFlexibleDates, setIsFlexibleDates,
   adults, setAdults, children05, setChildren05, children616, setChildren616, errors
 }) => {
-    return (
-      <div className="space-y-4">
-        {/* Date selection fields */}
+  const today = new Date().toISOString().split('T')[0];
+  const checkOutMin = checkIn ? new Date(new Date(checkIn).getTime() + 86400000).toISOString().split('T')[0] : today;
+
+  return (
+    <div className="space-y-4">
+      {/* Date selection fields */}
+      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <div className="flex-1">
+          <FormField
+            label="Check-in Date"
+            id="checkIn"
+            type="date"
+            value={checkIn}
+            onChange={setCheckIn}
+            required
+            error={errors.checkIn}
+            min={today}
+          />
+        </div>
+        <div className="flex-1">
+          <FormField
+            label="Check-out Date"
+            id="checkOut"
+            type="date"
+            value={checkOut}
+            onChange={setCheckOut}
+            required
+            error={errors.checkOut}
+            min={checkOutMin}
+          />
+        </div>
+      </div>
+      <div className="flex items-center">
+        <input
+          type="checkbox"
+          id="isFlexibleDates"
+          checked={isFlexibleDates}
+          onChange={(e) => setIsFlexibleDates(e.target.checked)}
+          className="mr-2"
+        />
+        <label htmlFor="isFlexibleDates">I&apos;m flexible with these dates</label>
+      </div>
+
+      {/* Guest number fields */}
+      <div>
+        <label className="block mb-1 font-medium">Number of Guests</label>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <div className="flex-1">
             <FormField
-              label="Check-in Date"
-              id="checkIn"
-              type="date"
-              value={checkIn}
-              onChange={setCheckIn}
+              label="Adults"
+              id="adults"
+              type="number"
+              value={adults}
+              onChange={(value) => setAdults(parseInt(value))}
               required
-              error={errors.checkIn}
+              error={errors.adults}
             />
           </div>
           <div className="flex-1">
             <FormField
-              label="Check-out Date"
-              id="checkOut"
-              type="date"
-              value={checkOut}
-              onChange={setCheckOut}
-              required
-              error={errors.checkOut}
+              label="Children 0 - 5 years"
+              id="children05"
+              type="number"
+              value={children05}
+              onChange={(value) => setChildren05(parseInt(value))}
+              error={errors.children05}
+            />
+          </div>
+          <div className="flex-1">
+            <FormField
+              label="Children 6 - 16 years"
+              id="children616"
+              type="number"
+              value={children616}
+              onChange={(value) => setChildren616(parseInt(value))}
+              error={errors.children616}
             />
           </div>
         </div>
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            id="isFlexibleDates"
-            checked={isFlexibleDates}
-            onChange={(e) => setIsFlexibleDates(e.target.checked)}
-            className="mr-2"
-          />
-          <label htmlFor="isFlexibleDates">I&apos;m flexible with these dates</label>
-        </div>
-
-        {/* Guest number fields */}
-        <div>
-          <label className="block mb-1 font-medium">Number of Guests</label>
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-            <div className="flex-1">
-              <FormField
-                label="Adults"
-                id="adults"
-                type="number"
-                value={adults}
-                onChange={(value) => setAdults(parseInt(value))}
-                required
-                error={errors.adults}
-              />
-            </div>
-            <div className="flex-1">
-              <FormField
-                label="Children 0 - 5 years"
-                id="children05"
-                type="number"
-                value={children05}
-                onChange={(value) => setChildren05(parseInt(value))}
-                error={errors.children05}
-              />
-            </div>
-            <div className="flex-1">
-              <FormField
-                label="Children 6 - 16 years"
-                id="children616"
-                type="number"
-                value={children616}
-                onChange={(value) => setChildren616(parseInt(value))}
-                error={errors.children616}
-              />
-            </div>
-          </div>
-        </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 const GuestDetailsForm: React.FC<{
   guestName: string;

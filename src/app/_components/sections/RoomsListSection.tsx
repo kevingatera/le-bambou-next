@@ -56,11 +56,13 @@ export const RoomsListSection = () => {
                             <p className="rooms-paragraph">Indulge in the comfort and charm of our recently decorated Double Bed Room, tucked away in the serene northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities for your convenience, and a welcoming chimney that creates a warm and inviting ambiance. Immerse yourself in picturesque views of the majestic Sabyinyo Mountain Volcano, adding an extra touch of natural beauty to your stay.</p>
                             <div className="mt-4 space-y-2">
                                 <p className="font-semibold">Pricing Options:</p>
-                                <ul className="list-none space-y-1">
-                                    <li>Full Board: ${roomPrices.Double.fullBoard}</li>
-                                    <li>Half Board: ${roomPrices.Double.halfBoard}</li>
-                                    <li>Bed & Breakfast: ${roomPrices.Double.bedAndBreakfast}</li>
-                                </ul>
+                                <div className="flex space-x-2">
+                                    <div>Full Board: <b>${roomPrices.Double.fullBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Half Board: <b>${roomPrices.Double.halfBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Bed & Breakfast: <b>${roomPrices.Double.bedAndBreakfast}</b></div>
+                                </div>
                             </div>
                             <button
                                 onClick={() => openBookingModal("Double")}
@@ -79,11 +81,13 @@ export const RoomsListSection = () => {
                             <p className="rooms-paragraph">Experience comfort and tranquility in our beautifully decorated Single Bed Room, nestled in the peaceful southern wing of our property. This cozy retreat offers a private en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Step outside and enjoy the serene beauty of our wonderful gardens, creating a serene and refreshing atmosphere.</p>
                             <div className="mt-4 space-y-2">
                                 <p className="font-semibold">Pricing Options:</p>
-                                <ul className="list-none space-y-1">
-                                    <li>Full Board: ${roomPrices.Single.fullBoard}</li>
-                                    <li>Half Board: ${roomPrices.Single.halfBoard}</li>
-                                    <li>Bed & Breakfast: ${roomPrices.Single.bedAndBreakfast}</li>
-                                </ul>
+                                <div className="flex space-x-2">
+                                    <div>Full Board: <b>${roomPrices.Single.fullBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Half Board: <b>${roomPrices.Single.halfBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Bed & Breakfast: <b>${roomPrices.Single.bedAndBreakfast}</b></div>
+                                </div>
                             </div>
                             <button
                                 onClick={() => openBookingModal("Single")}
@@ -102,11 +106,13 @@ export const RoomsListSection = () => {
                             <p className="rooms-paragraph">Indulge in the comfort and space of our beautifully decorated Triple Bed Room, located in the peaceful northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. From the windows, behold stunning views of the majestic Sabyinyo Mountain Volcano, allowing you to connect with nature&#x27;s grandeur during your stay.</p>
                             <div className="mt-4 space-y-2">
                                 <p className="font-semibold">Pricing Options:</p>
-                                <ul className="list-none space-y-1">
-                                    <li>Full Board: ${roomPrices.Triple.fullBoard}</li>
-                                    <li>Half Board: ${roomPrices.Triple.halfBoard}</li>
-                                    <li>Bed & Breakfast: ${roomPrices.Triple.bedAndBreakfast}</li>
-                                </ul>
+                                <div className="flex space-x-2">
+                                    <div>Full Board: <b>${roomPrices.Triple.fullBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Half Board: <b>${roomPrices.Triple.halfBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Bed & Breakfast: <b>${roomPrices.Triple.bedAndBreakfast}</b></div>
+                                </div>
                             </div>
                             <button
                                 onClick={() => openBookingModal("Triple")}
@@ -125,11 +131,13 @@ export const RoomsListSection = () => {
                             <p className="rooms-paragraph">Experience comfort and flexibility in our beautifully decorated Double Twin Bed Room, located in the serene northern wing of our property. This cozy retreat offers two comfortable twin beds, perfect for friends or family traveling together. Enjoy the convenience of an en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Admire the picturesque views of our wonderful gardens, creating a tranquil and refreshing atmosphere for your stay.</p>
                             <div className="mt-4 space-y-2">
                                 <p className="font-semibold">Pricing Options:</p>
-                                <ul className="list-none space-y-1">
-                                    <li>Full Board: ${roomPrices.Twin.fullBoard}</li>
-                                    <li>Half Board: ${roomPrices.Twin.halfBoard}</li>
-                                    <li>Bed & Breakfast: ${roomPrices.Twin.bedAndBreakfast}</li>
-                                </ul>
+                                <div className="flex space-x-2">
+                                    <div>Full Board: <b>${roomPrices.Twin.fullBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Half Board: <b>${roomPrices.Twin.halfBoard}</b></div>
+                                    <div>|</div>
+                                    <div>Bed & Breakfast: <b>${roomPrices.Twin.bedAndBreakfast}</b></div>
+                                </div>
                             </div>
                             <button
                                 onClick={() => openBookingModal("Twin")}
