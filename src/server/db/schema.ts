@@ -3,16 +3,16 @@
 
 import { sql } from "drizzle-orm";
 import {
+  boolean,
+  date,
   index,
+  integer,
+  jsonb,
   pgTableCreator,
   serial,
+  text,
   timestamp,
   varchar,
-  date,
-  integer,
-  boolean,
-  jsonb,
-  text,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -32,12 +32,12 @@ export const posts = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );
 
 export const rooms = createTable(
@@ -51,9 +51,9 @@ export const rooms = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
-  }
+  },
 );
 
 export const bookings = createTable(
@@ -80,11 +80,11 @@ export const bookings = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
   },
   (table) => ({
     checkInIndex: index("check_in_idx").on(table.checkIn),
     checkOutIndex: index("check_out_idx").on(table.checkOut),
-  })
+  }),
 );

@@ -14,11 +14,11 @@ export interface AdditionalService {
 }
 
 export const additionalServices: AdditionalService[] = [
-  { id: 'transportation', name: 'Transportation', price: 100 },
-  { id: 'boatTour', name: 'Twin Lake Burera and Ruhondo Boat Tour', price: 30 },
-  { id: 'bisokeHiking', name: 'Bisoke Hiking Permit', price: 75 },
-  { id: 'goldenMonkey', name: 'Golden Monkey Permit', price: 100 },
-  { id: 'gorillaPermit', name: 'Gorilla Permit', price: 1500 },
+  { id: "transportation", name: "Transportation", price: 100 },
+  { id: "boatTour", name: "Twin Lake Burera and Ruhondo Boat Tour", price: 30 },
+  { id: "bisokeHiking", name: "Bisoke Hiking Permit", price: 75 },
+  { id: "goldenMonkey", name: "Golden Monkey Permit", price: 100 },
+  { id: "gorillaPermit", name: "Gorilla Permit", price: 1500 },
 ];
 
 export interface RoomPricing {
@@ -31,23 +31,23 @@ export const roomPrices: Record<RoomType, RoomPricing> = {
   Single: {
     fullBoard: 250,
     halfBoard: 220,
-    bedAndBreakfast: 200
+    bedAndBreakfast: 200,
   },
   Double: {
     fullBoard: 300,
     halfBoard: 280,
-    bedAndBreakfast: 250
+    bedAndBreakfast: 250,
   },
   Twin: {
     fullBoard: 300,
     halfBoard: 280,
-    bedAndBreakfast: 250
+    bedAndBreakfast: 250,
   },
   Triple: {
     fullBoard: 400,
     halfBoard: 380,
-    bedAndBreakfast: 350
-  }
+    bedAndBreakfast: 350,
+  },
 };
 
-export type BoardType = 'fullBoard' | 'halfBoard' | 'bedAndBreakfast';
+export type BoardType = "fullBoard" | "halfBoard" | "bedAndBreakfast";

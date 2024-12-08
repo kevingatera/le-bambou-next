@@ -1,5 +1,5 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 
 export const DiscoverRoomsSection = async () => {
@@ -11,7 +11,7 @@ export const DiscoverRoomsSection = async () => {
         fill={true}
         className="opacity-70 object-cover"
         loading="lazy"
-        blurDataURL={await dynamicBlurDataUrl('/images/DSC_3572.jpg')}
+        blurDataURL={await dynamicBlurDataUrl("/images/DSC_3572.jpg")}
         placeholder="blur"
       />
       <div className="absolute inset-0 bg-[rgba(44,44,44,0.21)] z-10"></div>
@@ -24,8 +24,8 @@ export const DiscoverRoomsSection = async () => {
         <p className="discover-sub-paragraph">
           Discover luxury and convenience at Le Bambou Gorilla Lodge. Start your
           day with a complimentary breakfast, stay connected with high-speed
-          Wi-Fi, and enjoy hassle-free parking. Our 24-hour front desk service is
-          here to assist you in our smoke-free environment. Savor an array of
+          Wi-Fi, and enjoy hassle-free parking. Our 24-hour front desk service
+          is here to assist you in our smoke-free environment. Savor an array of
           local and international cuisines at our on-site restaurant, unwind at
           our bar, or grab a hot cup of coffee or tea from our lobby. Regardless
           of the weather, our efficient air conditioning ensures a comfortable
@@ -34,5 +34,5 @@ export const DiscoverRoomsSection = async () => {
         </p>
       </div>
     </section>
-  )
-}
+  );
+};

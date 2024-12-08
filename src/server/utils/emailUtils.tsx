@@ -1,7 +1,11 @@
 import nodemailer from "nodemailer";
-import { type RoomSelection, additionalServices, roomPrices } from "~/types/booking";
-import fs from 'fs';
-import path from 'path';
+import {
+    additionalServices,
+    roomPrices,
+    type RoomSelection,
+} from "~/types/booking";
+import fs from "fs";
+import path from "path";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -24,7 +28,7 @@ const transporter = nodemailer.createTransport(
                 user: "info@lebambougorillalodge.com",
                 pass: process.env.SITEGROUND_EMAIL_PASSWORD,
             },
-        }
+        },
 );
 
 export interface BookingEmailData {
@@ -38,16 +42,18 @@ export interface BookingEmailData {
     adults: number;
     children05: number;
     children616: number;
-    isEastAfricanResident: boolean; 
+    isEastAfricanResident: boolean;
     selectedServices: string[];
     message: string | null;
     createdAt: Date;
     updatedAt: Date | null;
 }
 
-export async function sendBookingConfirmationEmails(booking: BookingEmailData | undefined) {
+export async function sendBookingConfirmationEmails(
+    booking: BookingEmailData | undefined,
+) {
     if (!booking) {
-        console.error('No booking data provided');
+        console.error("No booking data provided");
         return;
     }
 
@@ -62,7 +68,7 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
     // Calculate services total
     const calculateServicesTotal = (selectedServices: string[]) => {
         return selectedServices.reduce((total, serviceId) => {
-            const service = additionalServices.find(s => s.id === serviceId);
+            const service = additionalServices.find((s) => s.id === serviceId);
             return total + (service?.price ?? 0);
         }, 0);
     };
@@ -72,8 +78,13 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
     const grandTotal = roomTotal + servicesTotal;
 
     // Read and encode the logo image
-    const logoPath = path.join(process.cwd(), 'public', 'images', 'Asset-34x.png');
-    const logoBase64 = fs.readFileSync(logoPath, { encoding: 'base64' });
+    const logoPath = path.join(
+        process.cwd(),
+        "public",
+        "images",
+        "Asset-34x.png",
+    );
+    const logoBase64 = fs.readFileSync(logoPath, { encoding: "base64" });
 
     const guestMailOptions = {
         from: isDevelopment
@@ -136,19 +147,35 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
                             <li><strong>Check-out:</strong> ${booking.checkOut}</li>
                             <li><strong>Room(s):</strong></li>
                             <ul>
-                                ${booking.roomSelections.map(r => `
-                                    <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type][r.boardType]} per room</li>
-                                `).join('')}
+                                ${
+            booking.roomSelections.map((r) => `
+                                    <li>${r.count} ${r.type} (${r.boardType}) - $${
+                roomPrices[r.type][r.boardType]
+            } per room</li>
+                                `).join("")
+        }
                             </ul>
                             <li><strong>Room Total:</strong> $${roomTotal}</li>
-                            <li><strong>Guests:</strong> ${booking.adults} Adults${booking.children05 > 0 || booking.children616 > 0 ? `, ${booking.children05} Children (0-5), ${booking.children616} Children (6-16)` : ''}</li>
-                            <li><strong>East African Resident:</strong> ${booking.isEastAfricanResident ? 'Yes' : 'No'}</li>
+                            <li><strong>Guests:</strong> ${booking.adults} Adults${
+            booking.children05 > 0 || booking.children616 > 0
+                ? `, ${booking.children05} Children (0-5), ${booking.children616} Children (6-16)`
+                : ""
+        }</li>
+                            <li><strong>East African Resident:</strong> ${
+            booking.isEastAfricanResident ? "Yes" : "No"
+        }</li>
                             <li><strong>Selected Services:</strong></li>
                             <ul>
-                                ${booking.selectedServices.map(serviceId => {
-                                    const service = additionalServices.find(s => s.id === serviceId);
-                                    return service ? `<li>${service.name} - $${service.price}</li>` : '';
-                                }).join('')}
+                                ${
+            booking.selectedServices.map((serviceId) => {
+                const service = additionalServices.find((s) =>
+                    s.id === serviceId
+                );
+                return service
+                    ? `<li>${service.name} - $${service.price}</li>`
+                    : "";
+            }).join("")
+        }
                             </ul>
                             <li><strong>Services Total:</strong> $${servicesTotal}</li>
                             <li><strong>Grand Total:</strong> $${grandTotal}</li>
@@ -167,7 +194,9 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
                         <p>We look forward to welcoming you to Le Bambou Gorilla Lodge!</p>
                     </div>
                     <div class="footer">
-                        <p>&copy; ${new Date().getFullYear()} Le Bambou Gorilla Lodge. All rights reserved.</p>
+                        <p>&copy; ${
+            new Date().getFullYear()
+        } Le Bambou Gorilla Lodge. All rights reserved.</p>
                     </div>
                 </div>
             </body>
@@ -195,23 +224,39 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
                 <li>Check-out: ${booking.checkOut}</li>
                 <li>Room(s):</li>
                 <ul>
-                    ${booking.roomSelections.map(r => `
-                        <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type][r.boardType]} per room</li>
-                    `).join('')}
+                    ${
+            booking.roomSelections.map((r) => `
+                        <li>${r.count} ${r.type} (${r.boardType}) - $${
+                roomPrices[r.type][r.boardType]
+            } per room</li>
+                    `).join("")
+        }
                 </ul>
                 <li>Room Total: $${roomTotal}</li>
-                <li>Guests: ${booking.adults} Adults${booking.children05 > 0 || booking.children616 > 0 ? `, ${booking.children05} Children (0-5), ${booking.children616} Children (6-16)` : ''}</li>
-                <li>East African Resident: ${booking.isEastAfricanResident ? 'Yes' : 'No'}</li>
+                <li>Guests: ${booking.adults} Adults${
+            booking.children05 > 0 || booking.children616 > 0
+                ? `, ${booking.children05} Children (0-5), ${booking.children616} Children (6-16)`
+                : ""
+        }</li>
+                <li>East African Resident: ${
+            booking.isEastAfricanResident ? "Yes" : "No"
+        }</li>
                 <li>Selected Services:</li>
                 <ul>
-                    ${booking.selectedServices.map(serviceId => {
-                        const service = additionalServices.find(s => s.id === serviceId);
-                        return service ? `<li>${service.name} - $${service.price}</li>` : '';
-                    }).join('')}
+                    ${
+            booking.selectedServices.map((serviceId) => {
+                const service = additionalServices.find((s) =>
+                    s.id === serviceId
+                );
+                return service
+                    ? `<li>${service.name} - $${service.price}</li>`
+                    : "";
+            }).join("")
+        }
                 </ul>
                 <li>Services Total: $${servicesTotal}</li>
                 <li>Grand Total: $${grandTotal}</li>
-                <li>Message: ${booking.message ?? 'No message provided'}</li>
+                <li>Message: ${booking.message ?? "No message provided"}</li>
             </ul>
 
             <div style="margin-top: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 5px;">

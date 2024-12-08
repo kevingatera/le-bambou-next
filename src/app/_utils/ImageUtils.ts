@@ -1,9 +1,11 @@
 const baseUrl = (() => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     // Server-side
-    return process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://lebambougorillalodge.com';
+    return process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://lebambougorillalodge.com";
   } else {
     // Client-side
     return window.location.origin;
@@ -12,13 +14,13 @@ const baseUrl = (() => {
 
 export async function dynamicBlurDataUrl(url: string) {
   // Remove leading slash if present
-  const imagePath = url.startsWith('/') ? url.slice(1) : url;
+  const imagePath = url.startsWith("/") ? url.slice(1) : url;
 
   const base64str = await fetch(`${baseUrl}/${imagePath}`)
     .then(async (res) => {
       const arrayBuffer = await res.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
-      return Buffer.from(uint8Array).toString('base64');
+      return Buffer.from(uint8Array).toString("base64");
     });
 
   const blurSvg = `
@@ -33,8 +35,8 @@ export async function dynamicBlurDataUrl(url: string) {
   `;
 
   const toBase64 = (str: string) =>
-    typeof window === 'undefined'
-      ? Buffer.from(str).toString('base64')
+    typeof window === "undefined"
+      ? Buffer.from(str).toString("base64")
       : window.btoa(str);
 
   return `data:image/svg+xml;base64,${toBase64(blurSvg)}`;

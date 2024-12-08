@@ -1,13 +1,13 @@
 "use client";
 
-import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
+import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { useState } from "react";
 import SuperJSON from "superjson";
 import { useReportWebVitals } from "next/web-vitals";
-import type { NextWebVitalsMetric } from 'next/app';
+import type { NextWebVitalsMetric } from "next/app";
 
 import { type AppRouter } from "~/server/api/root";
 import { createQueryClient } from "./query-client";
@@ -66,17 +66,20 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
   useReportWebVitals((metric: NextWebVitalsMetric) => {
     if (process.env.NODE_ENV === "development") {
       const threshold: Record<string, number> = {
-        FCP: 2000,  // First Contentful Paint
-        LCP: 2500,  // Largest Contentful Paint
-        CLS: 0.1,   // Cumulative Layout Shift
-        FID: 100,   // First Input Delay
-        TTFB: 600,  // Time to First Byte
+        FCP: 2000, // First Contentful Paint
+        LCP: 2500, // Largest Contentful Paint
+        CLS: 0.1, // Cumulative Layout Shift
+        FID: 100, // First Input Delay
+        TTFB: 600, // Time to First Byte
       };
 
       const metricName = metric.name;
       const metricValue = metric.value;
 
-      if (metricName in threshold && threshold[metricName] && metricValue > threshold[metricName]) {
+      if (
+        metricName in threshold && threshold[metricName] &&
+        metricValue > threshold[metricName]
+      ) {
         console.warn(`Web Vital ${metricName} exceeded threshold:`, metric);
       }
     }

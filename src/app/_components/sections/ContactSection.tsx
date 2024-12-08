@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import React from 'react'
-import { dynamicBlurDataUrl } from '~/app/_utils/ImageUtils'
-import { ContactForm } from '../ContactForm'
+import Image from "next/image";
+import React from "react";
+import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
+import { ContactForm } from "../ContactForm";
 
 export const ContactSection = async () => {
   return (
@@ -9,10 +9,18 @@ export const ContactSection = async () => {
       <div className="container mx-auto md:px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="contact-form flex flex-col justify-center">
-            <h2 className="text-[#2c2c2c] mt-0 mb-0 text-3xl font-normal leading-snug">Contact us</h2>
+            <h2 className="text-[#2c2c2c] mt-0 mb-0 text-3xl font-normal leading-snug">
+              Contact us
+            </h2>
             <div className="mb-4"></div>
             <p className="mb-6 text-lg">
-              Feel free to contact us anytime through: <a href="mailto:info@lebambougorillalodge.com?subject=Booking!" className="text-[#2c2c2c] font-semibold hover:underline">info@lebambougorillalodge.com</a>
+              Feel free to contact us anytime through:{" "}
+              <a
+                href="mailto:info@lebambougorillalodge.com?subject=Booking!"
+                className="text-[#2c2c2c] font-semibold hover:underline"
+              >
+                info@lebambougorillalodge.com
+              </a>
             </p>
             <ContactForm />
           </div>
@@ -24,12 +32,12 @@ export const ContactSection = async () => {
               width={3008}
               height={2000}
               quality={75}
-              blurDataURL={await dynamicBlurDataUrl('/images/DSC_3662.webp')}
+              blurDataURL={await dynamicBlurDataUrl("/images/DSC_3662.webp")}
               placeholder="blur"
             />
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

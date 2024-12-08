@@ -31,6 +31,11 @@ export const sharedMetadata: Partial<Metadata> = {
       },
     ],
   },
+  title: "Le Bambou Gorilla Lodge | Mountain Gorilla Trekking Adventure",
+  description:
+    "Join us at Le Bambou Gorilla Lodge for an exclusive Mountain gorilla trekking experience in Rwanda's Volcanoes National Park. Discover the beauty of these gentle giants.",
+  keywords:
+    "Le Bambou Gorilla Lodge, Mountain gorilla trekking, Rwanda, Volcanoes National Park, wildlife adventure",
 };
 
 export const viewport: Viewport = {

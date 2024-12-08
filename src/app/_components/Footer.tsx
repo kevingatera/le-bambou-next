@@ -1,45 +1,45 @@
-'use client'
+"use client";
 
-import React, { useCallback } from 'react'
-import { FacebookIcon } from './icons/social/FacebookIcon'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import React, { useCallback } from "react";
+import { FacebookIcon } from "./icons/social/FacebookIcon";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Footer = () => {
     const pathname = usePathname();
 
     const isActive = useCallback((href: string) => {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
             return href == pathname + window?.location.hash || href == pathname;
         }
         return href == pathname;
     }, [pathname]);
-    
 
     return (
         <footer className="footer wf-section">
             <footer className="footer-section website-bottom-border">
                 <div className="footer-container">
                     <div className="w-layout-grid footer-small-grid">
-                        <div
-                            className="max-width-416"
-                        >
+                        <div className="max-width-416">
                             <a
                                 href="/"
                                 aria-current="page"
                                 className="logo spark-margin-bottom-32px w-inline-block text-[#2c2c2c] font-bold"
                             >
-                                <Image src="/images/White-writing4x.png"
+                                <Image
+                                    src="/images/White-writing4x.png"
                                     loading="lazy"
                                     alt=""
                                     width={200}
-                                    height={200} />
+                                    height={200}
+                                />
                             </a>
                             <p className="text-[rgba(0,0,0,.76)]">
-                                Nestled at the foothills of Volcanoes National Park in Kinigi,
-                                Rwanda, Le Bambou Gorilla Lodge offers a captivating retreat
-                                amidst the majestic home of mountain gorillas.
+                                Nestled at the foothills of Volcanoes National
+                                Park in Kinigi, Rwanda, Le Bambou Gorilla Lodge
+                                offers a captivating retreat amidst the majestic
+                                home of mountain gorillas.
                             </p>
                         </div>
                         <div
@@ -57,7 +57,8 @@ export const Footer = () => {
                             </a>
                             <p className="footer-bold-heading">Location</p>
                             <p className="text-[rgba(0,0,0,.76)]">
-                                Kinigi Sector, Musanze District, Northern Province - RWANDA
+                                Kinigi Sector, Musanze District, Northern
+                                Province - RWANDA
                             </p>
                             <p className="footer-bold-heading center-of-reservations-header">
                                 Centre of Reservations (COR)
@@ -69,24 +70,34 @@ export const Footer = () => {
                                 (+250) 788307374 (reservations)
                             </p>
                         </div>
-                        <div
-                            className="flexed-row-of-links pt-4"
-                        >
+                        <div className="flexed-row-of-links pt-4">
                             <Link
                                 href="/about"
-                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${isActive('/about') ? 'text-[#2c2c2c]' : 'text-[#ebf8f7]'}`}
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${
+                                    isActive("/about")
+                                        ? "text-[#2c2c2c]"
+                                        : "text-[#ebf8f7]"
+                                }`}
                             >
                                 About
                             </Link>
                             <Link
                                 href="/contact"
-                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7 ${isActive('/contact') ? 'text-[#2c2c2c]' : 'text-[#ebf8f7]'}`}
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7 ${
+                                    isActive("/contact")
+                                        ? "text-[#2c2c2c]"
+                                        : "text-[#ebf8f7]"
+                                }`}
                             >
                                 Contact
                             </Link>
                             <Link
                                 href="/hotel-policies"
-                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${isActive('/hotel-policies') ? 'text-[#2c2c2c]' : 'text-[#ebf8f7]'}`}
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${
+                                    isActive("/hotel-policies")
+                                        ? "text-[#2c2c2c]"
+                                        : "text-[#ebf8f7]"
+                                }`}
                             >
                                 Bookings & Cancellations
                             </Link>
@@ -116,5 +127,5 @@ export const Footer = () => {
                 </div>
             </div>
         </footer>
-    )
-}
+    );
+};

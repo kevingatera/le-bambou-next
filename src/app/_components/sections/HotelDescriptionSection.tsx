@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export const HotelDescriptionSection = () => {
   return (
@@ -25,22 +25,23 @@ export const HotelDescriptionSection = () => {
             private cottages, each adorned with its own cozy fireplace. Designed
             to provide the utmost comfort, our rooms have been meticulously
             crafted using environmentally friendly materials, including locally
-            sourced bamboo. Our lodge&apos;s allure lies not only in its comfort,
-            affordability, and convenience, but also in its dedication to
-            sustainability. We work closely with the local community, creating job
-            opportunities and fostering cultural exchange. To delight our guests,
-            a local cultural dancing troupe showcases Rwanda&apos;s vibrant lifestyle
-            and rich heritage, promoting sustainable tourism and authentic
-            cultural experiences.
+            sourced bamboo. Our lodge&apos;s allure lies not only in its
+            comfort, affordability, and convenience, but also in its dedication
+            to sustainability. We work closely with the local community,
+            creating job opportunities and fostering cultural exchange. To
+            delight our guests, a local cultural dancing troupe showcases
+            Rwanda&apos;s vibrant lifestyle and rich heritage, promoting
+            sustainable tourism and authentic cultural experiences.
           </p>
           <p className="text-[#2c2c2c] font-sans text-lg font-normal mt-6">
-            Prepare for an awe-inspiring experience as you embark on a remarkable
-            journey in this extraordinary part of Africa. Le Bambou Gorilla Lodge
-            eagerly awaits the opportunity to exceed your expectations and create
-            lasting memories amidst the breathtaking beauty of Rwanda.
+            Prepare for an awe-inspiring experience as you embark on a
+            remarkable journey in this extraordinary part of Africa. Le Bambou
+            Gorilla Lodge eagerly awaits the opportunity to exceed your
+            expectations and create lasting memories amidst the breathtaking
+            beauty of Rwanda.
           </p>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

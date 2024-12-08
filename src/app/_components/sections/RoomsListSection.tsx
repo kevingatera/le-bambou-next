@@ -1,15 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BookingSection } from "./BookingSection";
 import { type RoomType } from "~/types/booking";
-import { getStoredBookingData, setStoredBookingData } from "~/app/_utils/localStorage";
+import {
+    getStoredBookingData,
+    setStoredBookingData,
+} from "~/app/_utils/localStorage";
 import { roomPrices } from "~/types/booking";
 
 export const RoomsListSection = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-    const [selectedRoomType, setSelectedRoomType] = useState<RoomType | null>(null);
+    const [selectedRoomType, setSelectedRoomType] = useState<RoomType | null>(
+        null,
+    );
 
     useEffect(() => {
         const storedData = getStoredBookingData();
@@ -31,7 +36,13 @@ export const RoomsListSection = () => {
 
     const openBookingModal = (roomType: RoomType) => {
         setSelectedRoomType(roomType);
-        setStoredBookingData({ roomSelections: [{ type: roomType, count: 1, boardType: "fullBoard" }] });
+        setStoredBookingData({
+            roomSelections: [{
+                type: roomType,
+                count: 1,
+                boardType: "fullBoard",
+            }],
+        });
         setIsBookingModalOpen(true);
     };
 
@@ -44,24 +55,61 @@ export const RoomsListSection = () => {
         <section className="room-section wf-section">
             <div id="Rooms" className="rooms-container w-container">
                 <div className="roomcentered-title-900">
-                    <h2 id="Room-Selection">Discover Your Perfect Retreat: Our Diverse Room Selection</h2>
+                    <h2 id="Room-Selection">
+                        Discover Your Perfect Retreat: Our Diverse Room
+                        Selection
+                    </h2>
                 </div>
                 <div className="room-flex-row">
                     <div className="room-wrapped-card spaced">
                         <a href="#" className="w-inline-block">
-                            <Image src="/images/double-bed-room.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                            <Image
+                                src="/images/double-bed-room.jpg"
+                                loading="eager"
+                                width="80"
+                                height="80"
+                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
+                                alt=""
+                                className="room-image"
+                            />
                         </a>
                         <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Double Bed Room</h4>
-                            <p className="rooms-paragraph">Indulge in the comfort and charm of our recently decorated Double Bed Room, tucked away in the serene northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities for your convenience, and a welcoming chimney that creates a warm and inviting ambiance. Immerse yourself in picturesque views of the majestic Sabyinyo Mountain Volcano, adding an extra touch of natural beauty to your stay.</p>
+                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
+                                Double Bed Room
+                            </h4>
+                            <p className="rooms-paragraph">
+                                Indulge in the comfort and charm of our recently
+                                decorated Double Bed Room, tucked away in the
+                                serene northern wing of our property. This cozy
+                                retreat offers a delightful en-suite bathroom,
+                                coffee-making facilities for your convenience,
+                                and a welcoming chimney that creates a warm and
+                                inviting ambiance. Immerse yourself in
+                                picturesque views of the majestic Sabyinyo
+                                Mountain Volcano, adding an extra touch of
+                                natural beauty to your stay.
+                            </p>
                             <div className="mt-4 space-y-2">
-                                <p className="font-semibold">Pricing Options:</p>
+                                <p className="font-semibold">
+                                    Pricing Options:
+                                </p>
                                 <div className="flex space-x-2">
-                                    <div>Full Board: <b>${roomPrices.Double.fullBoard}</b></div>
+                                    <div>
+                                        Full Board:{" "}
+                                        <b>${roomPrices.Double.fullBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Half Board: <b>${roomPrices.Double.halfBoard}</b></div>
+                                    <div>
+                                        Half Board:{" "}
+                                        <b>${roomPrices.Double.halfBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Bed & Breakfast: <b>${roomPrices.Double.bedAndBreakfast}</b></div>
+                                    <div>
+                                        Bed & Breakfast:{" "}
+                                        <b>
+                                            ${roomPrices.Double.bedAndBreakfast}
+                                        </b>
+                                    </div>
                                 </div>
                             </div>
                             <button
@@ -74,19 +122,52 @@ export const RoomsListSection = () => {
                     </div>
                     <div className="room-wrapped-card spaced">
                         <a href="#" className="w-inline-block">
-                            <Image src="/images/single-bed-room.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                            <Image
+                                src="/images/single-bed-room.jpg"
+                                loading="eager"
+                                width="80"
+                                height="80"
+                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
+                                alt=""
+                                className="room-image"
+                            />
                         </a>
                         <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Single Bed Room</h4>
-                            <p className="rooms-paragraph">Experience comfort and tranquility in our beautifully decorated Single Bed Room, nestled in the peaceful southern wing of our property. This cozy retreat offers a private en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Step outside and enjoy the serene beauty of our wonderful gardens, creating a serene and refreshing atmosphere.</p>
+                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
+                                Single Bed Room
+                            </h4>
+                            <p className="rooms-paragraph">
+                                Experience comfort and tranquility in our
+                                beautifully decorated Single Bed Room, nestled
+                                in the peaceful southern wing of our property.
+                                This cozy retreat offers a private en-suite
+                                bathroom, coffee-making facilities, and a
+                                charming chimney that adds warmth and ambiance
+                                to the room. Step outside and enjoy the serene
+                                beauty of our wonderful gardens, creating a
+                                serene and refreshing atmosphere.
+                            </p>
                             <div className="mt-4 space-y-2">
-                                <p className="font-semibold">Pricing Options:</p>
+                                <p className="font-semibold">
+                                    Pricing Options:
+                                </p>
                                 <div className="flex space-x-2">
-                                    <div>Full Board: <b>${roomPrices.Single.fullBoard}</b></div>
+                                    <div>
+                                        Full Board:{" "}
+                                        <b>${roomPrices.Single.fullBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Half Board: <b>${roomPrices.Single.halfBoard}</b></div>
+                                    <div>
+                                        Half Board:{" "}
+                                        <b>${roomPrices.Single.halfBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Bed & Breakfast: <b>${roomPrices.Single.bedAndBreakfast}</b></div>
+                                    <div>
+                                        Bed & Breakfast:{" "}
+                                        <b>
+                                            ${roomPrices.Single.bedAndBreakfast}
+                                        </b>
+                                    </div>
                                 </div>
                             </div>
                             <button
@@ -99,19 +180,53 @@ export const RoomsListSection = () => {
                     </div>
                     <div className="room-wrapped-card spaced">
                         <a href="#" className="w-inline-block">
-                            <Image src="/images/1340973158.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                            <Image
+                                src="/images/1340973158.jpg"
+                                loading="eager"
+                                width="80"
+                                height="80"
+                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
+                                alt=""
+                                className="room-image"
+                            />
                         </a>
                         <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Triple Bed Room</h4>
-                            <p className="rooms-paragraph">Indulge in the comfort and space of our beautifully decorated Triple Bed Room, located in the peaceful northern wing of our property. This cozy retreat offers a delightful en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. From the windows, behold stunning views of the majestic Sabyinyo Mountain Volcano, allowing you to connect with nature&#x27;s grandeur during your stay.</p>
+                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
+                                Triple Bed Room
+                            </h4>
+                            <p className="rooms-paragraph">
+                                Indulge in the comfort and space of our
+                                beautifully decorated Triple Bed Room, located
+                                in the peaceful northern wing of our property.
+                                This cozy retreat offers a delightful en-suite
+                                bathroom, coffee-making facilities, and a
+                                charming chimney that adds warmth and ambiance
+                                to the room. From the windows, behold stunning
+                                views of the majestic Sabyinyo Mountain Volcano,
+                                allowing you to connect with nature&#x27;s
+                                grandeur during your stay.
+                            </p>
                             <div className="mt-4 space-y-2">
-                                <p className="font-semibold">Pricing Options:</p>
+                                <p className="font-semibold">
+                                    Pricing Options:
+                                </p>
                                 <div className="flex space-x-2">
-                                    <div>Full Board: <b>${roomPrices.Triple.fullBoard}</b></div>
+                                    <div>
+                                        Full Board:{" "}
+                                        <b>${roomPrices.Triple.fullBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Half Board: <b>${roomPrices.Triple.halfBoard}</b></div>
+                                    <div>
+                                        Half Board:{" "}
+                                        <b>${roomPrices.Triple.halfBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Bed & Breakfast: <b>${roomPrices.Triple.bedAndBreakfast}</b></div>
+                                    <div>
+                                        Bed & Breakfast:{" "}
+                                        <b>
+                                            ${roomPrices.Triple.bedAndBreakfast}
+                                        </b>
+                                    </div>
                                 </div>
                             </div>
                             <button
@@ -124,19 +239,55 @@ export const RoomsListSection = () => {
                     </div>
                     <div className="room-wrapped-card spaced">
                         <a href="#" className="w-inline-block">
-                            <Image src="/images/1340975342.jpg" loading="eager" width="80" height="80" sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px" alt="" className="room-image" />
+                            <Image
+                                src="/images/1340975342.jpg"
+                                loading="eager"
+                                width="80"
+                                height="80"
+                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
+                                alt=""
+                                className="room-image"
+                            />
                         </a>
                         <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">Twin Bed Room</h4>
-                            <p className="rooms-paragraph">Experience comfort and flexibility in our beautifully decorated Double Twin Bed Room, located in the serene northern wing of our property. This cozy retreat offers two comfortable twin beds, perfect for friends or family traveling together. Enjoy the convenience of an en-suite bathroom, coffee-making facilities, and a charming chimney that adds warmth and ambiance to the room. Admire the picturesque views of our wonderful gardens, creating a tranquil and refreshing atmosphere for your stay.</p>
+                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
+                                Twin Bed Room
+                            </h4>
+                            <p className="rooms-paragraph">
+                                Experience comfort and flexibility in our
+                                beautifully decorated Double Twin Bed Room,
+                                located in the serene northern wing of our
+                                property. This cozy retreat offers two
+                                comfortable twin beds, perfect for friends or
+                                family traveling together. Enjoy the convenience
+                                of an en-suite bathroom, coffee-making
+                                facilities, and a charming chimney that adds
+                                warmth and ambiance to the room. Admire the
+                                picturesque views of our wonderful gardens,
+                                creating a tranquil and refreshing atmosphere
+                                for your stay.
+                            </p>
                             <div className="mt-4 space-y-2">
-                                <p className="font-semibold">Pricing Options:</p>
+                                <p className="font-semibold">
+                                    Pricing Options:
+                                </p>
                                 <div className="flex space-x-2">
-                                    <div>Full Board: <b>${roomPrices.Twin.fullBoard}</b></div>
+                                    <div>
+                                        Full Board:{" "}
+                                        <b>${roomPrices.Twin.fullBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Half Board: <b>${roomPrices.Twin.halfBoard}</b></div>
+                                    <div>
+                                        Half Board:{" "}
+                                        <b>${roomPrices.Twin.halfBoard}</b>
+                                    </div>
                                     <div>|</div>
-                                    <div>Bed & Breakfast: <b>${roomPrices.Twin.bedAndBreakfast}</b></div>
+                                    <div>
+                                        Bed & Breakfast:{" "}
+                                        <b>
+                                            ${roomPrices.Twin.bedAndBreakfast}
+                                        </b>
+                                    </div>
                                 </div>
                             </div>
                             <button
@@ -150,8 +301,14 @@ export const RoomsListSection = () => {
                 </div>
             </div>
             {isBookingModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={closeBookingModal}>
-                    <div className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                    onClick={closeBookingModal}
+                >
+                    <div
+                        className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <button
                             onClick={closeBookingModal}
                             className="float-right text-4xl"

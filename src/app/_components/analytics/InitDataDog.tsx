@@ -1,11 +1,11 @@
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { datadogRum } from "@datadog/browser-rum";
 
 // Lazy load the InitDataDog component
-const InitDataDog = dynamic(() => import('./InitDataDog'), {
+const InitDataDog = dynamic(() => import("./InitDataDog"), {
   ssr: false, // Disable server-side rendering for this component
 });
 
@@ -29,6 +29,6 @@ export default function App() {
     };
     initDD();
   }, []);
-  
+
   return <InitDataDog />;
 }

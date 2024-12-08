@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export const BookingCallToActionSection = () => {
   return (
@@ -11,5 +11,5 @@ export const BookingCallToActionSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

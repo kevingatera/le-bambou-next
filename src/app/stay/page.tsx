@@ -9,13 +9,16 @@ import { sharedMetadata } from "../metadata";
 export const metadata: Metadata = {
   ...sharedMetadata,
   title: "Stay at Le Bambou Gorilla Lodge | Luxury Rooms & Amenities",
-  description: "Discover our luxurious rooms and amenities at Le Bambou Gorilla Lodge. Experience comfort and tranquility in the heart of Rwanda's natural beauty.",
-  keywords: "Le Bambou Gorilla Lodge, accommodation, luxury rooms, amenities, Rwanda lodging",
+  description:
+    "Discover our luxurious rooms and amenities at Le Bambou Gorilla Lodge. Experience comfort and tranquility in the heart of Rwanda's natural beauty.",
+  keywords:
+    "Le Bambou Gorilla Lodge, accommodation, luxury rooms, amenities, Rwanda lodging",
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com/stay",
     title: "Stay at Le Bambou Gorilla Lodge | Luxury Rooms & Amenities",
-    description: "Discover our luxurious rooms and amenities at Le Bambou Gorilla Lodge. Experience comfort and tranquility in the heart of Rwanda's natural beauty.",
+    description:
+      "Discover our luxurious rooms and amenities at Le Bambou Gorilla Lodge. Experience comfort and tranquility in the heart of Rwanda's natural beauty.",
     images: [
       {
         url: "/images/Rooms---Aerial-view.JPG",
@@ -27,7 +30,6 @@ export const metadata: Metadata = {
   },
 };
 export default async function Home() {
-
   return (
     <HydrateClient>
       <main>

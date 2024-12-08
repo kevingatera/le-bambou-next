@@ -1,16 +1,18 @@
-import React from 'react';
+import React from "react";
 
 interface DropdownArrowProps {
   className?: string;
-  direction?: 'up' | 'down' | 'left' | 'right';
+  direction?: "up" | "down" | "left" | "right";
 }
 
-export const DropdownArrow: React.FC<DropdownArrowProps> = ({ className, direction = 'down' }) => {
+export const DropdownArrow: React.FC<DropdownArrowProps> = (
+  { className, direction = "down" },
+) => {
   const rotation = {
-    up: 'rotate(0deg)',
-    down: 'rotate(180deg)',
-    left: 'rotate(90deg)',
-    right: 'rotate(-90deg)',
+    up: "rotate(0deg)",
+    down: "rotate(180deg)",
+    left: "rotate(90deg)",
+    right: "rotate(-90deg)",
   };
 
   return (
@@ -21,7 +23,10 @@ export const DropdownArrow: React.FC<DropdownArrowProps> = ({ className, directi
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ transform: rotation[direction], transition: 'transform 0.3s ease' }}
+      style={{
+        transform: rotation[direction],
+        transition: "transform 0.3s ease",
+      }}
     >
       <path
         fillRule="evenodd"

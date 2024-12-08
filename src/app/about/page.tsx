@@ -7,13 +7,16 @@ import { sharedMetadata } from "../metadata";
 export const metadata: Metadata = {
   ...sharedMetadata,
   title: "About Le Bambou Gorilla Lodge | Our Story & Commitment",
-  description: "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
-  keywords: "Le Bambou Gorilla Lodge history, eco-lodge Rwanda, sustainable tourism, conservation efforts",
+  description:
+    "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
+  keywords:
+    "Le Bambou Gorilla Lodge history, eco-lodge Rwanda, sustainable tourism, conservation efforts",
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com/about",
     title: "About Le Bambou Gorilla Lodge | Our Story & Commitment",
-    description: "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
+    description:
+      "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
     images: [
       {
         url: "/images/DSC_3494.jpg",
@@ -26,7 +29,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-
   return (
     <HydrateClient>
       <main>
@@ -35,7 +37,10 @@ export default async function Home() {
         <HistoryVisionValuesSection />
 
         <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)]">
-          <div className="max-w-4xl mx-auto text-center text-3xl mb-12">Join us on a journey to create cherished moments in Rwanda&apos;s captivating landscapes.</div>
+          <div className="max-w-4xl mx-auto text-center text-3xl mb-12">
+            Join us on a journey to create cherished moments in Rwanda&apos;s
+            captivating landscapes.
+          </div>
         </section>
       </main>
     </HydrateClient>
