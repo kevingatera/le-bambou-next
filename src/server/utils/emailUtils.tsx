@@ -54,7 +54,7 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
     // Calculate total room cost
     const calculateRoomTotal = (roomSelections: RoomSelection[]) => {
         return roomSelections.reduce((total, room) => {
-            const price = roomPrices[room.type as keyof typeof roomPrices][room.boardType];
+            const price = roomPrices[room.type][room.boardType];
             return total + (price * room.count);
         }, 0);
     };
@@ -137,7 +137,7 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
                             <li><strong>Room(s):</strong></li>
                             <ul>
                                 ${booking.roomSelections.map(r => `
-                                    <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type as keyof typeof roomPrices][r.boardType]} per room</li>
+                                    <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type][r.boardType]} per room</li>
                                 `).join('')}
                             </ul>
                             <li><strong>Room Total:</strong> $${roomTotal}</li>
@@ -196,7 +196,7 @@ export async function sendBookingConfirmationEmails(booking: BookingEmailData | 
                 <li>Room(s):</li>
                 <ul>
                     ${booking.roomSelections.map(r => `
-                        <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type as keyof typeof roomPrices][r.boardType]} per room</li>
+                        <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type][r.boardType]} per room</li>
                     `).join('')}
                 </ul>
                 <li>Room Total: $${roomTotal}</li>

@@ -248,12 +248,15 @@ const GalleryGrid = ({
   isLoading 
 }: { 
   images: Array<{ src: string; alt: string; width: number; height: number; blurDataURL: string }>;
-  onImageClick: (image: any, index: number) => void;
+  onImageClick: (image: { src: string; alt: string; width: number; height: number; blurDataURL: string }, index: number) => void;
   isLoading: boolean;
 }) => {
   // Reduce number of columns for better layout
-  const breakpointColumnsObj = {
-    default: 3, // Changed from 4 to 3 for better distribution
+  const breakpointColumnsObj: {
+    default: number;
+    [key: number]: number;
+  } = {
+    default: 3,
     1100: 3,
     700: 2,
     500: 1

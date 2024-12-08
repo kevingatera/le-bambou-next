@@ -27,8 +27,8 @@ export const NavigationBar = () => {
   }, [isMobileMenuOpen]);
 
   const isActive = useCallback((href: string) => {
-    const [pathname1, hash1 = ''] = href.split('#');
-    const [pathname2, hash2 = ''] = pathname.split('#');
+    const [pathname1] = href.split('#');
+    const [pathname2] = pathname.split('#');
     return pathname1 === pathname2;
   }, [pathname]);
 
@@ -69,7 +69,7 @@ export const NavigationBar = () => {
       e.preventDefault();
       router.push(href);
       if (href.includes('#')) {
-        const [_, hash] = href.split('#');
+        const hash = href.split('#')[1];
         scrollToHash(`#${hash}`);
       }
     };

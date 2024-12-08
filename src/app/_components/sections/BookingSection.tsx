@@ -3,9 +3,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { type BookingEmailData } from '~/server/utils/emailUtils';
 import { api } from '~/trpc/react'
-import { type RoomType, type RoomSelection, additionalServices, roomPrices, BoardType } from '~/types/booking'
-
-const roomTypes = ["Double", "Single", "Triple", "Twin"] as const;
+import { type RoomType, type RoomSelection, additionalServices, roomPrices } from '~/types/booking'
+import type { BoardType } from '~/types/booking'
 
 const steps = [
   "Dates & Guests",
