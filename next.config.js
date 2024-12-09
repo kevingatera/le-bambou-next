@@ -13,17 +13,17 @@ const config = {
     return [
       {
         source: '/webmail/mail',
-        destination: 'https://gtxm1298.siteground.biz/webmail/mail',
+        destination: 'https://inbox.purelymail.com',
         permanent: true,
       },
       {
         source: '/webmail/login',
-        destination: 'https://gtxm1298.siteground.biz/webmail/login',
+        destination: 'https://purelymail.com/user/login',
         permanent: true,
       },
       {
         source: '/webmail',
-        destination: 'https://gtxm1298.siteground.biz/webmail',
+        destination: 'https://inbox.purelymail.com',
         permanent: true,
       },
     ];

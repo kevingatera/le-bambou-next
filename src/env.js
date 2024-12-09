@@ -11,10 +11,10 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    ZOHO_EMAIL_PASSWORD: z.string(),
-    SITEGROUND_EMAIL_PASSWORD: z.string(),
+    EMAIL_PASSWORD_DEV: z.string(),
+    EMAIL_PASSWORD_PROD: z.string(),
   },
-  
+
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars. To expose them to the client, prefix them with
@@ -33,8 +33,8 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-    ZOHO_EMAIL_PASSWORD: process.env.ZOHO_EMAIL_PASSWORD,
-    SITEGROUND_EMAIL_PASSWORD: process.env.SITEGROUND_EMAIL_PASSWORD,
+    EMAIL_PASSWORD_DEV: process.env.EMAIL_PASSWORD_DEV,
+    EMAIL_PASSWORD_PROD: process.env.EMAIL_PASSWORD_PROD,
     NEXT_PUBLIC_DD_CLIENT_APP_ID: process.env.NEXT_PUBLIC_DD_CLIENT_APP_ID,
     NEXT_PUBLIC_DD_CLIENT_TOKEN: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
   },

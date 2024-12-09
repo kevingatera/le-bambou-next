@@ -17,16 +17,16 @@ const transporter = nodemailer.createTransport(
             secure: true,
             auth: {
                 user: "kevin@deployitwith.me",
-                pass: process.env.ZOHO_EMAIL_PASSWORD,
+                pass: process.env.EMAIL_PASSWORD_DEV,
             },
         }
         : {
-            host: "mail.lebambougorillalodge.com",
+            host: "smtp.purelymail.com",
             port: 465,
             secure: true,
             auth: {
                 user: "info@lebambougorillalodge.com",
-                pass: process.env.SITEGROUND_EMAIL_PASSWORD,
+                pass: process.env.EMAIL_PASSWORD_PROD,
             },
         },
 );

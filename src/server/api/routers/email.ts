@@ -12,18 +12,18 @@ const transporter = nodemailer.createTransport(
             secure: true,
             auth: {
                 user: "kevin@deployitwith.me",
-                pass: process.env.ZOHO_EMAIL_PASSWORD,
+                pass: process.env.EMAIL_PASSWORD_DEV,
             },
         }
         : {
-            host: "mail.lebambougorillalodge.com",
+            host: "smtp.purelymail.com",
             port: 465,
             secure: true,
             auth: {
                 user: "info@lebambougorillalodge.com",
-                pass: process.env.SITEGROUND_EMAIL_PASSWORD,
+                pass: process.env.EMAIL_PASSWORD_PROD,
             },
-        }
+        },
 );
 
 export const emailRouter = createTRPCRouter({
@@ -33,7 +33,7 @@ export const emailRouter = createTRPCRouter({
                 name: z.string().min(1),
                 email: z.string().email(),
                 message: z.string().min(1),
-            })
+            }),
         )
         .mutation(async ({ input }) => {
             const { name, email, message } = input;
