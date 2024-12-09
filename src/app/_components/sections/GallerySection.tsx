@@ -252,7 +252,11 @@ export const GallerySection = () => {
       height: number;
       blurDataURL: string;
     }>;
-  }>({ hotel: [], clients: [], checkIn: [] });
+  }>({
+    hotel: images.hotel.map((img) => ({ ...img, blurDataURL: "" })),
+    clients: images.clients.map((img) => ({ ...img, blurDataURL: "" })),
+    checkIn: images.checkIn.map((img) => ({ ...img, blurDataURL: "" })),
+  });
 
   const loadBlurPlaceholders = useCallback(async () => {
     const hotelImagesWithBlur = await Promise.all(
@@ -451,57 +455,52 @@ const GalleryGrid = ({
         className="flex w-auto -ml-4"
         columnClassName="pl-4 bg-clip-padding"
       >
-        {isLoading && images.length === 0
-          ? (
-            Array.from({ length: 3 }).map((_, index) => (
-              <div
-                key={index}
-                className="animate-pulse bg-gray-400 rounded-lg h-60 w-full mb-4"
-              >
-              </div>
-            ))
-          )
-          : (
-            sortedImages.map((image, index) => {
-              const aspectRatio = image.width / image.height;
-              // Add specific classes based on aspect ratio
-              const imageClasses = `
-              w-full h-auto object-cover rounded-lg
-              ${
-                aspectRatio > 1.2
-                  ? "landscape"
-                  : aspectRatio < 0.8
-                  ? "portrait"
-                  : "square"
-              }
-            `;
+        {sortedImages.map((image, index) => {
+          const aspectRatio = image.width / image.height;
+          // Calculate height based on aspect ratio to prevent layout shifts
+          const containerStyle = {
+            paddingBottom: `${(image.height / image.width) * 100}%`,
+            position: "relative" as const,
+          };
 
-              return (
-                <div key={index} className="mb-4 break-inside-avoid">
-                  <a
-                    href="#"
-                    className="block w-full"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onImageClick(image, index);
-                    }}
-                  >
+          return (
+            <div key={index} className="mb-4 break-inside-avoid">
+              <a
+                href="#"
+                className="block w-full relative"
+                style={containerStyle}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onImageClick(image, index);
+                }}
+              >
+                {!image.blurDataURL
+                  ? (
+                    <div className="absolute inset-0 animate-pulse bg-gray-400 rounded-lg" />
+                  )
+                  : (
                     <Image
                       src={image.src}
                       alt={image.alt}
                       loading="lazy"
                       sizes="(max-width: 500px) 100vw, (max-width: 700px) 50vw, 33vw"
-                      className={imageClasses}
+                      className={`absolute inset-0 w-full h-full object-cover rounded-lg ${
+                        aspectRatio > 1.2
+                          ? "landscape"
+                          : aspectRatio < 0.8
+                          ? "portrait"
+                          : "square"
+                      }`}
                       width={image.width}
                       height={image.height}
                       placeholder="blur"
                       blurDataURL={image.blurDataURL}
                     />
-                  </a>
-                </div>
-              );
-            })
-          )}
+                  )}
+              </a>
+            </div>
+          );
+        })}
       </Masonry>
     </div>
   );
