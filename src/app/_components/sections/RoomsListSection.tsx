@@ -9,6 +9,14 @@ import {
     setStoredBookingData,
 } from "~/app/_utils/localStorage";
 import { roomPrices } from "~/types/booking";
+import { InfoCircle } from "../icons/InfoCirlce";
+
+const BoardTypeInfo = {
+    fullBoard: "Includes breakfast, lunch, and dinner.",
+    halfBoard:
+        "Typically includes breakfast and dinner, with guests choosing where to eat their third meal. Half board is a good option for travelers who want to explore the area and try local cuisine.",
+    bedAndBreakfast: "Includes overnight stay and breakfast only.",
+};
 
 export const RoomsListSection = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -94,21 +102,33 @@ export const RoomsListSection = () => {
                                     Pricing Options:
                                 </p>
                                 <div className="flex space-x-2">
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Full Board:{" "}
                                         <b>${roomPrices.Double.fullBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.fullBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Half Board:{" "}
                                         <b>${roomPrices.Double.halfBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
+                                            {BoardTypeInfo.halfBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Bed & Breakfast:{" "}
                                         <b>
                                             ${roomPrices.Double.bedAndBreakfast}
                                         </b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.bedAndBreakfast}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -152,21 +172,33 @@ export const RoomsListSection = () => {
                                     Pricing Options:
                                 </p>
                                 <div className="flex space-x-2">
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Full Board:{" "}
                                         <b>${roomPrices.Single.fullBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.fullBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Half Board:{" "}
                                         <b>${roomPrices.Single.halfBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
+                                            {BoardTypeInfo.halfBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Bed & Breakfast:{" "}
                                         <b>
                                             ${roomPrices.Single.bedAndBreakfast}
                                         </b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.bedAndBreakfast}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -211,21 +243,33 @@ export const RoomsListSection = () => {
                                     Pricing Options:
                                 </p>
                                 <div className="flex space-x-2">
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Full Board:{" "}
                                         <b>${roomPrices.Triple.fullBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.fullBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Half Board:{" "}
                                         <b>${roomPrices.Triple.halfBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
+                                            {BoardTypeInfo.halfBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Bed & Breakfast:{" "}
                                         <b>
                                             ${roomPrices.Triple.bedAndBreakfast}
                                         </b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.bedAndBreakfast}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -272,21 +316,33 @@ export const RoomsListSection = () => {
                                     Pricing Options:
                                 </p>
                                 <div className="flex space-x-2">
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Full Board:{" "}
                                         <b>${roomPrices.Twin.fullBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.fullBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Half Board:{" "}
                                         <b>${roomPrices.Twin.halfBoard}</b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
+                                            {BoardTypeInfo.halfBoard}
+                                        </span>
                                     </div>
                                     <div>|</div>
-                                    <div>
+                                    <div className="group relative flex items-center">
                                         Bed & Breakfast:{" "}
                                         <b>
                                             ${roomPrices.Twin.bedAndBreakfast}
                                         </b>
+                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                            {BoardTypeInfo.bedAndBreakfast}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
