@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BookingSection } from "./BookingSection";
 import { type RoomType } from "~/types/booking";
 import {
@@ -10,12 +10,132 @@ import {
 } from "~/app/_utils/localStorage";
 import { roomPrices } from "~/types/booking";
 import { InfoCircle } from "../icons/InfoCirlce";
+import { DropdownArrow } from "../icons/DropDownArrow";
 
 const BoardTypeInfo = {
     fullBoard: "Includes breakfast, lunch, and dinner.",
     halfBoard:
         "Typically includes breakfast and dinner, with guests choosing where to eat their third meal. Half board is a good option for travelers who want to explore the area and try local cuisine.",
     bedAndBreakfast: "Includes overnight stay and breakfast only.",
+};
+
+const roomImages = {
+    Double: [
+        {
+            src: "/images/rooms/double/double-bed-room.jpg",
+            alt: "Double Bed Room",
+        },
+        {
+            src: "/images/rooms/double/Double bed setup for a valentine's day celebration.webp",
+            alt: "Double Bed Valentine Setup",
+        },
+    ],
+    Single: [
+        {
+            src: "/images/rooms/single/single-bed-room.jpg",
+            alt: "Single Bed Room",
+        },
+        {
+            src: "/images/rooms/single/Single bedroom.webp",
+            alt: "Single Bedroom Interior",
+        },
+    ],
+    Triple: [
+        {
+            src: "/images/1340973158.jpg",
+            alt: "Triple Bed Room",
+        },
+        {
+            src: "/images/rooms/triple/View of the beds in a triple bed room.webp",
+            alt: "Triple Bed Room Interior",
+        },
+    ],
+    Twin: [
+        {
+            src: "/images/1340975342.jpg",
+            alt: "Twin Bed Room",
+        },
+        {
+            src: "/images/rooms/twin/View of the twin bedroom interior with fireplace.webp",
+            alt: "Twin Bedroom with Fireplace",
+        },
+    ],
+};
+
+const RoomImageCarousel = (
+    { images, roomType }: {
+        images: typeof roomImages[keyof typeof roomImages];
+        roomType: string;
+    },
+) => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    if (!images || images.length === 0) {
+        return null;
+    }
+
+    const nextImage = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    };
+
+    const prevImage = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setCurrentImageIndex((prev) =>
+            (prev - 1 + images.length) % images.length
+        );
+    };
+
+    const currentImage = images[currentImageIndex] as {
+        src: string;
+        alt: string;
+    };
+
+    return (
+        <div className="relative group">
+            <a href="#" className="w-inline-block">
+                <Image
+                    src={currentImage.src}
+                    loading="eager"
+                    width={500}
+                    height={500}
+                    sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
+                    alt={currentImage.alt}
+                    className="room-image"
+                />
+            </a>
+            {images.length > 1 && (
+                <>
+                    <button
+                        onClick={prevImage}
+                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        aria-label={`Previous ${roomType} room image`}
+                    >
+                        <DropdownArrow className="w-4 h-4" direction="left" />
+                    </button>
+                    <button
+                        onClick={nextImage}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        aria-label={`Next ${roomType} room image`}
+                    >
+                        <DropdownArrow className="w-4 h-4" direction="right" />
+                    </button>
+                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+                        {images.map((_, index) => (
+                            <div
+                                key={index}
+                                className={`w-2 h-2 rounded-full ${
+                                    index === currentImageIndex
+                                        ? "bg-white"
+                                        : "bg-white/50"
+                                }`}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
+        </div>
+    );
 };
 
 export const RoomsListSection = () => {
@@ -69,291 +189,86 @@ export const RoomsListSection = () => {
                     </h2>
                 </div>
                 <div className="room-flex-row">
-                    <div className="room-wrapped-card spaced">
-                        <a href="#" className="w-inline-block">
-                            <Image
-                                src="/images/rooms/double/double-bed-room.jpg"
-                                loading="eager"
-                                width="80"
-                                height="80"
-                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt="Double Bed Room"
-                                className="room-image"
+                    {(["Double", "Single", "Triple", "Twin"] as const).map((
+                        roomType,
+                    ) => (
+                        <div
+                            key={roomType}
+                            className="room-wrapped-card spaced"
+                        >
+                            <RoomImageCarousel
+                                images={roomImages[roomType]}
+                                roomType={roomType}
                             />
-                        </a>
-                        <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
-                                Double Bed Room
-                            </h4>
-                            <p className="rooms-paragraph">
-                                Indulge in the comfort and charm of our recently
-                                decorated Double Bed Room, tucked away in the
-                                serene northern wing of our property. This cozy
-                                retreat offers a delightful en-suite bathroom,
-                                coffee-making facilities for your convenience,
-                                and a welcoming chimney that creates a warm and
-                                inviting ambiance. Immerse yourself in
-                                picturesque views of the majestic Sabyinyo
-                                Mountain Volcano, adding an extra touch of
-                                natural beauty to your stay.
-                            </p>
-                            <div className="mt-4 space-y-2">
-                                <p className="font-semibold">
-                                    Pricing Options:
+                            <div className="room-details">
+                                <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
+                                    {roomType} Bed Room
+                                </h4>
+                                <p className="rooms-paragraph">
+                                    Indulge in the comfort and charm of our
+                                    recently decorated {roomType}{" "}
+                                    Bed Room, tucked away in the serene northern
+                                    wing of our property. This cozy retreat
+                                    offers a delightful en-suite bathroom,
+                                    coffee-making facilities for your
+                                    convenience, and a welcoming chimney that
+                                    creates a warm and inviting ambiance.
+                                    Immerse yourself in picturesque views of the
+                                    majestic Sabyinyo Mountain Volcano, adding
+                                    an extra touch of natural beauty to your
+                                    stay.
                                 </p>
-                                <div className="flex space-x-2">
-                                    <div className="group relative flex items-center">
-                                        Full Board:{" "}
-                                        <b>${roomPrices.Double.fullBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.fullBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Half Board:{" "}
-                                        <b>${roomPrices.Double.halfBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
-                                            {BoardTypeInfo.halfBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Bed & Breakfast:{" "}
-                                        <b>
-                                            ${roomPrices.Double.bedAndBreakfast}
-                                        </b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.bedAndBreakfast}
-                                        </span>
+                                <div className="mt-4 space-y-2">
+                                    <p className="font-semibold">
+                                        Pricing Options:
+                                    </p>
+                                    <div className="flex space-x-2">
+                                        <div className="group relative flex items-center">
+                                            Full Board:{" "}
+                                            <b>
+                                                ${roomPrices[roomType]
+                                                    .fullBoard}
+                                            </b>
+                                            <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                                {BoardTypeInfo.fullBoard}
+                                            </span>
+                                        </div>
+                                        <div>|</div>
+                                        <div className="group relative flex items-center">
+                                            Half Board:{" "}
+                                            <b>
+                                                ${roomPrices[roomType]
+                                                    .halfBoard}
+                                            </b>
+                                            <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
+                                                {BoardTypeInfo.halfBoard}
+                                            </span>
+                                        </div>
+                                        <div>|</div>
+                                        <div className="group relative flex items-center">
+                                            Bed & Breakfast:{" "}
+                                            <b>
+                                                ${roomPrices[roomType]
+                                                    .bedAndBreakfast}
+                                            </b>
+                                            <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
+                                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
+                                                {BoardTypeInfo.bedAndBreakfast}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                                <button
+                                    onClick={() => openBookingModal(roomType)}
+                                    className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
+                                >
+                                    Book Now
+                                </button>
                             </div>
-                            <button
-                                onClick={() => openBookingModal("Double")}
-                                className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
-                            >
-                                Book Now
-                            </button>
                         </div>
-                    </div>
-                    <div className="room-wrapped-card spaced">
-                        <a href="#" className="w-inline-block">
-                            <Image
-                                src="/images/rooms/single/single-bed-room.jpg"
-                                loading="eager"
-                                width="80"
-                                height="80"
-                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt="Single Bed Room"
-                                className="room-image"
-                            />
-                        </a>
-                        <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
-                                Single Bed Room
-                            </h4>
-                            <p className="rooms-paragraph">
-                                Experience comfort and tranquility in our
-                                beautifully decorated Single Bed Room, nestled
-                                in the peaceful southern wing of our property.
-                                This cozy retreat offers a private en-suite
-                                bathroom, coffee-making facilities, and a
-                                charming chimney that adds warmth and ambiance
-                                to the room. Step outside and enjoy the serene
-                                beauty of our wonderful gardens, creating a
-                                serene and refreshing atmosphere.
-                            </p>
-                            <div className="mt-4 space-y-2">
-                                <p className="font-semibold">
-                                    Pricing Options:
-                                </p>
-                                <div className="flex space-x-2">
-                                    <div className="group relative flex items-center">
-                                        Full Board:{" "}
-                                        <b>${roomPrices.Single.fullBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.fullBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Half Board:{" "}
-                                        <b>${roomPrices.Single.halfBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
-                                            {BoardTypeInfo.halfBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Bed & Breakfast:{" "}
-                                        <b>
-                                            ${roomPrices.Single.bedAndBreakfast}
-                                        </b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.bedAndBreakfast}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => openBookingModal("Single")}
-                                className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
-                            >
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                    <div className="room-wrapped-card spaced">
-                        <a href="#" className="w-inline-block">
-                            <Image
-                                src="/images/1340973158.jpg"
-                                loading="eager"
-                                width="80"
-                                height="80"
-                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt="Triple Bed Room"
-                                className="room-image"
-                            />
-                        </a>
-                        <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
-                                Triple Bed Room
-                            </h4>
-                            <p className="rooms-paragraph">
-                                Indulge in the comfort and space of our
-                                beautifully decorated Triple Bed Room, located
-                                in the peaceful northern wing of our property.
-                                This cozy retreat offers a delightful en-suite
-                                bathroom, coffee-making facilities, and a
-                                charming chimney that adds warmth and ambiance
-                                to the room. From the windows, behold stunning
-                                views of the majestic Sabyinyo Mountain Volcano,
-                                allowing you to connect with nature&#x27;s
-                                grandeur during your stay.
-                            </p>
-                            <div className="mt-4 space-y-2">
-                                <p className="font-semibold">
-                                    Pricing Options:
-                                </p>
-                                <div className="flex space-x-2">
-                                    <div className="group relative flex items-center">
-                                        Full Board:{" "}
-                                        <b>${roomPrices.Triple.fullBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.fullBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Half Board:{" "}
-                                        <b>${roomPrices.Triple.halfBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
-                                            {BoardTypeInfo.halfBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Bed & Breakfast:{" "}
-                                        <b>
-                                            ${roomPrices.Triple.bedAndBreakfast}
-                                        </b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.bedAndBreakfast}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => openBookingModal("Triple")}
-                                className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
-                            >
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                    <div className="room-wrapped-card spaced">
-                        <a href="#" className="w-inline-block">
-                            <Image
-                                src="/images/1340975342.jpg"
-                                loading="eager"
-                                width="80"
-                                height="80"
-                                sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt="Twin Bed Room"
-                                className="room-image"
-                            />
-                        </a>
-                        <div className="room-details">
-                            <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
-                                Twin Bed Room
-                            </h4>
-                            <p className="rooms-paragraph">
-                                Experience comfort and flexibility in our
-                                beautifully decorated Double Twin Bed Room,
-                                located in the serene northern wing of our
-                                property. This cozy retreat offers two
-                                comfortable twin beds, perfect for friends or
-                                family traveling together. Enjoy the convenience
-                                of an en-suite bathroom, coffee-making
-                                facilities, and a charming chimney that adds
-                                warmth and ambiance to the room. Admire the
-                                picturesque views of our wonderful gardens,
-                                creating a tranquil and refreshing atmosphere
-                                for your stay.
-                            </p>
-                            <div className="mt-4 space-y-2">
-                                <p className="font-semibold">
-                                    Pricing Options:
-                                </p>
-                                <div className="flex space-x-2">
-                                    <div className="group relative flex items-center">
-                                        Full Board:{" "}
-                                        <b>${roomPrices.Twin.fullBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.fullBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Half Board:{" "}
-                                        <b>${roomPrices.Twin.halfBoard}</b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
-                                            {BoardTypeInfo.halfBoard}
-                                        </span>
-                                    </div>
-                                    <div>|</div>
-                                    <div className="group relative flex items-center">
-                                        Bed & Breakfast:{" "}
-                                        <b>
-                                            ${roomPrices.Twin.bedAndBreakfast}
-                                        </b>
-                                        <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-48">
-                                            {BoardTypeInfo.bedAndBreakfast}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => openBookingModal("Twin")}
-                                className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
-                            >
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
             {isBookingModalOpen && (
