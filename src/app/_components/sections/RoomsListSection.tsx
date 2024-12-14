@@ -72,12 +72,12 @@ export const RoomsListSection = () => {
                     <div className="room-wrapped-card spaced">
                         <a href="#" className="w-inline-block">
                             <Image
-                                src="/images/double-bed-room.jpg"
+                                src="/images/rooms/double/double-bed-room.jpg"
                                 loading="eager"
                                 width="80"
                                 height="80"
                                 sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt=""
+                                alt="Double Bed Room"
                                 className="room-image"
                             />
                         </a>
@@ -143,12 +143,12 @@ export const RoomsListSection = () => {
                     <div className="room-wrapped-card spaced">
                         <a href="#" className="w-inline-block">
                             <Image
-                                src="/images/single-bed-room.jpg"
+                                src="/images/rooms/single/single-bed-room.jpg"
                                 loading="eager"
                                 width="80"
                                 height="80"
                                 sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt=""
+                                alt="Single Bed Room"
                                 className="room-image"
                             />
                         </a>
@@ -218,7 +218,7 @@ export const RoomsListSection = () => {
                                 width="80"
                                 height="80"
                                 sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt=""
+                                alt="Triple Bed Room"
                                 className="room-image"
                             />
                         </a>
@@ -289,7 +289,7 @@ export const RoomsListSection = () => {
                                 width="80"
                                 height="80"
                                 sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
-                                alt=""
+                                alt="Twin Bed Room"
                                 className="room-image"
                             />
                         </a>
