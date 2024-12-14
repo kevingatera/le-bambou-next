@@ -359,7 +359,7 @@ export const GallerySection = () => {
 
   useEffect(() => {
     const hash = window.location.hash;
-    const match = hash.match(/^#(hotel|clients|checkIn)-(\d+)$/);
+    const match = /^#(hotel|clients|checkIn)-(\d+)$/.exec(hash);
     if (match) {
       const galleryType = match[1] as "hotel" | "clients" | "checkIn";
       const index = parseInt(match[2] ?? "0", 10);
