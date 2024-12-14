@@ -93,6 +93,9 @@ export const GallerySection = () => {
   >(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentGalleryType, setCurrentGalleryType] = useState<
+    "hotel" | "clients" | "checkIn"
+  >("hotel");
 
   const images = useMemo(() => ({
     hotel: [
@@ -318,28 +321,32 @@ export const GallerySection = () => {
   const handleImageClick = (
     image: { src: string; alt: string; blurDataURL: string },
     index: number,
+    galleryType: "hotel" | "clients" | "checkIn",
   ) => {
     setIsLoading(true);
     setSelectedImage(image);
     setCurrentIndex(index);
-    window.location.hash = `image-${index}`;
+    setCurrentGalleryType(galleryType);
+    window.location.hash = `${galleryType}-${index}`;
   };
 
   const handlePrev = () => {
-    const newIndex = (currentIndex - 1 + images.hotel.length) %
-      images.hotel.length;
+    const currentImages = imagesWithBlur[currentGalleryType];
+    const newIndex = (currentIndex - 1 + currentImages.length) %
+      currentImages.length;
     setIsLoading(true);
-    setSelectedImage(imagesWithBlur.hotel[newIndex] ?? null);
+    setSelectedImage(currentImages[newIndex] ?? null);
     setCurrentIndex(newIndex);
-    window.location.hash = `image-${newIndex}`;
+    window.location.hash = `${currentGalleryType}-${newIndex}`;
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % images.hotel.length;
+    const currentImages = imagesWithBlur[currentGalleryType];
+    const newIndex = (currentIndex + 1) % currentImages.length;
     setIsLoading(true);
-    setSelectedImage(imagesWithBlur.hotel[newIndex] ?? null);
+    setSelectedImage(currentImages[newIndex] ?? null);
     setCurrentIndex(newIndex);
-    window.location.hash = `image-${newIndex}`;
+    window.location.hash = `${currentGalleryType}-${newIndex}`;
   };
 
   useEffect(() => {
@@ -352,11 +359,16 @@ export const GallerySection = () => {
 
   useEffect(() => {
     const hash = window.location.hash;
-    if (hash.startsWith("#image-")) {
-      const index = parseInt(hash.replace("#image-", ""), 10);
-      if (index >= 0 && index < imagesWithBlur.hotel.length) {
-        setSelectedImage(imagesWithBlur.hotel[index] ?? null);
+    const match = hash.match(/^#(hotel|clients|checkIn)-(\d+)$/);
+    if (match) {
+      const galleryType = match[1] as "hotel" | "clients" | "checkIn";
+      const index = parseInt(match[2] ?? "0", 10);
+      const currentImages = imagesWithBlur[galleryType];
+
+      if (index >= 0 && index < currentImages.length) {
+        setSelectedImage(currentImages[index] ?? null);
         setCurrentIndex(index);
+        setCurrentGalleryType(galleryType);
       }
     }
   }, [imagesWithBlur]);
@@ -376,7 +388,8 @@ export const GallerySection = () => {
               <div className="large-spacing-block"></div>
               <GalleryGrid
                 images={imagesWithBlur.hotel}
-                onImageClick={handleImageClick}
+                onImageClick={(image, index) =>
+                  handleImageClick(image, index, "hotel")}
                 isLoading={isLoading}
               />
 
@@ -389,7 +402,8 @@ export const GallerySection = () => {
               <div className="large-spacing-block"></div>
               <GalleryGrid
                 images={imagesWithBlur.clients}
-                onImageClick={handleImageClick}
+                onImageClick={(image, index) =>
+                  handleImageClick(image, index, "clients")}
                 isLoading={isLoading}
               />
 
@@ -402,7 +416,8 @@ export const GallerySection = () => {
               <div className="large-spacing-block"></div>
               <GalleryGrid
                 images={imagesWithBlur.checkIn}
-                onImageClick={handleImageClick}
+                onImageClick={(image, index) =>
+                  handleImageClick(image, index, "checkIn")}
                 isLoading={isLoading}
               />
             </div>
