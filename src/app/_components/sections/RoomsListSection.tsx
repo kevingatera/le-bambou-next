@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BookingSection } from "./BookingSection";
 import { type RoomType } from "~/types/booking";
 import {
@@ -11,6 +11,7 @@ import {
 import { roomPrices } from "~/types/booking";
 import { InfoCircle } from "../icons/InfoCirlce";
 import { DropdownArrow } from "../icons/DropDownArrow";
+import { motion } from "framer-motion";
 
 const BoardTypeInfo = {
     fullBoard: "Includes breakfast, lunch, and dinner.",
@@ -52,35 +53,119 @@ const roomImages = {
     ],
     Twin: [
         {
-            src: "/images/1340975342.jpg",
-            alt: "Twin Bed Room",
-        },
-        {
             src: "/images/rooms/twin/View of the twin bedroom interior with fireplace.webp",
             alt: "Twin Bedroom with Fireplace",
         },
     ],
 };
 
-const RoomImageCarousel = (
-    { images, roomType }: {
-        images: typeof roomImages[keyof typeof roomImages];
-        roomType: string;
-    },
-) => {
+const Modal = ({
+    image,
+    onClose,
+    onPrev,
+    onNext,
+    isLoading,
+    onLoad,
+}: {
+    image: { src: string; alt: string };
+    onClose: () => void;
+    onPrev: () => void;
+    onNext: () => void;
+    isLoading: boolean;
+    onLoad: () => void;
+}) => {
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === "Escape") onClose();
+        if (e.key === "ArrowLeft") onPrev();
+        if (e.key === "ArrowRight") onNext();
+    }, [onClose, onPrev, onNext]);
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [handleKeyDown]);
+
+    return (
+        <div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+            onClick={onClose}
+        >
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="relative bg-[#d7dfde] p-2 sm:p-5 rounded-lg max-h-screen overflow-auto min-w-80 min-h-60 md:min-h-[25rem] sm:min-w-[500px]"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {isLoading && (
+                    <div className="absolute right-1/2 bottom-1/2 transform translate-x-1/2 translate-y-1/2">
+                        <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-8 h-16 w-16" />
+                    </div>
+                )}
+                <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={1000}
+                    height={1000}
+                    priority
+                    className={`object-contain max-h-[calc(100dvh-100px)] max-w-full ${
+                        isLoading ? "opacity-0" : "opacity-100"
+                    }`}
+                    onLoadingComplete={onLoad}
+                />
+                <button
+                    onClick={onPrev}
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full m-2"
+                >
+                    <DropdownArrow className="w-6 h-6" direction="left" />
+                </button>
+                <button
+                    onClick={onNext}
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full m-2"
+                >
+                    <DropdownArrow className="w-6 h-6" direction="right" />
+                </button>
+            </motion.div>
+        </div>
+    );
+};
+
+const RoomImageCarousel = ({ images, roomType }: {
+    images: typeof roomImages[keyof typeof roomImages];
+    roomType: string;
+}) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    if (!images || images.length === 0) {
-        return null;
-    }
+    useEffect(() => {
+        images.forEach((image) => {
+            const preloadLink = document.createElement("link");
+            preloadLink.rel = "preload";
+            preloadLink.as = "image";
+            preloadLink.href = image.src;
+            document.head.appendChild(preloadLink);
+        });
 
-    const nextImage = (e: React.MouseEvent) => {
-        e.preventDefault();
+        return () => {
+            const preloadLinks = document.head.querySelectorAll(
+                'link[rel="preload"][as="image"]',
+            );
+            preloadLinks.forEach((link) => link.remove());
+        };
+    }, [images]);
+
+    if (!images || images.length === 0) return null;
+
+    const nextImage = (e?: React.MouseEvent) => {
+        e?.preventDefault();
+        setIsLoading(true);
         setCurrentImageIndex((prev) => (prev + 1) % images.length);
     };
 
-    const prevImage = (e: React.MouseEvent) => {
-        e.preventDefault();
+    const prevImage = (e?: React.MouseEvent) => {
+        e?.preventDefault();
+        setIsLoading(true);
         setCurrentImageIndex((prev) =>
             (prev - 1 + images.length) % images.length
         );
@@ -93,7 +178,15 @@ const RoomImageCarousel = (
 
     return (
         <div className="relative group">
-            <a href="#" className="w-inline-block">
+            <a
+                href="#"
+                className="w-inline-block"
+                onClick={(e) => {
+                    e.preventDefault();
+                    setIsLoading(true);
+                    setIsModalOpen(true);
+                }}
+            >
                 <Image
                     src={currentImage.src}
                     loading="eager"
@@ -102,6 +195,7 @@ const RoomImageCarousel = (
                     sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
                     alt={currentImage.alt}
                     className="room-image"
+                    onLoad={() => setIsLoading(false)}
                 />
             </a>
             {images.length > 1 && (
@@ -133,6 +227,17 @@ const RoomImageCarousel = (
                         ))}
                     </div>
                 </>
+            )}
+
+            {isModalOpen && currentImage && (
+                <Modal
+                    image={currentImage}
+                    onClose={() => setIsModalOpen(false)}
+                    onPrev={prevImage}
+                    onNext={nextImage}
+                    isLoading={isLoading}
+                    onLoad={() => setIsLoading(false)}
+                />
             )}
         </div>
     );
