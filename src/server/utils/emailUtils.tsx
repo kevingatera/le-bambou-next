@@ -171,9 +171,11 @@ export async function sendBookingConfirmationEmails(
                 const service = additionalServices.find((s) =>
                     s.id === serviceId
                 );
-                return service
-                    ? `<li>${service.name} - $${service.price}</li>`
-                    : "";
+                if (!service) return "";
+                const priceDisplay = service.id === "transportation"
+                    ? "$100-$250"
+                    : `$${service.price}`;
+                return `<li>${service.name} - ${priceDisplay}</li>`;
             }).join("")
         }
                             </ul>
@@ -248,9 +250,11 @@ export async function sendBookingConfirmationEmails(
                 const service = additionalServices.find((s) =>
                     s.id === serviceId
                 );
-                return service
-                    ? `<li>${service.name} - $${service.price}</li>`
-                    : "";
+                if (!service) return "";
+                const priceDisplay = service.id === "transportation"
+                    ? "$100-$250"
+                    : `$${service.price}`;
+                return `<li>${service.name} - ${priceDisplay}</li>`;
             }).join("")
         }
                 </ul>
