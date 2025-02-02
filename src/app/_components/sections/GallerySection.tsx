@@ -94,7 +94,7 @@ export const GallerySection = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentGalleryType, setCurrentGalleryType] = useState<
-    "hotel" | "clients" | "checkIn"
+    "hotel" | "clients" | "checkIn" | "helene"
   >("hotel");
 
   const images = useMemo(() => ({
@@ -148,13 +148,13 @@ export const GallerySection = () => {
         height: 3008,
         blurDataURL: "",
       },
-      {
-        src: "/images/le-bambou-gorilla-lodge.jpg",
-        alt: "Le Bambou Gorilla Lodge",
-        width: 1100,
-        height: 733,
-        blurDataURL: "",
-      },
+      // {
+      //   src: "/images/le-bambou-gorilla-lodge.jpg",
+      //   alt: "Le Bambou Gorilla Lodge",
+      //   width: 1100,
+      //   height: 733,
+      //   blurDataURL: "",
+      // },
       {
         src: "/images/DSC_3572.jpg",
         alt: "DSC 3572",
@@ -162,20 +162,20 @@ export const GallerySection = () => {
         height: 3008,
         blurDataURL: "",
       },
-      {
-        src: "/images/DSC_3563.jpg",
-        alt: "DSC 3563",
-        width: 4512,
-        height: 3008,
-        blurDataURL: "",
-      },
-      {
-        src: "/images/rooms/lobby/lobby----Le-Bambou-Gorilla-Lodge.jpg",
-        alt: "Lobby at Le Bambou Gorilla Lodge",
-        width: 1594,
-        height: 1063,
-        blurDataURL: "",
-      },
+      // {
+      //   src: "/images/DSC_3563.jpg",
+      //   alt: "DSC 3563",
+      //   width: 4512,
+      //   height: 3008,
+      //   blurDataURL: "",
+      // },
+      // {
+      //   src: "/images/rooms/lobby/lobby----Le-Bambou-Gorilla-Lodge.jpg",
+      //   alt: "Lobby at Le Bambou Gorilla Lodge",
+      //   width: 1594,
+      //   height: 1063,
+      //   blurDataURL: "",
+      // },
     ],
     clients: [
       {
@@ -192,13 +192,13 @@ export const GallerySection = () => {
         height: 1080,
         blurDataURL: "",
       },
-      {
-        src: "/images/client_experiences/relaxing/IMG_2652.webp",
-        alt: "Group photo at the lodge",
-        width: 1920,
-        height: 1080,
-        blurDataURL: "",
-      },
+      // {
+      //   src: "/images/client_experiences/relaxing/IMG_2652.webp",
+      //   alt: "Group photo at the lodge",
+      //   width: 1920,
+      //   height: 1080,
+      //   blurDataURL: "",
+      // },
       {
         src: "/images/client_experiences/relaxing/IMG_2656.webp",
         alt: "Guests enjoying dinner",
@@ -206,20 +206,20 @@ export const GallerySection = () => {
         height: 1080,
         blurDataURL: "",
       },
-      {
-        src: "/images/client_experiences/relaxing/IMG_2658.webp",
-        alt: "Happy guests at the lodge",
-        width: 1920,
-        height: 1080,
-        blurDataURL: "",
-      },
-      {
-        src: "/images/client_experiences/relaxing/IMG_2659.webp",
-        alt: "Guests having fun",
-        width: 1920,
-        height: 1080,
-        blurDataURL: "",
-      },
+      // {
+      //   src: "/images/client_experiences/relaxing/IMG_2658.webp",
+      //   alt: "Happy guests at the lodge",
+      //   width: 1920,
+      //   height: 1080,
+      //   blurDataURL: "",
+      // },
+      // {
+      //   src: "/images/client_experiences/relaxing/IMG_2659.webp",
+      //   alt: "Guests having fun",
+      //   width: 1920,
+      //   height: 1080,
+      //   blurDataURL: "",
+      // },
     ],
     checkIn: [
       {
@@ -229,13 +229,13 @@ export const GallerySection = () => {
         height: 1080,
         blurDataURL: "",
       },
-      {
-        src: "/images/client_experiences/checking_in/20240701_175738.webp",
-        alt: "Clients receiving their keys",
-        width: 1920,
-        height: 1080,
-        blurDataURL: "",
-      },
+      // {
+      //   src: "/images/client_experiences/checking_in/20240701_175738.webp",
+      //   alt: "Clients receiving their keys",
+      //   width: 1920,
+      //   height: 1080,
+      //   blurDataURL: "",
+      // },
       {
         src: "/images/client_experiences/checking_in/20240701_175747.webp",
         alt: "Clients at the reception",
@@ -250,9 +250,75 @@ export const GallerySection = () => {
         height: 1080,
         blurDataURL: "",
       },
+      // {
+      //   src: "/images/client_experiences/checking_in/20240701_175744.webp",
+      //   alt: "Clients with staff during check-in",
+      //   width: 1920,
+      //   height: 1080,
+      //   blurDataURL: "",
+      // },
+    ],
+    helene: [
       {
-        src: "/images/client_experiences/checking_in/20240701_175744.webp",
-        alt: "Clients with staff during check-in",
+        src:
+          "/images/Helene DeGeneres Campus/Cafeteria 2 inside Helene DeGeneres Campus.webp",
+        alt: "Cafeteria 2 inside Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Cafeteria inside Helene DeGeneres Campus.webp",
+        alt: "Cafeteria inside Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Entrance view at Helene DeGeneres Campus.webp",
+        alt: "Entrance view at Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Exhibit inside Helene DeGeneres Campus.webp",
+        alt: "Exhibit inside Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Landscape view of Helene DeGeneres Campus.webp",
+        alt: "Landscape view of Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Map inside Helene DeGeneres Campus.webp",
+        alt: "Map inside Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Path leading to Helene DeGeneres Campus.webp",
+        alt: "Path leading to Helene DeGeneres Campus",
+        width: 1920,
+        height: 1080,
+        blurDataURL: "",
+      },
+      {
+        src:
+          "/images/Helene DeGeneres Campus/Sitting outside Helene DeGeneres Campus.webp",
+        alt: "Sitting outside Helene DeGeneres Campus",
         width: 1920,
         height: 1080,
         blurDataURL: "",
@@ -282,10 +348,18 @@ export const GallerySection = () => {
       height: number;
       blurDataURL: string;
     }>;
+    helene: Array<{
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      blurDataURL: string;
+    }>;
   }>({
     hotel: images.hotel.map((img) => ({ ...img, blurDataURL: "" })),
     clients: images.clients.map((img) => ({ ...img, blurDataURL: "" })),
     checkIn: images.checkIn.map((img) => ({ ...img, blurDataURL: "" })),
+    helene: images.helene.map((img) => ({ ...img, blurDataURL: "" })),
   });
 
   const loadBlurPlaceholders = useCallback(async () => {
@@ -307,10 +381,17 @@ export const GallerySection = () => {
         blurDataURL: await dynamicBlurDataUrl(image.src),
       })),
     );
+    const heleneImagesWithBlur = await Promise.all(
+      images.helene.map(async (image) => ({
+        ...image,
+        blurDataURL: await dynamicBlurDataUrl(image.src),
+      })),
+    );
     setImagesWithBlur({
       hotel: hotelImagesWithBlur,
       clients: clientImagesWithBlur,
       checkIn: checkInImagesWithBlur,
+      helene: heleneImagesWithBlur,
     });
   }, [images]);
 
@@ -321,7 +402,7 @@ export const GallerySection = () => {
   const handleImageClick = (
     image: { src: string; alt: string; blurDataURL: string },
     index: number,
-    galleryType: "hotel" | "clients" | "checkIn",
+    galleryType: "hotel" | "clients" | "checkIn" | "helene",
   ) => {
     setIsLoading(true);
     setSelectedImage(image);
@@ -359,9 +440,13 @@ export const GallerySection = () => {
 
   useEffect(() => {
     const hash = window.location.hash;
-    const match = /^#(hotel|clients|checkIn)-(\d+)$/.exec(hash);
+    const match = /^#(hotel|clients|checkIn|helene)-(\d+)$/.exec(hash);
     if (match) {
-      const galleryType = match[1] as "hotel" | "clients" | "checkIn";
+      const galleryType = match[1] as
+        | "hotel"
+        | "clients"
+        | "checkIn"
+        | "helene";
       const index = parseInt(match[2] ?? "0", 10);
       const currentImages = imagesWithBlur[galleryType];
 
@@ -410,7 +495,7 @@ export const GallerySection = () => {
               <div className="text-center mt-12">
                 <div className="spacing-block"></div>
                 <h2 id="Clients-Checking-In" className="gallery-heading">
-                  Welcoming Our Guests:<br />Clients Checking In
+                  Welcoming Our Guests:<br />Guests Check In Time
                 </h2>
               </div>
               <div className="large-spacing-block"></div>
@@ -418,6 +503,20 @@ export const GallerySection = () => {
                 images={imagesWithBlur.checkIn}
                 onImageClick={(image, index) =>
                   handleImageClick(image, index, "checkIn")}
+                isLoading={isLoading}
+              />
+
+              <div className="text-center mt-12">
+                <div className="spacing-block"></div>
+                <h2 id="Helene-Campus" className="gallery-heading">
+                  Conservation Hub:<br />Helene DeGeneres Campus
+                </h2>
+              </div>
+              <div className="large-spacing-block"></div>
+              <GalleryGrid
+                images={imagesWithBlur.helene}
+                onImageClick={(image, index) =>
+                  handleImageClick(image, index, "helene")}
                 isLoading={isLoading}
               />
             </div>
@@ -429,8 +528,8 @@ export const GallerySection = () => {
           selectedImage={{
             src: selectedImage.src,
             alt: selectedImage.alt,
-            width: images.hotel[currentIndex]?.width ?? 500,
-            height: images.hotel[currentIndex]?.height ?? 500,
+            width: images[currentGalleryType][currentIndex]?.width ?? 500,
+            height: images[currentGalleryType][currentIndex]?.height ?? 500,
             blurDataURL: selectedImage.blurDataURL,
           }}
           onClose={() => {
