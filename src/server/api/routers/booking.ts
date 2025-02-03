@@ -1,7 +1,27 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { bookings } from "~/server/db/schema";
-import { type BookingEmailData, sendBookingConfirmationEmails } from "~/server/utils/emailUtils";
+import {
+  type BookingEmailData,
+  sendBookingConfirmationEmails,
+} from "~/server/utils/emailUtils";
+import dns from "dns";
+import { promisify } from "util";
+import { isEmail } from "validator";
+
+const resolveMx = promisify(dns.resolveMx);
+
+async function isEmailValid(email: string): Promise<boolean> {
+  if (!isEmail(email)) return false;
+  try {
+    const domain = email.split("@")[1];
+    if (!domain) return false;
+    const mxRecords = await resolveMx(domain);
+    return mxRecords.length > 0;
+  } catch {
+    return false;
+  }
+}
 
 const roomTypeEnum = z.enum(["Double", "Single", "Triple", "Twin"]);
 const boardTypeEnum = z.enum(["fullBoard", "halfBoard", "bedAndBreakfast"]);
@@ -28,6 +48,11 @@ export const bookingRouter = createTRPCRouter({
     }))
     .mutation(async ({ ctx, input }) => {
       try {
+        const isValid = await isEmailValid(input.guestEmail);
+        if (!isValid) {
+          throw new Error("Invalid email address");
+        }
+
         const booking = await ctx.db.insert(bookings).values({
           roomSelections: input.roomSelections,
           checkIn: input.checkIn,
@@ -48,8 +73,10 @@ export const bookingRouter = createTRPCRouter({
 
         return booking[0];
       } catch (error) {
-        console.error('Error creating booking', error);
-        throw new Error('Error creating booking');
+        console.error("Error creating booking", error);
+        throw new Error(
+          error instanceof Error ? error.message : "Error creating booking",
+        );
       }
     }),
 

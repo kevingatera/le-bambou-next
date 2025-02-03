@@ -48,3 +48,7 @@ yarn-error.log*
 
 # Custom Added Files
 webflow.css
+
+web.archive.org
+
+**/images/**/archive/

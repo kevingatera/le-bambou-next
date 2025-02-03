@@ -2,6 +2,48 @@ import Image from "next/image";
 import React from "react";
 
 export const OutsideAttractionsListSection = () => {
+  const attractions = [
+    {
+      title: "Twin Lakes Excursion",
+      image: "/images/Twin-Lakes-of-Burera-and-Ruhondo-750x450.jpg",
+      description:
+        "Visit the picturesque Twin Lakes of Burera and Ruhondo. Enjoy scenic boat rides, birdwatching, and picnics while soaking in the tranquil atmosphere.",
+      price: "Free of charge*",
+    },
+    {
+      title: "Musanze Caves:",
+      image: "/images/DwiI_I7WkAATzND.jpg",
+      description:
+        "Explore the Musanze Caves, a network of lava tubes located a short distance from Kinigi. Marvel at the geological formations and learn about the volcanic history of the region.",
+    },
+    {
+      title: "Musanze Waterfalls",
+      image: "/images/musanze-waterfalls.jpg",
+      description:
+        "Take a refreshing hike to the beautiful waterfalls in Musanze.",
+      price: "Free of charge*",
+    },
+    {
+      title: "Buhanga Eco-Park:",
+      image: "/images/buhanga-eco-park.jpg",
+      description:
+        "Discover the Buhanga Eco-Park, located in Musanze District. Explore the forest reserve, guided by locals, and learn about traditional rituals, cultural practices, and medicinal plants.",
+    },
+    {
+      title: "Intore Dance Performance",
+      image: "/images/intore-dancers-performance-visit-rwanda_2x3.jpg",
+      description:
+        "Watch vibrant traditional Intore dancers showcase Rwandan culture through captivating routines and colorful costumes.",
+      price: "Free of charge*",
+    },
+    {
+      title: "Iby'Iwacu Community Center:",
+      image: "/images/Kings-Palace-Museum-in-Rwanda.jpg",
+      description:
+        "Engage with the local community at the Iby'Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performances.",
+    },
+  ];
+
   return (
     <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)]">
       <div className="px-0 sm:px-4 md:px-8 lg:px-16">
@@ -46,42 +88,3 @@ export const OutsideAttractionsListSection = () => {
     </section>
   );
 };
-
-const attractions = [
-  {
-    title: "Iby'Iwacu Cultural Village:",
-    image: "/images/iba.png",
-    description:
-      "Immerse yourself in the vibrant culture of a nearby village, where you can witness traditional dances, engage with local communities, and discover Rwandan customs, music, and crafts.",
-  },
-  {
-    title: "Musanze Caves:",
-    image: "/images/DwiI_I7WkAATzND.jpg",
-    description:
-      "Explore the Musanze Caves, a network of lava tubes located a short distance from Kinigi. Marvel at the geological formations and learn about the volcanic history of the region.",
-  },
-  {
-    title: "Twin Lakes:",
-    image: "/images/Twin-Lakes-of-Burera-and-Ruhondo-750x450.jpg",
-    description:
-      "Visit the picturesque Twin Lakes of Burera and Ruhondo near Kinigi. Enjoy scenic boat rides, birdwatching, and picnics while soaking in the tranquil atmosphere and stunning views.",
-  },
-  {
-    title: "Buhanga Eco-Park:",
-    image: "/images/buhanga-eco-park.jpg",
-    description:
-      "Discover the Buhanga Eco-Park, located in Musanze District. Explore the forest reserve, guided by locals, and learn about traditional rituals, cultural practices, and medicinal plants.",
-  },
-  {
-    title: "Iby'Iwacu Community Center:",
-    image: "/images/Kings-Palace-Museum-in-Rwanda.jpg",
-    description:
-      "Engage with the local community at the Iby'Iwacu Community Center, where you can learn about traditional Rwandan lifestyles, participate in activities like pottery making, and enjoy cultural performances.",
-  },
-  {
-    title: "Intore dancers:",
-    image: "/images/intore-dancers-performance-visit-rwanda_2x3.jpg",
-    description:
-      "Experience the vibrant and energetic performances of Intore dancers, showcasing traditional Rwandan dance and culture through their captivating routines and colorful costumes.",
-  },
-];

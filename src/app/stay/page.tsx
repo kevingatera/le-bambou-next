@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       "Discover our luxurious rooms and amenities at Le Bambou Gorilla Lodge. Experience comfort and tranquility in the heart of Rwanda's natural beauty.",
     images: [
       {
-        url: "/images/Rooms---Aerial-view.JPG",
+        url: "/images/Rooms---Aerial-view.webp",
         width: 1600,
         height: 1200,
         alt: "Le Bambou Gorilla Lodge - Accommodations",

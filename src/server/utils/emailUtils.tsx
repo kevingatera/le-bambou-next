@@ -6,6 +6,9 @@ import {
 } from "~/types/booking";
 import fs from "fs";
 import path from "path";
+import { isEmail } from "validator";
+import dns from "dns";
+import { promisify } from "util";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -31,6 +34,29 @@ const transporter = nodemailer.createTransport(
         },
 );
 
+const resolveMx = promisify(dns.resolveMx);
+
+async function isEmailValid(email: string): Promise<boolean> {
+    if (
+        !isEmail(email, {
+            allow_display_name: false,
+            require_display_name: false,
+            allow_utf8_local_part: true,
+            require_tld: true,
+            allow_ip_domain: false,
+            domain_specific_validation: true,
+        })
+    ) return false;
+    try {
+        const domain = email.split("@")[1];
+        if (!domain) return false;
+        const mxRecords = await resolveMx(domain);
+        return mxRecords.length > 0;
+    } catch {
+        return false;
+    }
+}
+
 export interface BookingEmailData {
     id: number;
     roomSelections: RoomSelection[];
@@ -55,6 +81,11 @@ export async function sendBookingConfirmationEmails(
     if (!booking) {
         console.error("No booking data provided");
         return;
+    }
+
+    const isValid = await isEmailValid(booking.guestEmail);
+    if (!isValid) {
+        throw new Error("Invalid email address");
     }
 
     // Calculate total room cost
@@ -171,9 +202,11 @@ export async function sendBookingConfirmationEmails(
                 const service = additionalServices.find((s) =>
                     s.id === serviceId
                 );
-                return service
-                    ? `<li>${service.name} - $${service.price}</li>`
-                    : "";
+                if (!service) return "";
+                const priceDisplay = service.id === "transportation"
+                    ? "$100-$250"
+                    : `$${service.price}`;
+                return `<li>${service.name} - ${priceDisplay}</li>`;
             }).join("")
         }
                             </ul>
@@ -248,9 +281,11 @@ export async function sendBookingConfirmationEmails(
                 const service = additionalServices.find((s) =>
                     s.id === serviceId
                 );
-                return service
-                    ? `<li>${service.name} - $${service.price}</li>`
-                    : "";
+                if (!service) return "";
+                const priceDisplay = service.id === "transportation"
+                    ? "$100-$250"
+                    : `$${service.price}`;
+                return `<li>${service.name} - ${priceDisplay}</li>`;
             }).join("")
         }
                 </ul>

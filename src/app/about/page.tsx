@@ -19,7 +19,8 @@ export const metadata: Metadata = {
       "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
     images: [
       {
-        url: "/images/DSC_3494.jpg",
+        url:
+          "/images/rooms/lobby/View of the main lobby-house lit at night-2.webp",
         width: 4512,
         height: 3008,
         alt: "Le Bambou Gorilla Lodge - About Us",

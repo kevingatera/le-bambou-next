@@ -11,7 +11,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    EMAIL_PASSWORD_DEV: z.string(),
+    EMAIL_PASSWORD_DEV: z.string().optional(),
     EMAIL_PASSWORD_PROD: z.string(),
   },
 
