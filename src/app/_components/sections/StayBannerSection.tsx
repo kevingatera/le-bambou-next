@@ -5,7 +5,7 @@ export const StayBannerSection = () => {
   return (
     <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
       <Image
-        src="/images/Rooms---Aerial-view.JPG"
+        src="/images/Rooms---Aerial-view.webp"
         alt="Background Image"
         fill={true}
         className="opacity-70 object-cover"
