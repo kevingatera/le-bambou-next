@@ -475,7 +475,6 @@ export const GallerySection = () => {
                 images={imagesWithBlur.hotel}
                 onImageClick={(image, index) =>
                   handleImageClick(image, index, "hotel")}
-                isLoading={isLoading}
               />
 
               <div className="text-center mt-12">
@@ -489,7 +488,6 @@ export const GallerySection = () => {
                 images={imagesWithBlur.clients}
                 onImageClick={(image, index) =>
                   handleImageClick(image, index, "clients")}
-                isLoading={isLoading}
               />
 
               <div className="text-center mt-12">
@@ -503,7 +501,6 @@ export const GallerySection = () => {
                 images={imagesWithBlur.checkIn}
                 onImageClick={(image, index) =>
                   handleImageClick(image, index, "checkIn")}
-                isLoading={isLoading}
               />
 
               <div className="text-center mt-12">
@@ -517,7 +514,6 @@ export const GallerySection = () => {
                 images={imagesWithBlur.helene}
                 onImageClick={(image, index) =>
                   handleImageClick(image, index, "helene")}
-                isLoading={isLoading}
               />
             </div>
           </div>
@@ -548,7 +544,6 @@ export const GallerySection = () => {
 const GalleryGrid = ({
   images,
   onImageClick,
-  isLoading,
 }: {
   images: Array<
     {
@@ -569,7 +564,6 @@ const GalleryGrid = ({
     },
     index: number,
   ) => void;
-  isLoading: boolean;
 }) => {
   // Reduce number of columns for better layout
   const breakpointColumnsObj: {
