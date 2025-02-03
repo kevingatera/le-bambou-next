@@ -1,29 +1,44 @@
 # Le Bambou Gorilla Lodge
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Next.js website for Rwanda's premier eco-lodge near Volcanoes National Park.
+Combines luxury accommodation booking with gorilla trekking experiences.
 
-## What's next? How do I make an app with this?
+## Key Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Immersive gorilla trekking adventure showcases
+- Responsive room displays with detailed amenities
+- Sustainable tourism education portal
+- Direct contact and inquiry system
+- Cultural experience highlights
+- Virtual lodge tour and gallery
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Based on [Create T3 App](https://create.t3.gg/)
 
-## Learn More
+- [Next.js](https://nextjs.org) 14 (App Router)
+- [Tailwind CSS](https://tailwindcss.com) with custom eco-themed palette
+- [Drizzle ORM](https://orm.drizzle.team) for PostgreSQL integration
+- [tRPC](https://trpc.io) for end-to-end type safety
+- [Framer Motion](https://www.framer.com/motion/) for animations
+- [Vercel Analytics](https://vercel.com/analytics) & Speed Insights
+- [Google Analytics](https://analytics.google.com) for visitor tracking
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Development
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+pnpm install
+pnpm dev
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Deployment
 
-## How do I deploy this?
+Pre-configured for:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [Vercel](https://create.t3.gg/en/deployment/vercel)
+- [Netlify](https://create.t3.gg/en/deployment/netlify)
+- [Docker](https://create.t3.gg/en/deployment/docker)
+
+---
+
+> "Preserving nature while creating unforgettable experiences" 🌍
