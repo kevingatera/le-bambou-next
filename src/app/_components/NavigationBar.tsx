@@ -15,6 +15,7 @@ export const NavigationBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [activeHash, setActiveHash] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Effect to toggle body scroll
   useEffect(() => {
@@ -52,6 +53,12 @@ export const NavigationBar = () => {
 
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToHash = useCallback((hash: string) => {
@@ -97,7 +104,7 @@ export const NavigationBar = () => {
   };
 
   return (
-    <div className="flex items-center min-h-[7rem] bg-[#b9c5c4] px-1 md:px-10 lg:px-[95px]">
+    <div className="sticky top-0 z-50 flex items-center min-h-[7rem] bg-[#b9c5c4] px-1 md:px-10 lg:px-[95px] shadow-md">
       <div className="flex items-center justify-between w-full">
         {/* Logo - visible on mobile, hidden on desktop */}
         <Link
@@ -107,10 +114,10 @@ export const NavigationBar = () => {
         >
           <Image
             src="/images/Asset-34x.png"
-            width={75}
-            height={75}
+            width={isScrolled ? 50 : 75}
+            height={isScrolled ? 50 : 75}
             alt=""
-            className=""
+            className="transition-all duration-300"
             priority={true}
           />
         </Link>
@@ -128,11 +135,10 @@ export const NavigationBar = () => {
               <div className="mr-auto pr-8 flex items-center">
                 <a href="stay" className="link-block-2 w-inline-block">
                   <div
-                    className={`text-xl ${
-                      isActive("/stay")
-                        ? "text-[#2c2c2c] font-bold"
-                        : "text-[#2c2c2c]"
-                    }`}
+                    className={`text-xl ${isActive("/stay")
+                      ? "text-[#2c2c2c] font-bold"
+                      : "text-[#2c2c2c]"
+                      }`}
                   >
                     Stay
                   </div>
@@ -146,32 +152,29 @@ export const NavigationBar = () => {
               <nav className="absolute left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible mt-2">
                 <CustomLink
                   href="/stay#Amenities"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
-                    isActive("/stay#Amenities") && activeHash === "#Amenities"
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/stay#Amenities") && activeHash === "#Amenities"
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                 >
                   Amenities
                 </CustomLink>
                 <CustomLink
                   href="/stay#Rooms"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
-                    isActive("/stay#Rooms") && activeHash === "#Rooms"
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/stay#Rooms") && activeHash === "#Rooms"
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                 >
                   Room&nbsp;Types
                 </CustomLink>
                 <CustomLink
                   href="/stay#Hotel-Gallery"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
-                    isActive("/stay#Hotel-Gallery") &&
-                      activeHash === "#Hotel-Gallery"
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/stay#Hotel-Gallery") &&
+                    activeHash === "#Hotel-Gallery"
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                 >
                   Hotel&nbsp;Gallery
                 </CustomLink>
@@ -187,11 +190,10 @@ export const NavigationBar = () => {
               <div className="pr-8 flex items-center">
                 <a href="explore" className="link-block-3 w-inline-block">
                   <div
-                    className={`text-xl ${
-                      isActive("/explore")
-                        ? "text-[#2c2c2c] font-bold"
-                        : "text-[#2c2c2c]"
-                    }`}
+                    className={`text-xl ${isActive("/explore")
+                      ? "text-[#2c2c2c] font-bold"
+                      : "text-[#2c2c2c]"
+                      }`}
                   >
                     Explore
                   </div>
@@ -205,34 +207,31 @@ export const NavigationBar = () => {
               <nav className="absolute w-[185px] left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible mt-2">
                 <CustomLink
                   href="/explore#Kinigi-journey"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
-                    isActive("/explore#Kinigi-journey") &&
-                      activeHash === "#Kinigi-journey"
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/explore#Kinigi-journey") &&
+                    activeHash === "#Kinigi-journey"
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                 >
                   Journey
                 </CustomLink>
                 <CustomLink
                   href="/explore#inside-volcanoes-park"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
-                    isActive("/explore#inside-volcanoes-park") &&
-                      activeHash === "#inside-volcanoes-park"
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/explore#inside-volcanoes-park") &&
+                    activeHash === "#inside-volcanoes-park"
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                 >
                   Inside The Park
                 </CustomLink>
                 <CustomLink
                   href="/explore#outside-volcanoes-park"
-                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${
-                    isActive("/explore#outside-volcanoes-park") &&
-                      activeHash === "#outside-volcanoes-park"
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/explore#outside-volcanoes-park") &&
+                    activeHash === "#outside-volcanoes-park"
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                 >
                   Outside The Park
                 </CustomLink>
@@ -242,22 +241,20 @@ export const NavigationBar = () => {
             {/* About Link */}
             <a
               href="about"
-              className={`text-xl mr-4 ${
-                isActive("/about")
-                  ? "text-[#2c2c2c] font-bold"
-                  : "text-[#2c2c2c]"
-              }`}
+              className={`text-xl mr-4 ${isActive("/about")
+                ? "text-[#2c2c2c] font-bold"
+                : "text-[#2c2c2c]"
+                }`}
             >
               About
             </a>
             {/* Contact Link */}
             <a
               href="contact"
-              className={`text-xl mr-4 ${
-                isActive("/contact")
-                  ? "text-[#2c2c2c] font-bold"
-                  : "text-[#2c2c2c]"
-              }`}
+              className={`text-xl mr-4 ${isActive("/contact")
+                ? "text-[#2c2c2c] font-bold"
+                : "text-[#2c2c2c]"
+                }`}
             >
               Contact
             </a>
@@ -273,10 +270,10 @@ export const NavigationBar = () => {
               <Image
                 src="/images/Asset-34x.png"
                 priority={true}
-                width={100}
-                height={100}
+                width={isScrolled ? 65 : 90}
+                height={isScrolled ? 65 : 90}
                 alt=""
-                className=""
+                className="transition-all duration-300"
               />
             </a>
           </div>
@@ -340,7 +337,6 @@ export const NavigationBar = () => {
                 width={100}
                 height={100}
                 alt=""
-                className=""
               />
             </a>
             {/* Close Button */}
@@ -370,11 +366,10 @@ export const NavigationBar = () => {
               {/* Stay Dropdown */}
               <div>
                 <button
-                  className={`flex items-center justify-between w-full text-left text-gray-700 text-lg focus:outline-none ${
-                    isActive("/stay")
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`flex items-center justify-between w-full text-left text-gray-700 text-lg focus:outline-none ${isActive("/stay")
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                   onClick={() =>
                     setMobileSubMenuOpen(
                       mobileSubMenuOpen === "stay" ? null : "stay",
@@ -391,31 +386,28 @@ export const NavigationBar = () => {
                   <div className="mt-3 ml-4 flex flex-col space-y-4">
                     <CustomLink
                       href="/stay#Amenities"
-                      className={`text-gray-600 text-base ${
-                        isActive("/stay#Amenities")
-                          ? "text-[#2c2c2c] font-bold"
-                          : "text-[#2c2c2c]"
-                      }`}
+                      className={`text-gray-600 text-base ${isActive("/stay#Amenities")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
                     >
                       Amenities
                     </CustomLink>
                     <CustomLink
                       href="/stay#Rooms"
-                      className={`text-gray-600 text-base ${
-                        isActive("/stay#Rooms")
-                          ? "text-[#2c2c2c] font-bold"
-                          : "text-[#2c2c2c]"
-                      }`}
+                      className={`text-gray-600 text-base ${isActive("/stay#Rooms")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
                     >
                       Room Types
                     </CustomLink>
                     <CustomLink
                       href="/stay#Hotel-Gallery"
-                      className={`text-gray-600 text-base ${
-                        isActive("/stay#Hotel-Gallery")
-                          ? "text-[#2c2c2c] font-bold"
-                          : "text-[#2c2c2c]"
-                      }`}
+                      className={`text-gray-600 text-base ${isActive("/stay#Hotel-Gallery")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
                     >
                       Hotel Gallery
                     </CustomLink>
@@ -426,11 +418,10 @@ export const NavigationBar = () => {
               {/* Explore Dropdown */}
               <div>
                 <button
-                  className={`flex items-center justify-between w-full text-left text-gray-700 text-lg focus:outline-none ${
-                    isActive("/explore")
-                      ? "text-[#2c2c2c] font-bold"
-                      : "text-[#2c2c2c]"
-                  }`}
+                  className={`flex items-center justify-between w-full text-left text-gray-700 text-lg focus:outline-none ${isActive("/explore")
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
                   onClick={() =>
                     setMobileSubMenuOpen(
                       mobileSubMenuOpen === "explore" ? null : "explore",
@@ -449,31 +440,28 @@ export const NavigationBar = () => {
                   <div className="mt-3 ml-4 flex flex-col space-y-4">
                     <CustomLink
                       href="/explore#Kinigi-journey"
-                      className={`text-gray-600 text-base ${
-                        isActive("/explore#Kinigi-journey")
-                          ? "text-[#2c2c2c] font-bold"
-                          : "text-[#2c2c2c]"
-                      }`}
+                      className={`text-gray-600 text-base ${isActive("/explore#Kinigi-journey")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
                     >
                       Journey
                     </CustomLink>
                     <CustomLink
                       href="/explore#inside-volcanoes-park"
-                      className={`text-gray-600 text-base ${
-                        isActive("/explore#inside-volcanoes-park")
-                          ? "text-[#2c2c2c] font-bold"
-                          : "text-[#2c2c2c]"
-                      }`}
+                      className={`text-gray-600 text-base ${isActive("/explore#inside-volcanoes-park")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
                     >
                       Inside The Park
                     </CustomLink>
                     <CustomLink
                       href="/explore#outside-volcanoes-park"
-                      className={`text-gray-600 text-base ${
-                        isActive("/explore#outside-volcanoes-park")
-                          ? "text-[#2c2c2c] font-bold"
-                          : "text-[#2c2c2c]"
-                      }`}
+                      className={`text-gray-600 text-base ${isActive("/explore#outside-volcanoes-park")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
                     >
                       Outside The Park
                     </CustomLink>
