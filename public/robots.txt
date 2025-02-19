@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Sitemap: https://lebambougorillalodge.com/sitemap.xml
+
+# Production environment
+Host: https://lebambougorillalodge.com
+
+# Development/Staging disallows
+User-agent: *
+Disallow: /_next/
+Disallow: /api/ 
