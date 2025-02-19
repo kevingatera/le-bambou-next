@@ -41,7 +41,7 @@ export default async function Home() {
                 { href: "#Rooms", label: "Rooms" },
                 { href: "#Amenities", label: "Amenities" },
                 { href: "#Gallery", label: "Gallery" },
-              ].map(({ href, label }, index) => (
+              ].map(({ href, label }) => (
                 <li key={href} className="mx-4">
                   <a
                     href={href}
