@@ -34,7 +34,27 @@ export default async function Home() {
     <HydrateClient>
       <main>
         <StayBannerSection />
-        <div className="h-[120px] min-h-[7.5rem] bg-[#566c6a] py-[60px]"></div>
+        <nav className="h-[80px] min-h-[7.5rem] bg-[#566c6a] py-[45px] sticky top-0 z-50 shadow-md transition-shadow">
+          <div className="container mx-auto px-4">
+            <ul className="flex justify-center items-center gap-12 text-lg">
+              {[
+                { href: "#Rooms", label: "Rooms" },
+                { href: "#Amenities", label: "Amenities" },
+                { href: "#Gallery", label: "Gallery" },
+              ].map(({ href, label }, index) => (
+                <li key={href} className="mx-4">
+                  <a
+                    href={href}
+                    className="text-white hover:text-[#ebf8f7] transition-colors relative group py-2"
+                  >
+                    {label}
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#ebf8f7] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
         <RoomsListSection />
         <RoomAmenitiesSection />
         <GallerySection />
