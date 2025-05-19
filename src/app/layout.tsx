@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Head from "next/head";
 import Script from "next/script";
+import { FloatingWhatsAppButton } from "~/app/_components/FloatingWhatsAppButton";
 
 const varelaRound = Varela_Round({
   weight: "400",
@@ -102,6 +103,7 @@ export default function RootLayout({
         <TRPCReactProvider>
           {/* <InitDataDog /> */}
           {children}
+          <FloatingWhatsAppButton phoneNumber="+250788307374" />
           <GoogleAnalytics gaId="G-7PEH6JNLXW" />
           <Script
             id="adroll-script"
