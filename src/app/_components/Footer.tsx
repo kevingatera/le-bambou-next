@@ -2,6 +2,7 @@
 
 import React, { useCallback } from "react";
 import { FacebookIcon } from "./icons/social/FacebookIcon";
+import { WhatsAppButton } from "./WhatsAppButton";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -69,35 +70,38 @@ export const Footer = () => {
                                 <br />
                                 (+250) 788307374 (reservations)
                             </p>
+                            <div className="mt-4">
+                                <WhatsAppButton
+                                    phoneNumber="+250788307374"
+                                    className="mt-2"
+                                />
+                            </div>
                         </div>
                         <div className="flexed-row-of-links pt-4">
                             <Link
                                 href="/about"
-                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${
-                                    isActive("/about")
-                                        ? "text-[#2c2c2c]"
-                                        : "text-[#ebf8f7]"
-                                }`}
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${isActive("/about")
+                                    ? "text-[#2c2c2c]"
+                                    : "text-[#ebf8f7]"
+                                    }`}
                             >
                                 About
                             </Link>
                             <Link
                                 href="/contact"
-                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7 ${
-                                    isActive("/contact")
-                                        ? "text-[#2c2c2c]"
-                                        : "text-[#ebf8f7]"
-                                }`}
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7 ${isActive("/contact")
+                                    ? "text-[#2c2c2c]"
+                                    : "text-[#ebf8f7]"
+                                    }`}
                             >
                                 Contact
                             </Link>
                             <Link
                                 href="/hotel-policies"
-                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${
-                                    isActive("/hotel-policies")
-                                        ? "text-[#2c2c2c]"
-                                        : "text-[#ebf8f7]"
-                                }`}
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${isActive("/hotel-policies")
+                                    ? "text-[#2c2c2c]"
+                                    : "text-[#ebf8f7]"
+                                    }`}
                             >
                                 Bookings & Cancellations
                             </Link>
