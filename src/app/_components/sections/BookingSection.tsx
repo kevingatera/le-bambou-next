@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "react";
 import { type BookingEmailData } from "~/server/utils/emailUtils";
 import { api } from "~/trpc/react";
 import {
@@ -101,6 +107,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   >("idle");
   const [currentStep, setCurrentStep] = useState<Step>("Dates & Guests");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [transportDays, setTransportDays] = useState(0);
+  const [airportTransferCount, setAirportTransferCount] = useState(0);
 
   const totalGuests = adults + children05 + children616;
 
@@ -293,12 +301,51 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     });
   };
 
+  const numberOfNights = useMemo(() => {
+    if (!checkIn || !checkOut) return 0;
+    const start = new Date(checkIn).getTime();
+    const end = new Date(checkOut).getTime();
+    if (isNaN(start) || isNaN(end) || end <= start) return 0;
+    return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+  }, [checkIn, checkOut]);
+
+  // Initialize transport days whenever nights change and user hasn't overridden
+  useEffect(() => {
+    if (transportDays === 0 && numberOfNights > 0) {
+      setTransportDays(numberOfNights);
+    }
+  }, [numberOfNights, transportDays]);
+
+  const transportServiceId = "transportFullDay";
+  const airportTransferId = "airportTransfer";
+  const [transportRemoved, setTransportRemoved] = useState(false);
+
+  // Auto-select transportation based on days unless user removed it
+  useEffect(() => {
+    if (numberOfNights > 0 && !transportRemoved && !selectedServices.includes(transportServiceId)) {
+      setSelectedServices((prev) => [...prev, transportServiceId]);
+    }
+  }, [numberOfNights, transportRemoved, selectedServices]);
+
+  // Ensure airportTransfer count resets when deselected
+  useEffect(() => {
+    if (!selectedServices.includes(airportTransferId)) {
+      setAirportTransferCount(0);
+    } else if (airportTransferCount === 0) {
+      setAirportTransferCount(1);
+    }
+  }, [selectedServices, airportTransferCount]);
+
   const handleServiceChange = (serviceId: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceId)
-        ? prev.filter((id) => id !== serviceId)
-        : [...prev, serviceId]
-    );
+    setSelectedServices((prev) => {
+      if (prev.includes(serviceId)) {
+        if (serviceId === transportServiceId) setTransportRemoved(true);
+        return prev.filter((id) => id !== serviceId);
+      } else {
+        if (serviceId === transportServiceId) setTransportRemoved(false);
+        return [...prev, serviceId];
+      }
+    });
   };
 
   const handleUpdateRoomBoardType = (type: RoomType, newBoardType: BoardType) => {
@@ -474,6 +521,10 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               handleServiceChange={handleServiceChange}
               message={message}
               setMessage={setMessage}
+              days={transportDays}
+              setDays={setTransportDays}
+              airportTransfers={airportTransferCount}
+              setAirportTransfers={setAirportTransferCount}
             />
             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
@@ -539,6 +590,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               isEastAfricanResident={isEastAfricanResident}
               selectedServices={selectedServices}
               message={message}
+              transportDays={transportDays}
+              airportTransfers={airportTransferCount}
             />
             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
@@ -957,24 +1010,63 @@ const AdditionalServicesForm: React.FC<{
   handleServiceChange: (serviceId: string) => void;
   message: string;
   setMessage: (value: string) => void;
-}> = ({ selectedServices, handleServiceChange, message, setMessage }) => {
+  days: number;
+  setDays: (d: number) => void;
+  airportTransfers: number;
+  setAirportTransfers: (n: number) => void;
+}> = ({ selectedServices, handleServiceChange, message, setMessage, days, setDays, airportTransfers, setAirportTransfers }) => {
   return (
     <div className="space-y-4">
       <div>
         <label className="block mb-1 font-medium">Additional Services</label>
         {additionalServices.map((service) => (
-          <div key={service.id} className="flex items-center">
-            <input
-              type="checkbox"
-              id={service.id}
-              checked={selectedServices.includes(service.id)}
-              onChange={() =>
-                handleServiceChange(service.id)}
-              className="mr-2"
-            />
-            <label htmlFor={service.id}>
-              {service.name} - ${service.price}
-            </label>
+          <div key={service.id} className="flex items-center justify-between py-1">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id={service.id}
+                checked={selectedServices.includes(service.id)}
+                onChange={() =>
+                  handleServiceChange(service.id)}
+                className="mr-2"
+              />
+              <label htmlFor={service.id} className="flex items-center space-x-2 select-none">
+                <span>
+                  {service.name} - $
+                  {service.id === "transportFullDay"
+                    ? `${service.price} per day (Total $${service.price * Math.max(1, days)})`
+                    : service.price}
+                </span>
+
+                {service.id === "transportFullDay" && selectedServices.includes(service.id) && (
+                  <span className="inline-flex items-center ml-2" title="Adjust number of transport days">
+                    <button
+                      type="button"
+                      onClick={() => setDays(Math.max(1, days - 1))}
+                      className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+                    <span className="px-3 py-1 bg-white border-t border-b text-sm" title="Current transport days">{days}</span>
+                    <button
+                      type="button"
+                      onClick={() => setDays(days + 1)}
+                      className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300"
+                    >
+                      +
+                    </button>
+                  </span>
+                )}
+              </label>
+            </div>
+
+            {service.id === "airportTransfer" && selectedServices.includes(service.id) && (
+              <span className="inline-flex items-center ml-2" title="Adjust number of transfers (e.g., arrival & departure)">
+                <button type="button" onClick={() => setAirportTransfers(Math.max(1, airportTransfers - 1))} className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300">-</button>
+                <span className="px-3 py-1 bg-white border-t border-b text-sm" title="Number of transfers">{airportTransfers}</span>
+                <button type="button" onClick={() => setAirportTransfers(airportTransfers + 1)} className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300">+</button>
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -1008,8 +1100,10 @@ const ReviewBooking: React.FC<{
   isEastAfricanResident: boolean;
   selectedServices: string[];
   message: string;
+  transportDays: number;
+  airportTransfers: number;
 }> = (props) => {
-  const calculateTotal = () => {
+  const calculateRoomTotal = () => {
     // Calculate number of nights between check-in and check-out
     const nights = Math.max(
       1,
@@ -1025,6 +1119,31 @@ const ReviewBooking: React.FC<{
       return total + pricePerNight * room.count * nights;
     }, 0);
   };
+
+  const calculateServicesTotal = () => {
+    return props.selectedServices.reduce((total, serviceId) => {
+      const service = additionalServices.find((s) => s.id === serviceId);
+      if (!service) return total;
+      if (service.id === "transportFullDay") {
+        return total + service.price * props.transportDays;
+      }
+      if (service.id === "airportTransfer") {
+        return total + service.price * props.airportTransfers;
+      }
+      return total + service.price;
+    }, 0);
+  };
+
+  const grandTotal = calculateRoomTotal() + calculateServicesTotal();
+
+  const numberOfDays = Math.max(
+    1,
+    Math.ceil(
+      (new Date(props.checkOut).getTime() -
+        new Date(props.checkIn).getTime()) /
+      (1000 * 60 * 60 * 24),
+    ),
+  );
 
   return (
     <div className="space-y-4">
@@ -1065,29 +1184,33 @@ const ReviewBooking: React.FC<{
         <ul>
           {props.roomSelections.map((room, index) => (
             <li key={index}>
-              {room.count} x {room.type}{" "}
-              Bed Room ({room.boardType}) -
-              ${roomPrices[room.type][room.boardType]} per room
+              {room.count} × {room.type} Bed ({room.boardType}) - $ {roomPrices[room.type][room.boardType]} × {numberOfDays} nights = $ {roomPrices[room.type][room.boardType] * numberOfDays * room.count}
             </li>
           ))}
         </ul>
         <p className="mt-4 text-xl font-bold">
-          Total: ${calculateTotal()}
+          Total: ${calculateRoomTotal()}
         </p>
       </div>
       <div>
-        <p>
-          <strong>Additional Services:</strong>
-        </p>
-        <ul>
+        <p className="font-semibold">Additional Services:</p>
+        <ul className="list-disc pl-6 space-y-1">
           {props.selectedServices.map((serviceId) => {
             const service = additionalServices.find((s) => s.id === serviceId);
-            return service && (
-              <li key={serviceId}>{service.name} - ${service.price}</li>
+            if (!service) return null;
+            const priceDisplay = service.id === "transportFullDay"
+              ? `$${service.price} x ${props.transportDays} days = $${service.price * props.transportDays}`
+              : service.id === "airportTransfer"
+                ? `$${service.price} x ${props.airportTransfers} = $${service.price * props.airportTransfers}`
+                : `$${service.price}`;
+            return (
+              <li key={serviceId}>{service.name} - {priceDisplay}</li>
             );
           })}
         </ul>
+        <p className="mt-2 font-medium">Services Total: ${calculateServicesTotal()}</p>
       </div>
+      <p className="text-xl font-bold border-t pt-4">Grand Total: ${grandTotal}</p>
       {props.message && (
         <div>
           <p>
