@@ -105,6 +105,15 @@ export const Footer = () => {
                             >
                                 Bookings & Cancellations
                             </Link>
+                            <Link
+                                href="/gorilla-visitation-guidelines"
+                                className={`font-bold bg-transparent border-none py-3 mr-6 leading-none transition-colors duration-150 hover:text-[#ebf8f7] ${isActive("/gorilla-visitation-guidelines")
+                                    ? "text-[#2c2c2c]"
+                                    : "text-[#ebf8f7]"
+                                    }`}
+                            >
+                                Gorilla&nbsp;Guidelines
+                            </Link>
                         </div>
                     </div>
                 </div>
