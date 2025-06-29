@@ -108,9 +108,8 @@ const Modal = ({
                     width={1000}
                     height={1000}
                     priority
-                    className={`object-contain max-h-[calc(100dvh-100px)] max-w-full ${
-                        isLoading ? "opacity-0" : "opacity-100"
-                    }`}
+                    className={`object-contain max-h-[calc(100dvh-100px)] max-w-full ${isLoading ? "opacity-0" : "opacity-100"
+                        }`}
                     onLoadingComplete={onLoad}
                 />
                 <button
@@ -218,11 +217,10 @@ const RoomImageCarousel = ({ images, roomType }: {
                         {images.map((_, index) => (
                             <div
                                 key={index}
-                                className={`w-2 h-2 rounded-full ${
-                                    index === currentImageIndex
-                                        ? "bg-white"
-                                        : "bg-white/50"
-                                }`}
+                                className={`w-2 h-2 rounded-full ${index === currentImageIndex
+                                    ? "bg-white"
+                                    : "bg-white/50"
+                                    }`}
                             />
                         ))}
                     </div>
@@ -382,7 +380,7 @@ export const RoomsListSection = () => {
                     onClick={closeBookingModal}
                 >
                     <div
-                        className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[90dvh] overflow-y-auto"
+                        className="bg-[#d7dfde] p-6 rounded-lg max-w-3xl w-full max-h-[100dvh] md:max-h-[95dvh] overflow-y-auto"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button

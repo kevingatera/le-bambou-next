@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BookingSection } from "./BookingSection";
 import {
   getStoredBookingData,
@@ -14,6 +14,8 @@ export const BookingCallToActionWithReservationSection = () => {
   const [children05, setChildren05] = useState(0);
   const [children616, setChildren616] = useState(0);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const callToActionRef = useRef<HTMLElement>(null);
+  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
     const storedData = getStoredBookingData();
@@ -39,6 +41,16 @@ export const BookingCallToActionWithReservationSection = () => {
     };
   }, [isBookingModalOpen]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (callToActionRef.current) {
+        setIsSticky(callToActionRef.current.getBoundingClientRect().top <= 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleBookNow = (e: React.FormEvent) => {
     e.preventDefault();
     setStoredBookingData({
@@ -60,7 +72,8 @@ export const BookingCallToActionWithReservationSection = () => {
   return (
     <section
       id="booking-call-to-action-with-reservation-section"
-      className="bg-[rgba(121,98,90,.89)]"
+      ref={callToActionRef}
+      className={`${isSticky ? "bg-[rgba(121,98,90,1)] shadow-md" : "bg-[rgba(121,98,90,.89)]"} sticky top-0 z-50`}
     >
       <div className="container mx-auto md:px-4">
         <form
