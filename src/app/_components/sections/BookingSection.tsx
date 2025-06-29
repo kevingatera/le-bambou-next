@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "react";
 import { type BookingEmailData } from "~/server/utils/emailUtils";
 import { api } from "~/trpc/react";
 import {
@@ -101,6 +107,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   >("idle");
   const [currentStep, setCurrentStep] = useState<Step>("Dates & Guests");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [serviceCounts, setServiceCounts] = useState<Record<string, number>>({});
 
   const totalGuests = adults + children05 + children616;
 
@@ -293,12 +300,77 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     });
   };
 
+  const numberOfNights = useMemo(() => {
+    if (!checkIn || !checkOut) return 0;
+    const start = new Date(checkIn).getTime();
+    const end = new Date(checkOut).getTime();
+    if (isNaN(start) || isNaN(end) || end <= start) return 0;
+    return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+  }, [checkIn, checkOut]);
+
+  // Initialize transport days whenever nights change
+  useEffect(() => {
+    if (numberOfNights > 0 && !serviceCounts.transportFullDay) {
+      setServiceCounts(prev => ({ ...prev, transportFullDay: numberOfNights }));
+    }
+  }, [numberOfNights, serviceCounts.transportFullDay]);
+
+  const transportServiceId = "transportFullDay";
+  const [transportRemoved, setTransportRemoved] = useState(false);
+
+  // Auto-select transportation based on days unless user removed it
+  useEffect(() => {
+    if (numberOfNights > 0 && !transportRemoved && !selectedServices.includes(transportServiceId)) {
+      setSelectedServices((prev) => [...prev, transportServiceId]);
+    }
+  }, [numberOfNights, transportRemoved, selectedServices]);
+
+  // Reset service counts when services are deselected
+  useEffect(() => {
+    const newCounts = { ...serviceCounts };
+    let changed = false;
+
+    // Remove counts for unselected services
+    Object.keys(newCounts).forEach(serviceId => {
+      if (!selectedServices.includes(serviceId)) {
+        delete newCounts[serviceId];
+        changed = true;
+      }
+    });
+
+    // Add default counts for newly selected services
+    selectedServices.forEach(serviceId => {
+      if (!newCounts[serviceId]) {
+        newCounts[serviceId] = serviceId === "transportFullDay" ? numberOfNights : 1;
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      setServiceCounts(newCounts);
+    }
+  }, [selectedServices, serviceCounts, numberOfNights]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (mode === "modal") {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }
+  }, [mode]);
+
   const handleServiceChange = (serviceId: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceId)
-        ? prev.filter((id) => id !== serviceId)
-        : [...prev, serviceId]
-    );
+    setSelectedServices((prev) => {
+      if (prev.includes(serviceId)) {
+        if (serviceId === transportServiceId) setTransportRemoved(true);
+        return prev.filter((id) => id !== serviceId);
+      } else {
+        if (serviceId === transportServiceId) setTransportRemoved(false);
+        return [...prev, serviceId];
+      }
+    });
   };
 
   const handleUpdateRoomBoardType = (type: RoomType, newBoardType: BoardType) => {
@@ -474,6 +546,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               handleServiceChange={handleServiceChange}
               message={message}
               setMessage={setMessage}
+              serviceCounts={serviceCounts}
+              setServiceCounts={setServiceCounts}
             />
             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
@@ -525,39 +599,71 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
         );
       case "Review & Book":
         return (
-          <>
-            <ReviewBooking
-              roomSelections={roomSelections}
-              checkIn={checkIn}
-              checkOut={checkOut}
-              isFlexibleDates={isFlexibleDates}
-              guestName={guestName}
-              guestEmail={guestEmail}
-              adults={adults}
-              children05={children05}
-              children616={children616}
-              isEastAfricanResident={isEastAfricanResident}
-              selectedServices={selectedServices}
-              message={message}
-            />
-            <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
-              <button
-                type="button"
-                onClick={handlePrevious}
-                className="px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300 disabled:opacity-50"
-              >
-                {isSubmitting ? "Booking..." : "Confirm Booking"}
-              </button>
+          <div className="flex flex-col h-[calc(100vh-16rem)] md:h-[calc(100vh-16rem)]">
+            <div className="flex-1 overflow-y-auto pr-2">
+              <ReviewBooking
+                roomSelections={roomSelections}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                isFlexibleDates={isFlexibleDates}
+                guestName={guestName}
+                guestEmail={guestEmail}
+                adults={adults}
+                children05={children05}
+                children616={children616}
+                isEastAfricanResident={isEastAfricanResident}
+                selectedServices={selectedServices}
+                message={message}
+                serviceCounts={serviceCounts}
+              />
             </div>
-          </>
+            <div className="sticky bottom-0 bg-[#d7dfde] border-t border-gray-300 pt-4">
+              {/* Grand Total */}
+              <div className="bg-white border border-gray-300 p-3 rounded-md mb-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-xl font-bold">Grand Total:</span>
+                  <span className="text-xl font-bold text-button">
+                    ${(() => {
+                      const nights = Math.max(
+                        1,
+                        Math.ceil(
+                          (new Date(checkOut).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24)
+                        )
+                      );
+                      const roomTotal = roomSelections.reduce((total, room) => {
+                        const pricePerNight = roomPrices[room.type][room.boardType];
+                        return total + pricePerNight * room.count * nights;
+                      }, 0);
+                      const servicesTotal = selectedServices.reduce((total, serviceId) => {
+                        const service = additionalServices.find((s) => s.id === serviceId);
+                        if (!service) return total;
+                        const count = serviceCounts[serviceId] ?? 1;
+                        return total + service.price * count;
+                      }, 0);
+                      return roomTotal + servicesTotal;
+                    })()}
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center md:space-x-4 space-y-4 md:space-y-0">
+                <button
+                  type="button"
+                  onClick={handlePrevious}
+                  className="px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Booking..." : "Confirm Booking"}
+                </button>
+              </div>
+            </div>
+          </div>
         );
     }
   };
@@ -622,7 +728,7 @@ const Breadcrumbs: React.FC<
   const isLastStep = currentStep === steps[steps.length - 1];
 
   return (
-    <nav className="mb-6 relative overflow-hidden">
+    <nav className="mb-4 relative overflow-hidden">
       <ol className="flex items-center space-x-2 text-sm whitespace-nowrap">
         {steps.map((step, index) => {
           const isCompleted = index < steps.indexOf(currentStep);
@@ -957,24 +1063,59 @@ const AdditionalServicesForm: React.FC<{
   handleServiceChange: (serviceId: string) => void;
   message: string;
   setMessage: (value: string) => void;
-}> = ({ selectedServices, handleServiceChange, message, setMessage }) => {
+  serviceCounts: Record<string, number>;
+  setServiceCounts: (counts: Record<string, number>) => void;
+}> = ({ selectedServices, handleServiceChange, message, setMessage, serviceCounts, setServiceCounts }) => {
+
+  const updateServiceCount = (serviceId: string, count: number) => {
+    setServiceCounts({ ...serviceCounts, [serviceId]: Math.max(1, count) });
+  };
+
   return (
     <div className="space-y-4">
       <div>
         <label className="block mb-1 font-medium">Additional Services</label>
         {additionalServices.map((service) => (
-          <div key={service.id} className="flex items-center">
-            <input
-              type="checkbox"
-              id={service.id}
-              checked={selectedServices.includes(service.id)}
-              onChange={() =>
-                handleServiceChange(service.id)}
-              className="mr-2"
-            />
-            <label htmlFor={service.id}>
-              {service.name} - ${service.price}
-            </label>
+          <div key={service.id} className="flex items-center justify-between py-1">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id={service.id}
+                checked={selectedServices.includes(service.id)}
+                onChange={() => handleServiceChange(service.id)}
+                className="mr-2"
+              />
+              <label htmlFor={service.id} className="flex items-center space-x-2 select-none">
+                <span>
+                  {service.name} - $
+                  {service.allowQuantity && selectedServices.includes(service.id)
+                    ? `${service.price} ${service.id === "transportFullDay" ? "per day" : "each"} (Total $${service.price * (serviceCounts[service.id] ?? 1)})`
+                    : service.price}
+                </span>
+              </label>
+            </div>
+
+            {service.allowQuantity && selectedServices.includes(service.id) && (
+              <span className="inline-flex items-center ml-2" title={`Adjust quantity for ${service.name}`}>
+                <button
+                  type="button"
+                  onClick={() => updateServiceCount(service.id, (serviceCounts[service.id] ?? 1) - 1)}
+                  className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300 text-sm"
+                >
+                  -
+                </button>
+                <span className="px-3 py-1 bg-white border-t border-b text-sm min-w-[2rem] text-center">
+                  {serviceCounts[service.id] ?? 1}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => updateServiceCount(service.id, (serviceCounts[service.id] ?? 1) + 1)}
+                  className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300 text-sm"
+                >
+                  +
+                </button>
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -1008,84 +1149,123 @@ const ReviewBooking: React.FC<{
   isEastAfricanResident: boolean;
   selectedServices: string[];
   message: string;
+  serviceCounts: Record<string, number>;
 }> = (props) => {
-  const calculateTotal = () => {
+  const calculateRoomTotal = () => {
+    // Calculate number of nights between check-in and check-out
+    const nights = Math.max(
+      1,
+      Math.ceil(
+        (new Date(props.checkOut).getTime() -
+          new Date(props.checkIn).getTime()) /
+        (1000 * 60 * 60 * 24),
+      ),
+    );
+
     return props.roomSelections.reduce((total, room) => {
-      const price = roomPrices[room.type][room.boardType];
-      return total + (price * room.count);
+      const pricePerNight = roomPrices[room.type][room.boardType];
+      return total + pricePerNight * room.count * nights;
     }, 0);
   };
 
+  const calculateServicesTotal = () => {
+    return props.selectedServices.reduce((total, serviceId) => {
+      const service = additionalServices.find((s) => s.id === serviceId);
+      if (!service) return total;
+      const count = props.serviceCounts[serviceId] ?? 1;
+      return total + service.price * count;
+    }, 0);
+  };
+
+  const grandTotal = calculateRoomTotal() + calculateServicesTotal();
+
+  const numberOfDays = Math.max(
+    1,
+    Math.ceil(
+      (new Date(props.checkOut).getTime() -
+        new Date(props.checkIn).getTime()) /
+      (1000 * 60 * 60 * 24),
+    ),
+  );
+
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Booking Summary</h3>
-      <div>
-        <p>
-          <strong>Guest:</strong> {props.guestName}
-        </p>
-        <p>
-          <strong>Email:</strong> {props.guestEmail}
-        </p>
-        <p>
-          <strong>Guests:</strong> {props.adults} Adults, {props.children05}
-          {" "}
-          Children (0-5), {props.children616} Children (6-16)
-        </p>
-        <p>
-          <strong>East African Resident:</strong>{" "}
-          {props.isEastAfricanResident ? "Yes" : "No"}
-        </p>
-      </div>
-      <div>
-        <p>
-          <strong>Check-in:</strong> {props.checkIn}
-        </p>
-        <p>
-          <strong>Check-out:</strong> {props.checkOut}
-        </p>
-        <p>
-          <strong>Flexible Dates:</strong>{" "}
-          {props.isFlexibleDates ? "Yes" : "No"}
-        </p>
-      </div>
-      <div>
-        <p>
-          <strong>Room Selection:</strong>
-        </p>
-        <ul>
-          {props.roomSelections.map((room, index) => (
-            <li key={index}>
-              {room.count} x {room.type}{" "}
-              Bed Room ({room.boardType}) -
-              ${roomPrices[room.type][room.boardType]} per room
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-xl font-bold">
-          Total: ${calculateTotal()}
-        </p>
-      </div>
-      <div>
-        <p>
-          <strong>Additional Services:</strong>
-        </p>
-        <ul>
-          {props.selectedServices.map((serviceId) => {
-            const service = additionalServices.find((s) => s.id === serviceId);
-            return service && (
-              <li key={serviceId}>{service.name} - ${service.price}</li>
-            );
-          })}
-        </ul>
-      </div>
-      {props.message && (
-        <div>
-          <p>
-            <strong>Additional Message:</strong>
-          </p>
-          <p>{props.message}</p>
+    <div className="space-y-3">
+      <h3 className="text-xl font-semibold mb-3">Booking Summary</h3>
+
+      <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {/* Guest Information */}
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Guest Information</h4>
+            <div className="space-y-0.5 text-xs">
+              <p><span className="font-medium">Name:</span> {props.guestName}</p>
+              <p><span className="font-medium">Email:</span> {props.guestEmail}</p>
+              <p><span className="font-medium">Guests:</span> {props.adults} Adults{props.children05 > 0 ? `, ${props.children05} Children (0-5)` : ''}{props.children616 > 0 ? `, ${props.children616} Children (6-16)` : ''}</p>
+              <p><span className="font-medium">East African Resident:</span> {props.isEastAfricanResident ? "Yes" : "No"}</p>
+            </div>
+          </div>
+
+          {/* Stay Details */}
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Stay Details</h4>
+            <div className="space-y-0.5 text-xs">
+              <p><span className="font-medium">Check-in:</span> {props.checkIn}</p>
+              <p><span className="font-medium">Check-out:</span> {props.checkOut}</p>
+              <p><span className="font-medium">Nights:</span> {numberOfDays}</p>
+              <p><span className="font-medium">Flexible Dates:</span> {props.isFlexibleDates ? "Yes" : "No"}</p>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Room Selection */}
+        <div className="bg-gray-50 p-3 rounded-md">
+          <h4 className="font-medium text-gray-700 mb-1 text-sm">Room Selection</h4>
+          <div className="space-y-1 text-xs">
+            {props.roomSelections.map((room, index) => (
+              <div key={index} className="flex justify-between">
+                <span>{room.count} × {room.type} Bed ({room.boardType})</span>
+                <span>${roomPrices[room.type][room.boardType] * numberOfDays * room.count}</span>
+              </div>
+            ))}
+            <div className="border-t pt-1 mt-1 font-medium flex justify-between text-sm">
+              <span>Room Total:</span>
+              <span>${calculateRoomTotal()}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Services */}
+        {props.selectedServices.length > 0 && (
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Additional Services</h4>
+            <div className="space-y-1 text-xs">
+              {props.selectedServices.map((serviceId) => {
+                const service = additionalServices.find((s) => s.id === serviceId);
+                if (!service) return null;
+                const count = props.serviceCounts[serviceId] ?? 1;
+                return (
+                  <div key={serviceId} className="flex justify-between">
+                    <span>{service.name}{count > 1 ? ` (x${count})` : ''}</span>
+                    <span>${service.price * count}</span>
+                  </div>
+                );
+              })}
+              <div className="border-t pt-1 mt-1 font-medium flex justify-between text-sm">
+                <span>Services Total:</span>
+                <span>${calculateServicesTotal()}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Additional Message */}
+        {props.message && (
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Additional Message</h4>
+            <p className="text-xs">{props.message}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
