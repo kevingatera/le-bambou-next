@@ -4,8 +4,6 @@ import {
     roomPrices,
     type RoomSelection,
 } from "~/types/booking";
-import fs from "fs";
-import path from "path";
 import { isEmail } from "validator";
 import dns from "dns";
 import { promisify } from "util";
@@ -90,9 +88,10 @@ export async function sendBookingConfirmationEmails(
 
     // Calculate total room cost
     const calculateRoomTotal = (roomSelections: RoomSelection[]) => {
+        const nights = calculateNumberOfNights(booking.checkIn, booking.checkOut);
         return roomSelections.reduce((total, room) => {
-            const price = roomPrices[room.type][room.boardType];
-            return total + (price * room.count);
+            const pricePerNight = roomPrices[room.type][room.boardType];
+            return total + pricePerNight * room.count * nights;
         }, 0);
     };
 
@@ -104,18 +103,19 @@ export async function sendBookingConfirmationEmails(
         }, 0);
     };
 
+    const calculateNumberOfNights = (checkIn: string, checkOut: string) => {
+        const startDate = new Date(checkIn);
+        const endDate = new Date(checkOut);
+        const timeDifference = endDate.getTime() - startDate.getTime();
+        const numberOfNights = Math.ceil(
+            timeDifference / (1000 * 60 * 60 * 24),
+        );
+        return numberOfNights;
+    };
+
     const roomTotal = calculateRoomTotal(booking.roomSelections);
     const servicesTotal = calculateServicesTotal(booking.selectedServices);
     const grandTotal = roomTotal + servicesTotal;
-
-    // Read and encode the logo image
-    const logoPath = path.join(
-        process.cwd(),
-        "public",
-        "images",
-        "Asset-34x.png",
-    );
-    const logoBase64 = fs.readFileSync(logoPath, { encoding: "base64" });
 
     const guestMailOptions = {
         from: isDevelopment
@@ -165,54 +165,88 @@ export async function sendBookingConfirmationEmails(
             <body>
                 <div class="container">
                     <div class="header">
-                        <img src="data:image/png;base64,${logoBase64}" alt="Le Bambou Gorilla Lodge" class="logo">
+                        <img src="https://lebambougorillalodge.com/images/Asset-34x.png" alt="Le Bambou Gorilla Lodge" class="logo" style="display: block; margin: 0 auto; width: 100px; height: auto;">
                         <h1>Le Bambou Gorilla Lodge</h1>
                     </div>
                     <div class="content">
                         <h2>Booking Confirmation</h2>
                         <p>Dear ${booking.guestName},</p>
-                        <p>Thank you for booking with Le Bambou Gorilla Lodge. Your booking details are as follows:</p>
-                        <ul>
-                            <li><strong>Booking ID:</strong> ${booking.id}</li>
-                            <li><strong>Check-in:</strong> ${booking.checkIn}</li>
-                            <li><strong>Check-out:</strong> ${booking.checkOut}</li>
-                            <li><strong>Room(s):</strong></li>
-                            <ul>
-                                ${
-            booking.roomSelections.map((r) => `
-                                    <li>${r.count} ${r.type} (${r.boardType}) - $${
-                roomPrices[r.type][r.boardType]
-            } per room</li>
-                                `).join("")
-        }
-                            </ul>
-                            <li><strong>Room Total:</strong> $${roomTotal}</li>
-                            <li><strong>Guests:</strong> ${booking.adults} Adults${
-            booking.children05 > 0 || booking.children616 > 0
-                ? `, ${booking.children05} Children (0-5), ${booking.children616} Children (6-16)`
-                : ""
-        }</li>
-                            <li><strong>East African Resident:</strong> ${
-            booking.isEastAfricanResident ? "Yes" : "No"
-        }</li>
-                            <li><strong>Selected Services:</strong></li>
-                            <ul>
-                                ${
-            booking.selectedServices.map((serviceId) => {
-                const service = additionalServices.find((s) =>
-                    s.id === serviceId
-                );
-                if (!service) return "";
-                const priceDisplay = service.id === "transportation"
-                    ? "$100-$250"
-                    : `$${service.price}`;
-                return `<li>${service.name} - ${priceDisplay}</li>`;
-            }).join("")
-        }
-                            </ul>
-                            <li><strong>Services Total:</strong> $${servicesTotal}</li>
-                            <li><strong>Grand Total:</strong> $${grandTotal}</li>
+                        <p>Thank you for booking with Le Bambou Gorilla Lodge. Here are your booking details:</p>
+                        
+                        <h3 style="margin: 20px 0 10px; color: #2c2c2c;">Booking Summary</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 8px;"><strong>Booking ID:</strong> ${booking.id}</li>
+                            <li style="margin-bottom: 8px;"><strong>Dates:</strong> ${booking.checkIn} to ${booking.checkOut} (${calculateNumberOfNights(booking.checkIn, booking.checkOut)
+            } nights)</li>
+                            <li style="margin-bottom: 8px;"><strong>Guest Type:</strong> ${booking.isEastAfricanResident
+                ? "East African Resident"
+                : "International Guest"
+            }</li>
                         </ul>
+
+                        <h3 style="margin: 25px 0 10px; color: #2c2c2c;">Accommodation Details</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            ${booking.roomSelections.map((r) => `
+                                <li style="margin-bottom: 8px;">
+                                    ${r.count} × ${r.type} (${r.boardType}) 
+                                    <span style="float: right;">@ $${roomPrices[r.type][r.boardType]
+                }</span>
+                                </li>
+                            `).join("")
+            }
+                            <li style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
+                                <strong>Room Total:</strong> 
+                                <span style="float: right;">$${roomTotal}</span>
+                            </li>
+                        </ul>
+
+                        <h3 style="margin: 25px 0 10px; color: #2c2c2c;">Guest Composition</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>Adults: ${booking.adults}</li>
+                            ${booking.children05 > 0
+                ? `<li>Children 0-5: ${booking.children05}</li>`
+                : ""
+            }
+                            ${booking.children616 > 0
+                ? `<li>Children 6-16: ${booking.children616}</li>`
+                : ""
+            }
+                        </ul>
+
+                        ${booking.selectedServices.length > 0
+                ? `
+                            <h3 style="margin: 25px 0 10px; color: #2c2c2c;">Additional Services</h3>
+                            <ul style="list-style: none; padding-left: 0;">
+                                ${booking.selectedServices.map((serviceId) => {
+                    const service = additionalServices.find((s) =>
+                        s.id === serviceId
+                    );
+                    return service
+                        ? `
+                                        <li style="margin-bottom: 8px;">
+                                            ${service.name}
+                                            <span style="float: right;">$${service.price}</span>
+                                        </li>
+                                    `
+                        : "";
+                }).join("")
+                }
+                                <li style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
+                                    <strong>Services Total:</strong> 
+                                    <span style="float: right;">$${servicesTotal}</span>
+                                </li>
+                            </ul>
+                        `
+                : ""
+            }
+
+                        <div style="margin: 30px 0; background: #f8f8f8; padding: 20px; border-radius: 8px;">
+                            <h3 style="margin: 0 0 15px; color: #2c2c2c;">Total Amount Due</h3>
+                            <p style="font-size: 1.4em; margin: 0;">
+                                $${grandTotal}
+                                <span style="font-size: 0.8em; color: #666;">(USD)</span>
+                            </p>
+                        </div>
 
                         <div style="margin-top: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 5px;">
                             <h3 style="color: #2c2c2c; margin-bottom: 10px;">Payment Information</h3>
@@ -227,9 +261,8 @@ export async function sendBookingConfirmationEmails(
                         <p>We look forward to welcoming you to Le Bambou Gorilla Lodge!</p>
                     </div>
                     <div class="footer">
-                        <p>&copy; ${
-            new Date().getFullYear()
-        } Le Bambou Gorilla Lodge. All rights reserved.</p>
+                        <p>&copy; ${new Date().getFullYear()
+            } Le Bambou Gorilla Lodge. All rights reserved.</p>
                     </div>
                 </div>
             </body>
@@ -257,37 +290,29 @@ export async function sendBookingConfirmationEmails(
                 <li>Check-out: ${booking.checkOut}</li>
                 <li>Room(s):</li>
                 <ul>
-                    ${
-            booking.roomSelections.map((r) => `
-                        <li>${r.count} ${r.type} (${r.boardType}) - $${
-                roomPrices[r.type][r.boardType]
+                    ${booking.roomSelections.map((r) => `
+                        <li>${r.count} ${r.type} (${r.boardType}) - $${roomPrices[r.type][r.boardType]
             } per room</li>
                     `).join("")
-        }
+            }
                 </ul>
                 <li>Room Total: $${roomTotal}</li>
-                <li>Guests: ${booking.adults} Adults${
-            booking.children05 > 0 || booking.children616 > 0
+                <li>Guests: ${booking.adults} Adults${booking.children05 > 0 || booking.children616 > 0
                 ? `, ${booking.children05} Children (0-5), ${booking.children616} Children (6-16)`
                 : ""
-        }</li>
-                <li>East African Resident: ${
-            booking.isEastAfricanResident ? "Yes" : "No"
-        }</li>
+            }</li>
+                <li>East African Resident: ${booking.isEastAfricanResident ? "Yes" : "No"
+            }</li>
                 <li>Selected Services:</li>
                 <ul>
-                    ${
-            booking.selectedServices.map((serviceId) => {
+                    ${booking.selectedServices.map((serviceId) => {
                 const service = additionalServices.find((s) =>
                     s.id === serviceId
                 );
                 if (!service) return "";
-                const priceDisplay = service.id === "transportation"
-                    ? "$100-$250"
-                    : `$${service.price}`;
-                return `<li>${service.name} - ${priceDisplay}</li>`;
+                return `<li>${service.name} - $${service.price}</li>`;
             }).join("")
-        }
+            }
                 </ul>
                 <li>Services Total: $${servicesTotal}</li>
                 <li>Grand Total: $${grandTotal}</li>

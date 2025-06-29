@@ -14,7 +14,8 @@ export interface AdditionalService {
 }
 
 export const additionalServices: AdditionalService[] = [
-  { id: "transportation", name: "Transportation (100-250)", price: 100 },
+  { id: "airportTransfer", name: "Airport Transfer Kigali ↔ Kinigi (one-way)", price: 100 },
+  { id: "transportFullDay", name: "Transportation Full-Day (driver & vehicle)", price: 250 },
   { id: "boatTour", name: "Twin Lake Burera and Ruhondo Boat Tour", price: 30 },
   { id: "bisokeHiking", name: "Bisoke Hiking Permit", price: 75 },
   { id: "goldenMonkey", name: "Golden Monkey Permit", price: 100 },

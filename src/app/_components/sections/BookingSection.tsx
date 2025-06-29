@@ -1010,9 +1010,19 @@ const ReviewBooking: React.FC<{
   message: string;
 }> = (props) => {
   const calculateTotal = () => {
+    // Calculate number of nights between check-in and check-out
+    const nights = Math.max(
+      1,
+      Math.ceil(
+        (new Date(props.checkOut).getTime() -
+          new Date(props.checkIn).getTime()) /
+        (1000 * 60 * 60 * 24),
+      ),
+    );
+
     return props.roomSelections.reduce((total, room) => {
-      const price = roomPrices[room.type][room.boardType];
-      return total + (price * room.count);
+      const pricePerNight = roomPrices[room.type][room.boardType];
+      return total + pricePerNight * room.count * nights;
     }, 0);
   };
 
