@@ -11,15 +11,16 @@ export interface AdditionalService {
   id: string;
   name: string;
   price: number;
+  allowQuantity?: boolean;
 }
 
 export const additionalServices: AdditionalService[] = [
-  { id: "airportTransfer", name: "Airport Transfer Kigali ↔ Kinigi (one-way)", price: 100 },
-  { id: "transportFullDay", name: "Transportation Full-Day (driver & vehicle)", price: 250 },
-  { id: "boatTour", name: "Twin Lake Burera and Ruhondo Boat Tour", price: 30 },
-  { id: "bisokeHiking", name: "Bisoke Hiking Permit", price: 75 },
-  { id: "goldenMonkey", name: "Golden Monkey Permit", price: 100 },
-  { id: "gorillaPermit", name: "Gorilla Permit", price: 1500 },
+  { id: "airportTransfer", name: "Airport Transfer (one-way)", price: 100, allowQuantity: true },
+  { id: "transportFullDay", name: "Full-Day Transport (driver & vehicle)", price: 250, allowQuantity: true },
+  { id: "boatTour", name: "Twin Lakes Boat Tour", price: 30, allowQuantity: true },
+  { id: "bisokeHiking", name: "Bisoke Hiking Permit", price: 75, allowQuantity: true },
+  { id: "goldenMonkey", name: "Golden Monkey Permit", price: 100, allowQuantity: true },
+  { id: "gorillaPermit", name: "Gorilla Permit", price: 1500, allowQuantity: true },
 ];
 
 export interface RoomPricing {

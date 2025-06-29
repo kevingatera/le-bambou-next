@@ -71,6 +71,7 @@ export interface BookingEmailData {
     message: string | null;
     createdAt: Date;
     updatedAt: Date | null;
+    serviceCounts?: Record<string, number>;
 }
 
 export async function sendBookingConfirmationEmails(
@@ -96,15 +97,13 @@ export async function sendBookingConfirmationEmails(
     };
 
     // Calculate services total
-    const calculateServicesTotal = (selectedServices: string[]) => {
+    const calculateServicesTotal = (selectedServices: string[], serviceCounts: Record<string, number> = {}) => {
         const days = calculateNumberOfNights(booking.checkIn, booking.checkOut);
         return selectedServices.reduce((total, serviceId) => {
             const service = additionalServices.find((s) => s.id === serviceId);
             if (!service) return total;
-            if (service.id === "transportFullDay") {
-                return total + service.price * days;
-            }
-            return total + service.price;
+            const count = serviceCounts[serviceId] ?? (serviceId === "transportFullDay" ? days : 1);
+            return total + service.price * count;
         }, 0);
     };
 
@@ -119,7 +118,7 @@ export async function sendBookingConfirmationEmails(
     };
 
     const roomTotal = calculateRoomTotal(booking.roomSelections);
-    const servicesTotal = calculateServicesTotal(booking.selectedServices);
+    const servicesTotal = calculateServicesTotal(booking.selectedServices, booking.serviceCounts ?? {});
     const grandTotal = roomTotal + servicesTotal;
 
     const guestMailOptions = {
@@ -227,12 +226,13 @@ export async function sendBookingConfirmationEmails(
                         s.id === serviceId
                     );
                     if (!service) return "";
-                    if (service.id === "transportFullDay") {
-                        const days = calculateNumberOfNights(booking.checkIn, booking.checkOut);
+                    const count = booking.serviceCounts?.[serviceId] ?? (serviceId === "transportFullDay" ? calculateNumberOfNights(booking.checkIn, booking.checkOut) : 1);
+                    if (service.allowQuantity && count > 1) {
+                        const unit = serviceId === "transportFullDay" ? "days" : "";
                         return `
                                         <li style="margin-bottom: 8px;">
                                             ${service.name}
-                                            <span style="float: right;">$${service.price} x ${days} days = $${service.price * days}</span>
+                                            <span style="float: right;">$${service.price} x ${count} ${unit} = $${service.price * count}</span>
                                         </li>
                                     `;
                     }
@@ -323,9 +323,10 @@ export async function sendBookingConfirmationEmails(
                     s.id === serviceId
                 );
                 if (!service) return "";
-                if (service.id === "transportFullDay") {
-                    const days = calculateNumberOfNights(booking.checkIn, booking.checkOut);
-                    return `<li>${service.name} - $${service.price} x ${days} days = $${service.price * days}</li>`;
+                const count = booking.serviceCounts?.[serviceId] ?? (serviceId === "transportFullDay" ? calculateNumberOfNights(booking.checkIn, booking.checkOut) : 1);
+                if (service.allowQuantity && count > 1) {
+                    const unit = serviceId === "transportFullDay" ? " days" : "";
+                    return `<li>${service.name} - $${service.price} x ${count}${unit} = $${service.price * count}</li>`;
                 }
                 return `<li>${service.name} - $${service.price}</li>`;
             }).join("")

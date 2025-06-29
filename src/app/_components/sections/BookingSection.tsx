@@ -107,8 +107,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   >("idle");
   const [currentStep, setCurrentStep] = useState<Step>("Dates & Guests");
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [transportDays, setTransportDays] = useState(0);
-  const [airportTransferCount, setAirportTransferCount] = useState(0);
+  const [serviceCounts, setServiceCounts] = useState<Record<string, number>>({});
 
   const totalGuests = adults + children05 + children616;
 
@@ -309,15 +308,14 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
   }, [checkIn, checkOut]);
 
-  // Initialize transport days whenever nights change and user hasn't overridden
+  // Initialize transport days whenever nights change
   useEffect(() => {
-    if (transportDays === 0 && numberOfNights > 0) {
-      setTransportDays(numberOfNights);
+    if (numberOfNights > 0 && !serviceCounts.transportFullDay) {
+      setServiceCounts(prev => ({ ...prev, transportFullDay: numberOfNights }));
     }
-  }, [numberOfNights, transportDays]);
+  }, [numberOfNights, serviceCounts.transportFullDay]);
 
   const transportServiceId = "transportFullDay";
-  const airportTransferId = "airportTransfer";
   const [transportRemoved, setTransportRemoved] = useState(false);
 
   // Auto-select transportation based on days unless user removed it
@@ -327,14 +325,41 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     }
   }, [numberOfNights, transportRemoved, selectedServices]);
 
-  // Ensure airportTransfer count resets when deselected
+  // Reset service counts when services are deselected
   useEffect(() => {
-    if (!selectedServices.includes(airportTransferId)) {
-      setAirportTransferCount(0);
-    } else if (airportTransferCount === 0) {
-      setAirportTransferCount(1);
+    const newCounts = { ...serviceCounts };
+    let changed = false;
+
+    // Remove counts for unselected services
+    Object.keys(newCounts).forEach(serviceId => {
+      if (!selectedServices.includes(serviceId)) {
+        delete newCounts[serviceId];
+        changed = true;
+      }
+    });
+
+    // Add default counts for newly selected services
+    selectedServices.forEach(serviceId => {
+      if (!newCounts[serviceId]) {
+        newCounts[serviceId] = serviceId === "transportFullDay" ? numberOfNights : 1;
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      setServiceCounts(newCounts);
     }
-  }, [selectedServices, airportTransferCount]);
+  }, [selectedServices, serviceCounts, numberOfNights]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (mode === "modal") {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }
+  }, [mode]);
 
   const handleServiceChange = (serviceId: string) => {
     setSelectedServices((prev) => {
@@ -521,10 +546,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               handleServiceChange={handleServiceChange}
               message={message}
               setMessage={setMessage}
-              days={transportDays}
-              setDays={setTransportDays}
-              airportTransfers={airportTransferCount}
-              setAirportTransfers={setAirportTransferCount}
+              serviceCounts={serviceCounts}
+              setServiceCounts={setServiceCounts}
             />
             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
@@ -590,8 +613,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               isEastAfricanResident={isEastAfricanResident}
               selectedServices={selectedServices}
               message={message}
-              transportDays={transportDays}
-              airportTransfers={airportTransferCount}
+              serviceCounts={serviceCounts}
             />
             <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
               <button
@@ -1010,11 +1032,14 @@ const AdditionalServicesForm: React.FC<{
   handleServiceChange: (serviceId: string) => void;
   message: string;
   setMessage: (value: string) => void;
-  days: number;
-  setDays: (d: number) => void;
-  airportTransfers: number;
-  setAirportTransfers: (n: number) => void;
-}> = ({ selectedServices, handleServiceChange, message, setMessage, days, setDays, airportTransfers, setAirportTransfers }) => {
+  serviceCounts: Record<string, number>;
+  setServiceCounts: (counts: Record<string, number>) => void;
+}> = ({ selectedServices, handleServiceChange, message, setMessage, serviceCounts, setServiceCounts }) => {
+
+  const updateServiceCount = (serviceId: string, count: number) => {
+    setServiceCounts({ ...serviceCounts, [serviceId]: Math.max(1, count) });
+  };
+
   return (
     <div className="space-y-4">
       <div>
@@ -1026,45 +1051,38 @@ const AdditionalServicesForm: React.FC<{
                 type="checkbox"
                 id={service.id}
                 checked={selectedServices.includes(service.id)}
-                onChange={() =>
-                  handleServiceChange(service.id)}
+                onChange={() => handleServiceChange(service.id)}
                 className="mr-2"
               />
               <label htmlFor={service.id} className="flex items-center space-x-2 select-none">
                 <span>
                   {service.name} - $
-                  {service.id === "transportFullDay"
-                    ? `${service.price} per day (Total $${service.price * Math.max(1, days)})`
+                  {service.allowQuantity && selectedServices.includes(service.id)
+                    ? `${service.price} ${service.id === "transportFullDay" ? "per day" : "each"} (Total $${service.price * (serviceCounts[service.id] ?? 1)})`
                     : service.price}
                 </span>
-
-                {service.id === "transportFullDay" && selectedServices.includes(service.id) && (
-                  <span className="inline-flex items-center ml-2" title="Adjust number of transport days">
-                    <button
-                      type="button"
-                      onClick={() => setDays(Math.max(1, days - 1))}
-                      className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300"
-                    >
-                      -
-                    </button>
-                    <span className="px-3 py-1 bg-white border-t border-b text-sm" title="Current transport days">{days}</span>
-                    <button
-                      type="button"
-                      onClick={() => setDays(days + 1)}
-                      className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300"
-                    >
-                      +
-                    </button>
-                  </span>
-                )}
               </label>
             </div>
 
-            {service.id === "airportTransfer" && selectedServices.includes(service.id) && (
-              <span className="inline-flex items-center ml-2" title="Adjust number of transfers (e.g., arrival & departure)">
-                <button type="button" onClick={() => setAirportTransfers(Math.max(1, airportTransfers - 1))} className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300">-</button>
-                <span className="px-3 py-1 bg-white border-t border-b text-sm" title="Number of transfers">{airportTransfers}</span>
-                <button type="button" onClick={() => setAirportTransfers(airportTransfers + 1)} className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300">+</button>
+            {service.allowQuantity && selectedServices.includes(service.id) && (
+              <span className="inline-flex items-center ml-2" title={`Adjust quantity for ${service.name}`}>
+                <button
+                  type="button"
+                  onClick={() => updateServiceCount(service.id, (serviceCounts[service.id] ?? 1) - 1)}
+                  className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300 text-sm"
+                >
+                  -
+                </button>
+                <span className="px-3 py-1 bg-white border-t border-b text-sm min-w-[2rem] text-center">
+                  {serviceCounts[service.id] ?? 1}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => updateServiceCount(service.id, (serviceCounts[service.id] ?? 1) + 1)}
+                  className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300 text-sm"
+                >
+                  +
+                </button>
               </span>
             )}
           </div>
@@ -1100,8 +1118,7 @@ const ReviewBooking: React.FC<{
   isEastAfricanResident: boolean;
   selectedServices: string[];
   message: string;
-  transportDays: number;
-  airportTransfers: number;
+  serviceCounts: Record<string, number>;
 }> = (props) => {
   const calculateRoomTotal = () => {
     // Calculate number of nights between check-in and check-out
@@ -1124,13 +1141,8 @@ const ReviewBooking: React.FC<{
     return props.selectedServices.reduce((total, serviceId) => {
       const service = additionalServices.find((s) => s.id === serviceId);
       if (!service) return total;
-      if (service.id === "transportFullDay") {
-        return total + service.price * props.transportDays;
-      }
-      if (service.id === "airportTransfer") {
-        return total + service.price * props.airportTransfers;
-      }
-      return total + service.price;
+      const count = props.serviceCounts[serviceId] ?? 1;
+      return total + service.price * count;
     }, 0);
   };
 
@@ -1198,11 +1210,10 @@ const ReviewBooking: React.FC<{
           {props.selectedServices.map((serviceId) => {
             const service = additionalServices.find((s) => s.id === serviceId);
             if (!service) return null;
-            const priceDisplay = service.id === "transportFullDay"
-              ? `$${service.price} x ${props.transportDays} days = $${service.price * props.transportDays}`
-              : service.id === "airportTransfer"
-                ? `$${service.price} x ${props.airportTransfers} = $${service.price * props.airportTransfers}`
-                : `$${service.price}`;
+            const count = props.serviceCounts[serviceId] ?? 1;
+            const priceDisplay = service.allowQuantity && count > 1
+              ? `$${service.price} x ${count} ${service.id === "transportFullDay" ? "days" : ""} = $${service.price * count}`
+              : `$${service.price}`;
             return (
               <li key={serviceId}>{service.name} - {priceDisplay}</li>
             );
