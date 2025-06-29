@@ -599,40 +599,71 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
         );
       case "Review & Book":
         return (
-          <>
-            <ReviewBooking
-              roomSelections={roomSelections}
-              checkIn={checkIn}
-              checkOut={checkOut}
-              isFlexibleDates={isFlexibleDates}
-              guestName={guestName}
-              guestEmail={guestEmail}
-              adults={adults}
-              children05={children05}
-              children616={children616}
-              isEastAfricanResident={isEastAfricanResident}
-              selectedServices={selectedServices}
-              message={message}
-              serviceCounts={serviceCounts}
-            />
-            <div className="mt-4 flex flex-col md:flex-row md:justify-between md:space-x-4 space-y-4 md:space-y-0">
-              <button
-                type="button"
-                onClick={handlePrevious}
-                className="px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300 disabled:opacity-50"
-              >
-                {isSubmitting ? "Booking..." : "Confirm Booking"}
-              </button>
+          <div className="flex flex-col h-[calc(100vh-16rem)] md:h-[calc(100vh-16rem)]">
+            <div className="flex-1 overflow-y-auto pr-2">
+              <ReviewBooking
+                roomSelections={roomSelections}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                isFlexibleDates={isFlexibleDates}
+                guestName={guestName}
+                guestEmail={guestEmail}
+                adults={adults}
+                children05={children05}
+                children616={children616}
+                isEastAfricanResident={isEastAfricanResident}
+                selectedServices={selectedServices}
+                message={message}
+                serviceCounts={serviceCounts}
+              />
             </div>
-          </>
+            <div className="sticky bottom-0 bg-[#d7dfde] border-t border-gray-300 pt-4">
+              {/* Grand Total */}
+              <div className="bg-white border border-gray-300 p-3 rounded-md mb-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-xl font-bold">Grand Total:</span>
+                  <span className="text-xl font-bold text-button">
+                    ${(() => {
+                      const nights = Math.max(
+                        1,
+                        Math.ceil(
+                          (new Date(checkOut).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24)
+                        )
+                      );
+                      const roomTotal = roomSelections.reduce((total, room) => {
+                        const pricePerNight = roomPrices[room.type][room.boardType];
+                        return total + pricePerNight * room.count * nights;
+                      }, 0);
+                      const servicesTotal = selectedServices.reduce((total, serviceId) => {
+                        const service = additionalServices.find((s) => s.id === serviceId);
+                        if (!service) return total;
+                        const count = serviceCounts[serviceId] ?? 1;
+                        return total + service.price * count;
+                      }, 0);
+                      return roomTotal + servicesTotal;
+                    })()}
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center md:space-x-4 space-y-4 md:space-y-0">
+                <button
+                  type="button"
+                  onClick={handlePrevious}
+                  className="px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-300"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Booking..." : "Confirm Booking"}
+                </button>
+              </div>
+            </div>
+          </div>
         );
     }
   };
@@ -697,7 +728,7 @@ const Breadcrumbs: React.FC<
   const isLastStep = currentStep === steps[steps.length - 1];
 
   return (
-    <nav className="mb-6 relative overflow-hidden">
+    <nav className="mb-4 relative overflow-hidden">
       <ol className="flex items-center space-x-2 text-sm whitespace-nowrap">
         {steps.map((step, index) => {
           const isCompleted = index < steps.indexOf(currentStep);
@@ -1158,78 +1189,83 @@ const ReviewBooking: React.FC<{
   );
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Booking Summary</h3>
-      <div>
-        <p>
-          <strong>Guest:</strong> {props.guestName}
-        </p>
-        <p>
-          <strong>Email:</strong> {props.guestEmail}
-        </p>
-        <p>
-          <strong>Guests:</strong> {props.adults} Adults, {props.children05}
-          {" "}
-          Children (0-5), {props.children616} Children (6-16)
-        </p>
-        <p>
-          <strong>East African Resident:</strong>{" "}
-          {props.isEastAfricanResident ? "Yes" : "No"}
-        </p>
-      </div>
-      <div>
-        <p>
-          <strong>Check-in:</strong> {props.checkIn}
-        </p>
-        <p>
-          <strong>Check-out:</strong> {props.checkOut}
-        </p>
-        <p>
-          <strong>Flexible Dates:</strong>{" "}
-          {props.isFlexibleDates ? "Yes" : "No"}
-        </p>
-      </div>
-      <div>
-        <p>
-          <strong>Room Selection:</strong>
-        </p>
-        <ul>
-          {props.roomSelections.map((room, index) => (
-            <li key={index}>
-              {room.count} × {room.type} Bed ({room.boardType}) - $ {roomPrices[room.type][room.boardType]} × {numberOfDays} nights = $ {roomPrices[room.type][room.boardType] * numberOfDays * room.count}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-xl font-bold">
-          Total: ${calculateRoomTotal()}
-        </p>
-      </div>
-      <div>
-        <p className="font-semibold">Additional Services:</p>
-        <ul className="list-disc pl-6 space-y-1">
-          {props.selectedServices.map((serviceId) => {
-            const service = additionalServices.find((s) => s.id === serviceId);
-            if (!service) return null;
-            const count = props.serviceCounts[serviceId] ?? 1;
-            const priceDisplay = service.allowQuantity && count > 1
-              ? `$${service.price} x ${count} ${service.id === "transportFullDay" ? "days" : ""} = $${service.price * count}`
-              : `$${service.price}`;
-            return (
-              <li key={serviceId}>{service.name} - {priceDisplay}</li>
-            );
-          })}
-        </ul>
-        <p className="mt-2 font-medium">Services Total: ${calculateServicesTotal()}</p>
-      </div>
-      <p className="text-xl font-bold border-t pt-4">Grand Total: ${grandTotal}</p>
-      {props.message && (
-        <div>
-          <p>
-            <strong>Additional Message:</strong>
-          </p>
-          <p>{props.message}</p>
+    <div className="space-y-3">
+      <h3 className="text-xl font-semibold mb-3">Booking Summary</h3>
+
+      <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {/* Guest Information */}
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Guest Information</h4>
+            <div className="space-y-0.5 text-xs">
+              <p><span className="font-medium">Name:</span> {props.guestName}</p>
+              <p><span className="font-medium">Email:</span> {props.guestEmail}</p>
+              <p><span className="font-medium">Guests:</span> {props.adults} Adults{props.children05 > 0 ? `, ${props.children05} Children (0-5)` : ''}{props.children616 > 0 ? `, ${props.children616} Children (6-16)` : ''}</p>
+              <p><span className="font-medium">East African Resident:</span> {props.isEastAfricanResident ? "Yes" : "No"}</p>
+            </div>
+          </div>
+
+          {/* Stay Details */}
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Stay Details</h4>
+            <div className="space-y-0.5 text-xs">
+              <p><span className="font-medium">Check-in:</span> {props.checkIn}</p>
+              <p><span className="font-medium">Check-out:</span> {props.checkOut}</p>
+              <p><span className="font-medium">Nights:</span> {numberOfDays}</p>
+              <p><span className="font-medium">Flexible Dates:</span> {props.isFlexibleDates ? "Yes" : "No"}</p>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Room Selection */}
+        <div className="bg-gray-50 p-3 rounded-md">
+          <h4 className="font-medium text-gray-700 mb-1 text-sm">Room Selection</h4>
+          <div className="space-y-1 text-xs">
+            {props.roomSelections.map((room, index) => (
+              <div key={index} className="flex justify-between">
+                <span>{room.count} × {room.type} Bed ({room.boardType})</span>
+                <span>${roomPrices[room.type][room.boardType] * numberOfDays * room.count}</span>
+              </div>
+            ))}
+            <div className="border-t pt-1 mt-1 font-medium flex justify-between text-sm">
+              <span>Room Total:</span>
+              <span>${calculateRoomTotal()}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Services */}
+        {props.selectedServices.length > 0 && (
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Additional Services</h4>
+            <div className="space-y-1 text-xs">
+              {props.selectedServices.map((serviceId) => {
+                const service = additionalServices.find((s) => s.id === serviceId);
+                if (!service) return null;
+                const count = props.serviceCounts[serviceId] ?? 1;
+                return (
+                  <div key={serviceId} className="flex justify-between">
+                    <span>{service.name}{count > 1 ? ` (x${count})` : ''}</span>
+                    <span>${service.price * count}</span>
+                  </div>
+                );
+              })}
+              <div className="border-t pt-1 mt-1 font-medium flex justify-between text-sm">
+                <span>Services Total:</span>
+                <span>${calculateServicesTotal()}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Additional Message */}
+        {props.message && (
+          <div className="bg-gray-50 p-3 rounded-md">
+            <h4 className="font-medium text-gray-700 mb-1 text-sm">Additional Message</h4>
+            <p className="text-xs">{props.message}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
