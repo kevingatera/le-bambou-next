@@ -239,16 +239,16 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       setIsEastAfricanResident(false);
       setSelectedServices([]);
       setMessage("");
-      // Close the booking section
+      // Auto-close after 10 seconds instead of 5
       setTimeout(() => {
         setSubmitStatus("idle");
         onClose();
-      }, 5000);
+      }, 15000);
     },
     onError: () => {
       setSubmitStatus("error");
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus("idle"), 5000);
+      setTimeout(() => setSubmitStatus("idle"), 10000);
     },
   });
 
@@ -677,30 +677,32 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
         }`}
     >
       <div className="container mx-auto py-2 max-w-[80rem] px-0 sm:px-4 md:px-8 lg:px-16">
-        <h2 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">
-          Book Your Stay
-        </h2>
-        <Breadcrumbs
-          steps={steps}
-          currentStep={currentStep}
-          onStepClick={handleStepClick}
-        />
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {renderStepContent()}
-        </form>
-        {submitStatus === "success" && (
-          <div className="success-message mt-4">
-            <p className="text-green-600">
-              Thank you! Your booking has been confirmed.
-            </p>
-          </div>
-        )}
-        {submitStatus === "error" && (
-          <div className="error-message mt-4">
-            <p className="text-red-600">
-              Oops! Something went wrong while processing your booking.
-            </p>
-          </div>
+        {submitStatus === "success" ? (
+          <BookingSuccessOverlay onDismiss={() => {
+            setSubmitStatus("idle");
+            onClose();
+          }} />
+        ) : (
+          <>
+            <h2 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">
+              Book Your Stay
+            </h2>
+            <Breadcrumbs
+              steps={steps}
+              currentStep={currentStep}
+              onStepClick={handleStepClick}
+            />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {renderStepContent()}
+            </form>
+            {submitStatus === "error" && (
+              <div className="error-message mt-4">
+                <p className="text-red-600">
+                  Oops! Something went wrong while processing your booking.
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
@@ -1265,6 +1267,47 @@ const ReviewBooking: React.FC<{
             <p className="text-xs">{props.message}</p>
           </div>
         )}
+      </div>
+    </div>
+  );
+};
+
+const BookingSuccessOverlay: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+        {/* Success Icon */}
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        {/* Success Message */}
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Booking Confirmed!</h3>
+        <p className="text-gray-600 mb-6">
+          Thank you for your booking. We&apos;ve sent a confirmation email with all the details.
+          We&apos;re looking forward to welcoming you to Le Bambou Gorilla Lodge!
+        </p>
+
+        {/* Additional Info */}
+        <div className="bg-gray-50 rounded-md p-4 mb-6 text-sm text-gray-700">
+          <p className="font-medium mb-2">What happens next?</p>
+          <ul className="text-left space-y-1">
+            <li>• Check your email for booking confirmation</li>
+            <li>• Payment details will be sent separately</li>
+            <li>• We&apos;ll contact you if we need any additional information</li>
+          </ul>
+        </div>
+
+        {/* Dismiss Button */}
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="w-full px-6 py-3 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300 font-medium"
+        >
+          Close
+        </button>
       </div>
     </div>
   );
