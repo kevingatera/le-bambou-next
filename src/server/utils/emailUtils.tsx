@@ -97,9 +97,14 @@ export async function sendBookingConfirmationEmails(
 
     // Calculate services total
     const calculateServicesTotal = (selectedServices: string[]) => {
+        const days = calculateNumberOfNights(booking.checkIn, booking.checkOut);
         return selectedServices.reduce((total, serviceId) => {
             const service = additionalServices.find((s) => s.id === serviceId);
-            return total + (service?.price ?? 0);
+            if (!service) return total;
+            if (service.id === "transportFullDay") {
+                return total + service.price * days;
+            }
+            return total + service.price;
         }, 0);
     };
 
@@ -221,14 +226,22 @@ export async function sendBookingConfirmationEmails(
                     const service = additionalServices.find((s) =>
                         s.id === serviceId
                     );
-                    return service
-                        ? `
+                    if (!service) return "";
+                    if (service.id === "transportFullDay") {
+                        const days = calculateNumberOfNights(booking.checkIn, booking.checkOut);
+                        return `
+                                        <li style="margin-bottom: 8px;">
+                                            ${service.name}
+                                            <span style="float: right;">$${service.price} x ${days} days = $${service.price * days}</span>
+                                        </li>
+                                    `;
+                    }
+                    return `
                                         <li style="margin-bottom: 8px;">
                                             ${service.name}
                                             <span style="float: right;">$${service.price}</span>
                                         </li>
-                                    `
-                        : "";
+                                    `;
                 }).join("")
                 }
                                 <li style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
@@ -310,6 +323,10 @@ export async function sendBookingConfirmationEmails(
                     s.id === serviceId
                 );
                 if (!service) return "";
+                if (service.id === "transportFullDay") {
+                    const days = calculateNumberOfNights(booking.checkIn, booking.checkOut);
+                    return `<li>${service.name} - $${service.price} x ${days} days = $${service.price * days}</li>`;
+                }
                 return `<li>${service.name} - $${service.price}</li>`;
             }).join("")
             }
