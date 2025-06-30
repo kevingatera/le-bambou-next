@@ -1440,6 +1440,12 @@ input.w-button {
   display: block;
 }
 
+@media screen and (max-width: 1080px) {
+  .room-image {
+    width: 300px;
+  }
+}
+
 .room-wrapped-card {
   grid-column-gap: 24px;
   justify-content: flex-start;
