@@ -340,7 +340,9 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     }
   }, [numberOfNights, transportRemoved, selectedServices]);
 
-  // Reset service counts when services are deselected
+  const guestBasedServiceIds = useMemo(() => ["boatTour", "bisokeHiking", "goldenMonkey", "gorillaPermit"], []);
+
+  // Reset service counts when services are deselected or newly selected
   useEffect(() => {
     const newCounts = { ...serviceCounts };
     let changed = false;
@@ -356,7 +358,13 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     // Add default counts for newly selected services
     selectedServices.forEach(serviceId => {
       if (!newCounts[serviceId]) {
-        newCounts[serviceId] = serviceId === "transportFullDay" ? numberOfNights : 1;
+        if (serviceId === "transportFullDay") {
+          newCounts[serviceId] = numberOfNights;
+        } else if (guestBasedServiceIds.includes(serviceId)) {
+          newCounts[serviceId] = totalGuests;
+        } else {
+          newCounts[serviceId] = 1;
+        }
         changed = true;
       }
     });
@@ -364,7 +372,29 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     if (changed) {
       setServiceCounts(newCounts);
     }
-  }, [selectedServices, serviceCounts, numberOfNights]);
+  }, [selectedServices, serviceCounts, numberOfNights, totalGuests, guestBasedServiceIds]);
+
+  // Ensure guest-based service counts stay in sync when guest numbers change
+  useEffect(() => {
+    if (totalGuests < 1) return;
+
+    const newCounts: Record<string, number> = {};
+    let changed = false;
+
+    guestBasedServiceIds.forEach(serviceId => {
+      if (selectedServices.includes(serviceId)) {
+        const current = serviceCounts[serviceId] ?? 0;
+        if (current !== totalGuests) {
+          newCounts[serviceId] = totalGuests;
+          changed = true;
+        }
+      }
+    });
+
+    if (changed) {
+      setServiceCounts(prev => ({ ...prev, ...newCounts }));
+    }
+  }, [totalGuests, selectedServices, serviceCounts, guestBasedServiceIds]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
