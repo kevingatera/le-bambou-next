@@ -2,6 +2,17 @@ import React from "react";
 import Link from "next/link";
 
 export const EventAnnouncementSection = () => {
+  // Hide the announcement one day after the ceremony date (September 5, 2025)
+  const ceremonyDate = new Date('2025-09-05');
+  const oneDayAfterCeremony = new Date(ceremonyDate);
+  oneDayAfterCeremony.setDate(ceremonyDate.getDate() + 1);
+  const now = new Date();
+
+  // If current date is past one day after ceremony, don't render the component
+  if (now > oneDayAfterCeremony) {
+    return null;
+  }
+
   return (
     <section id="kwita-izina-event" className="homepage wf-section pt-12 pb-16" style={{ background: 'linear-gradient(to bottom, #fdfcfb, #fff)' }}>
       <div className="container mx-auto px-4">
