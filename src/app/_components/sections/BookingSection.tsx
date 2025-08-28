@@ -1242,8 +1242,6 @@ const ReviewBooking: React.FC<{
       }, 0);
     };
 
-    const grandTotal = calculateRoomTotal() + calculateServicesTotal();
-
     const numberOfDays = Math.max(
       1,
       Math.ceil(
