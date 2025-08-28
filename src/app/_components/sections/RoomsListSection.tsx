@@ -291,7 +291,7 @@ export const RoomsListSection = () => {
                         Selection
                     </h2>
                 </div>
-                <div className="room-flex-row">
+                <div className="room-flex-row rounded-lg p-4">
                     {(["Double", "Single", "Triple", "Twin"] as const).map((
                         roomType,
                     ) => (
