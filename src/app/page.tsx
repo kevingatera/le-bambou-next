@@ -1,7 +1,6 @@
 import { HydrateClient } from "~/trpc/server";
 import { HeroSection } from "./_components/sections/HeroSection";
 import { HotelDescriptionSection } from "./_components/sections/HotelDescriptionSection";
-import { GorillaTrekkingSection } from "./_components/sections/GorillaTrekkingSection";
 import { BookingCallToActionWithReservationSection } from "./_components/sections/BookingCallToActionWithReservationSection";
 import { TestimonialSection } from "./_components/sections/TestimonialSection";
 import { DiscoverRoomsSection } from "./_components/sections/DiscoverRoomsSection";
