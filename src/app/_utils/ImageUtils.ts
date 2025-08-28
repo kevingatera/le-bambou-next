@@ -4,8 +4,8 @@ const baseUrl = (() => {
     return process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://lebambougorillalodge.com";
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://lebambougorillalodge.com";
   } else {
     // Client-side
     return window.location.origin;
@@ -13,10 +13,11 @@ const baseUrl = (() => {
 })();
 
 export async function dynamicBlurDataUrl(url: string) {
-  // Remove leading slash if present
-  const imagePath = url.startsWith("/") ? url.slice(1) : url;
+  // Support absolute URLs (e.g., Vercel Blob) and local paths
+  const isAbsolute = /^https?:\/\//.test(url);
+  const fetchUrl = isAbsolute ? url : `${baseUrl}/${url.startsWith("/") ? url.slice(1) : url}`;
 
-  const base64str = await fetch(`${baseUrl}/${imagePath}`)
+  const base64str = await fetch(fetchUrl)
     .then(async (res) => {
       const arrayBuffer = await res.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
