@@ -8,6 +8,10 @@ await import("./src/env.js");
 const config = {
   images: {
     imageSizes: [500, 800, 1080, 1600, 2000, 2600],
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.vercel-storage.com' },
+      { protocol: 'https', hostname: 'blob.vercel-storage.com' },
+    ],
   },
   async redirects() {
     return [
