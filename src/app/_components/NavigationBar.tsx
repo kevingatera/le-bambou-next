@@ -104,7 +104,7 @@ export const NavigationBar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 flex items-center min-h-[7rem] bg-[#b9c5c4] px-1 md:px-10 lg:px-[95px] shadow-md">
+    <div id="navigation-bar" className="sticky top-0 z-50 flex items-center min-h-[7rem] bg-[#b9c5c4] px-1 md:px-10 lg:px-[95px] shadow-md">
       <div className="flex items-center justify-between w-full">
         {/* Logo - visible on mobile, hidden on desktop */}
         <Link
