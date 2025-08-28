@@ -85,10 +85,33 @@ export const bookingRouter = createTRPCRouter({
       checkIn: z.string(),
       checkOut: z.string(),
     }))
-    .query(async ({ ctx }) => {
-      // TODO: Simplified query. Later need to check against existing bookings.
-      const availableRooms = await ctx.db.query.rooms.findMany({
-        where: (rooms, { gt }) => gt(rooms.availableCount, 0),
+    .query(async ({ ctx, input }) => {
+      const { checkIn, checkOut } = input;
+
+      // Get all bookings that overlap with the requested dates
+      const overlappingBookings = await ctx.db.query.bookings.findMany({
+        where: (bookings, { and, lte, gte }) =>
+          and(
+            lte(bookings.checkIn, checkOut),
+            gte(bookings.checkOut, checkIn)
+          ),
+      });
+
+      // Get total room inventory
+      const allRooms = await ctx.db.query.rooms.findMany();
+
+      // Calculate booked rooms by type from overlapping bookings
+      const bookedCounts: Record<string, number> = {};
+      overlappingBookings.forEach(booking => {
+        booking.roomSelections.forEach(selection => {
+          bookedCounts[selection.type] = (bookedCounts[selection.type] ?? 0) + selection.count;
+        });
+      });
+
+      // Calculate available rooms by type
+      const availableRooms = allRooms.filter(room => {
+        const booked = bookedCounts[room.type] ?? 0;
+        return room.availableCount > booked;
       });
 
       return availableRooms;
