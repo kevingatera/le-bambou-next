@@ -17,7 +17,23 @@ export async function dynamicBlurDataUrl(url: string) {
   const isAbsolute = /^https?:\/\//.test(url);
   const fetchUrl = isAbsolute ? url : `${baseUrl}/${url.startsWith("/") ? url.slice(1) : url}`;
 
-  const base64str = await fetch(fetchUrl)
+  const TWO_MB = 2 * 1024 * 1024;
+  let fetchOptions: RequestInit & { next?: { revalidate: number } } = { cache: "no-store" };
+
+  try {
+    // Prefer caching sub-2MB responses; avoid caching larger ones to prevent Next data cache errors
+    const headRes = await fetch(fetchUrl, { method: "HEAD", cache: "no-store" });
+    const length = headRes.headers.get("content-length");
+    const contentLength = length ? parseInt(length, 10) : NaN;
+    if (Number.isFinite(contentLength) && contentLength > 0 && contentLength <= TWO_MB) {
+      fetchOptions = { next: { revalidate: 86400 } }; // cache for 1 day
+    }
+  } catch {
+    // Fall back to no-store on any probe failure
+    fetchOptions = { cache: "no-store" };
+  }
+
+  const base64str = await fetch(fetchUrl, fetchOptions)
     .then(async (res) => {
       const arrayBuffer = await res.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
