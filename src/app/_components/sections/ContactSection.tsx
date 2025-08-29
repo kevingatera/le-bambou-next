@@ -7,8 +7,8 @@ export const ContactSection = async () => {
   return (
     <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)] py-12">
       <div className="container mx-auto md:px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="contact-form flex flex-col justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="contact-form flex flex-col justify-center w-full max-w-2xl mx-auto md:mx-0 px-4 sm:pl-16">
             <h2 className="text-[#2c2c2c] mt-0 mb-0 text-3xl font-normal leading-snug">
               Contact us
             </h2>
@@ -24,7 +24,7 @@ export const ContactSection = async () => {
             </p>
             <ContactForm />
           </div>
-          <div className="contact-image-wrapper relative">
+          <div className="contact-image-wrapper relative flex justify-center items-center w-full">
             <Image
               src="/images/DSC_3662.webp"
               alt="Contact image"
