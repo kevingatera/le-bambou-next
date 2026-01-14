@@ -98,16 +98,19 @@ export const GallerySection = () => {
   >("hotel");
 
   const images = useMemo(() => {
-    // If NEXT_PUBLIC_WILDLIFE_BASE_URL is provided, wildlife images will load from Vercel Blob
+    // If NEXT_PUBLIC_GALLERY_BASE_URL is provided, gallery images will load from Vercel Blob
     // rather than the local public folder. This keeps the gallery flexible across deployments.
-    const wildlifeBaseUrl = process.env.NEXT_PUBLIC_WILDLIFE_BASE_URL ?? "";
+    const galleryBaseUrl = process.env.NEXT_PUBLIC_GALLERY_BASE_URL ?? "";
+    const normalizedBaseUrl = galleryBaseUrl.replace(/\/$/, "");
+    const makeGallerySrc = (path: string) =>
+      normalizedBaseUrl ? `${normalizedBaseUrl}${path}` : path;
     const makeWildlifeSrc = (fileName: string) =>
-      wildlifeBaseUrl
-        ? `${wildlifeBaseUrl}/images/wildlife/${fileName}`
-        : `/images/wildlife/${fileName}`;
+      `/images/wildlife/${fileName}`;
+    const applyBaseUrl = <T extends { src: string }>(items: T[]) =>
+      items.map((item) => ({ ...item, src: makeGallerySrc(item.src) }));
 
     return ({
-      hotel: [
+      hotel: applyBaseUrl([
         {
           src: "/images/rooms/single/Single-room-Entrance-door.jpg",
           alt: "Single room entrance door",
@@ -185,8 +188,8 @@ export const GallerySection = () => {
         //   height: 1063,
         //   blurDataURL: "",
         // },
-      ],
-      clients: [
+      ]),
+      clients: applyBaseUrl([
         {
           src: "/images/client_experiences/relaxing/IMG_2649.webp",
           alt: "Client enjoying the lodge",
@@ -229,8 +232,8 @@ export const GallerySection = () => {
         //   height: 1080,
         //   blurDataURL: "",
         // },
-      ],
-      checkIn: [
+      ]),
+      checkIn: applyBaseUrl([
         {
           src: "/images/client_experiences/checking_in/20240701_175712.webp",
           alt: "Clients checking in at the lodge",
@@ -266,8 +269,8 @@ export const GallerySection = () => {
         //   height: 1080,
         //   blurDataURL: "",
         // },
-      ],
-      helene: [
+      ]),
+      helene: applyBaseUrl([
         {
           src:
             "/images/Helene DeGeneres Campus/Cafeteria 2 inside Helene DeGeneres Campus.webp",
@@ -332,8 +335,8 @@ export const GallerySection = () => {
           height: 1080,
           blurDataURL: "",
         },
-      ],
-      wildlife: [
+      ]),
+      wildlife: applyBaseUrl([
         { src: makeWildlifeSrc("buffalo-group-image.jpeg"), alt: "A group of African buffalo resting and standing alert in dry bushland.", width: 1600, height: 1067, blurDataURL: "" },
         { src: makeWildlifeSrc("african-fish-eagle-image.jpeg"), alt: "An African Fish Eagle perched on a tree branch by the water, with smaller birds nearby.", width: 1600, height: 1067, blurDataURL: "" },
         { src: makeWildlifeSrc("buffalo-trio-image.jpeg"), alt: "Three African buffalo in the savanna, one lying down and two standing watchfully.", width: 1600, height: 1067, blurDataURL: "" },
@@ -359,7 +362,7 @@ export const GallerySection = () => {
         { src: makeWildlifeSrc("baboon-mother-infant-image.jpeg"), alt: "A baboon sitting on the ground holding an infant close to her chest.", width: 1600, height: 1067, blurDataURL: "" },
         { src: makeWildlifeSrc("baboons-duo-image.jpeg"), alt: "Two baboons in the savanna, one facing forward and one with its back turned.", width: 1600, height: 1067, blurDataURL: "" },
         { src: makeWildlifeSrc("elephant-riverbank-image.jpeg"), alt: "An elephant seen from behind, feeding on thick greenery along the river’s edge.", width: 1600, height: 1067, blurDataURL: "" },
-      ],
+      ]),
     });
   }, []);
 
