@@ -34,7 +34,6 @@ export default async function Home() {
           <BookingCallToActionWithReservationSection />
           <HotelDescriptionSection />
           <EventAnnouncementSection />
-          {/* <GorillaTrekkingSection /> */}
           <DiscoverRoomsSection />
           <TestimonialSection />
         </LocalStorageProvider>

@@ -1,19 +1,24 @@
 import Image from "next/image";
 import React from "react";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const AttractionsUsBannerSection = async () => {
+  const imageSrc = withGalleryBaseUrl(
+    "/images/gallery/attractions/ellen-campus/ellendegenerescampus-001.webp",
+  );
+
   return (
     <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
       <Image
-        src="/images/1200px-Sabyinyo_volcanoe_view_from_Kinigi_sector_Musanze_district_Rwanda.jpg"
-        alt="Background Image"
+        src={imageSrc}
+        alt="Ellen DeGeneres Campus view"
         fill={true}
         className="opacity-70 object-cover"
         quality={75}
         priority={true}
         blurDataURL={await dynamicBlurDataUrl(
-          "/images/1200px-Sabyinyo_volcanoe_view_from_Kinigi_sector_Musanze_district_Rwanda.jpg",
+          imageSrc,
         )}
         placeholder="blur"
       />

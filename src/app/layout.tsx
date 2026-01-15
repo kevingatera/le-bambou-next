@@ -8,7 +8,6 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Head from "next/head";
 import Script from "next/script";
 import { FloatingWhatsAppButton } from "~/app/_components/FloatingWhatsAppButton";
 
@@ -27,6 +26,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Le Bambou Gorilla Lodge" }],
   creator: "Le Bambou Gorilla Lodge",
   publisher: "Le Bambou Gorilla Lodge",
+  alternates: {
+    canonical: "https://lebambougorillalodge.com",
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -69,36 +71,34 @@ export default function RootLayout({
       className={`${varelaRound.variable} font-sans`}
       suppressHydrationWarning={true}
     >
-      <Head>
-        <link rel="canonical" href="https://lebambougorillalodge.com" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LodgingBusiness",
-              "name": "Le Bambou Gorilla Lodge",
-              "image": "https://lebambougorillalodge.com/images/DSC_3675.jpg",
-              "description":
-                "Experience the pinnacle of luxury at Rwanda's top-rated eco-lodge.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Kinigi",
-                "addressRegion": "Northern Province",
-                "addressCountry": "Rwanda",
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "-1.4833",
-                "longitude": "29.6333",
-              },
-              "url": "https://lebambougorillalodge.com",
-              "telephone": "+250 784753415",
-              "priceRange": "$$$",
-            }),
-          }}
-        />
-      </Head>
+      <Script
+        id="structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LodgingBusiness",
+            "name": "Le Bambou Gorilla Lodge",
+            "image": "https://lebambougorillalodge.com/images/DSC_3675.jpg",
+            "description":
+              "Experience the pinnacle of luxury at Rwanda's top-rated eco-lodge.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kinigi",
+              "addressRegion": "Northern Province",
+              "addressCountry": "Rwanda",
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "-1.4833",
+              "longitude": "29.6333",
+            },
+            "url": "https://lebambougorillalodge.com",
+            "telephone": "+250 784753415",
+            "priceRange": "$$$",
+          }),
+        }}
+      />
       <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
           {/* <InitDataDog /> */}

@@ -1,17 +1,22 @@
 import React from "react";
 import Image from "next/image";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const DiscoverRoomsSection = async () => {
+  const imageSrc = withGalleryBaseUrl(
+    "/images/gallery/rooms/double/lebambou-doubleroom-001.webp",
+  );
+
   return (
     <section className="discover-rooms-section flex items-center mb-2.5 pt-[140px] font-sans relative">
       <Image
-        src="/images/DSC_3572.jpg"
+        src={imageSrc}
         alt="Discover Rooms Background"
         fill={true}
         className="opacity-70 object-cover"
         loading="lazy"
-        blurDataURL={await dynamicBlurDataUrl("/images/DSC_3572.jpg")}
+        blurDataURL={await dynamicBlurDataUrl(imageSrc)}
         placeholder="blur"
       />
       <div className="absolute inset-0 bg-[rgba(44,44,44,0.21)] z-10"></div>
