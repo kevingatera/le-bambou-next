@@ -6,14 +6,14 @@ export type GalleryImage = {
   blurDataURL: string;
 };
 
-export type GallerySection = {
+export type GallerySectionData = {
   id: string;
   title: string;
   subtitle: string;
   images: GalleryImage[];
 };
 
-export const gallerySections: GallerySection[] = [
+export const gallerySections: GallerySectionData[] = [
   {
     id: 'lodge',
     title: 'Lodge & Grounds',
@@ -2408,7 +2408,7 @@ export const gallerySections: GallerySection[] = [
       },
       {
         src: '/images/wildlife/zebra-closeup-image.jpeg',
-        alt: 'Close-up view of a zebra's black-and-white striped pattern with its mane standing upright.',
+        alt: 'Close-up view of a zebra\'s black-and-white striped pattern with its mane standing upright.',
         width: 1600,
         height: 1067,
         blurDataURL: '',
@@ -2478,7 +2478,7 @@ export const gallerySections: GallerySection[] = [
       },
       {
         src: '/images/wildlife/elephant-riverbank-image.jpeg',
-        alt: 'An elephant seen from behind, feeding on thick greenery along the river's edge.',
+        alt: 'An elephant seen from behind, feeding on thick greenery along the river\'s edge.',
         width: 1600,
         height: 1067,
         blurDataURL: '',
