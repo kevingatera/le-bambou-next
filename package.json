@@ -15,27 +15,27 @@
   },
   "dependencies": {
     "@datadog/browser-rum": "^5.35.1",
-    "@next/third-parties": "^14.2.32",
+    "@next/third-parties": "14.2.35",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-query": "^5.85.5",
     "@trpc/client": "^11.5.0",
     "@trpc/react-query": "^11.5.0",
-    "@trpc/server": "^11.5.0",
+    "@trpc/server": "^11.8.1",
     "@types/validator": "^13.15.2",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "drizzle-orm": "^0.33.0",
     "framer-motion": "^11.18.2",
     "geist": "^1.4.2",
-    "next": "^14.2.32",
-    "nodemailer": "^6.10.1",
+    "next": "14.2.35",
+    "nodemailer": "^7.0.12",
     "postgres": "^3.4.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-masonry-css": "^1.0.16",
     "server-only": "^0.0.1",
     "superjson": "^2.2.2",
-    "validator": "^13.15.15",
+    "validator": "^13.15.26",
     "zod": "^3.25.76"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@typescript-eslint/parser": "^8.41.0",
     "drizzle-kit": "^0.24.2",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.32",
+    "eslint-config-next": "14.2.35",
     "eslint-plugin-drizzle": "^0.2.3",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
@@ -60,20 +60,19 @@
     "initVersion": "7.37.0"
   },
   "packageManager": "pnpm@9.11.0",
-  "pnpm": {
-    "overrides": {
-      "esbuild@<=0.24.2": ">=0.25.0",
-      "validator@<13.15.20": ">=13.15.20",
-      "js-yaml@>=4.0.0 <4.1.1": ">=4.1.1",
-      "nodemailer@<7.0.7": ">=7.0.7",
-      "glob@>=10.2.0 <10.5.0": ">=10.5.0",
-      "nodemailer@<=7.0.10": ">=7.0.11",
-      "validator@<13.15.22": ">=13.15.22",
-      "next@>=13.3.0 <14.2.34": ">=14.2.34",
-      "next@>=13.3.1-canary.0 <14.2.35": ">=14.2.35",
-      "@trpc/server@>=11.0.0 <11.8.0": ">=11.8.0",
-      "nodemailer@<7.0.11": ">=7.0.11",
-      "@smithy/config-resolver@<4.4.0": ">=4.4.0"
+    "pnpm": {
+      "overrides": {
+        "esbuild@<=0.24.2": ">=0.25.0",
+        "validator@<13.15.20": ">=13.15.20",
+        "js-yaml@>=4.0.0 <4.1.1": ">=4.1.1",
+        "nodemailer@<7.0.7": ">=7.0.7",
+        "glob@>=10.2.0 <10.5.0": ">=10.5.0",
+        "nodemailer@<=7.0.10": ">=7.0.11",
+        "validator@<13.15.22": ">=13.15.22",
+        "next": "14.2.35",
+        "@trpc/server@>=11.0.0 <11.8.0": ">=11.8.0",
+        "nodemailer@<7.0.11": ">=7.0.11",
+        "@smithy/config-resolver@<4.4.0": ">=4.4.0"
+      }
     }
-  }
 }
