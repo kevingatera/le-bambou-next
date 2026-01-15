@@ -12,6 +12,7 @@ import { roomPrices } from "~/types/booking";
 import { InfoCircle } from "../icons/InfoCirlce";
 import { DropdownArrow } from "../icons/DropDownArrow";
 import { motion } from "framer-motion";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 const BoardTypeInfo = {
     fullBoard: "Includes breakfast, lunch, and dinner.",
@@ -23,38 +24,64 @@ const BoardTypeInfo = {
 const roomImages = {
     Double: [
         {
-            src: "/images/rooms/double/double-bed-room.jpg",
-            alt: "Double Bed Room",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/double/lebambou-doubleroom-001.webp",
+            ),
+            alt: "Double room interior",
         },
         {
-            src: "/images/rooms/double/Double bed setup for a valentine's day celebration.webp",
-            alt: "Double Bed Valentine Setup",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/double/lebambou-doubleroom-005.webp",
+            ),
+            alt: "Double room with cozy lighting",
+        },
+        {
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/double/lebambou-doubleroom-010.webp",
+            ),
+            alt: "Double room details",
         },
     ],
     Single: [
         {
-            src: "/images/rooms/single/single-bed-room.jpg",
-            alt: "Single Bed Room",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/single/lebambou-singleroom-001.webp",
+            ),
+            alt: "Single room interior",
         },
         {
-            src: "/images/rooms/single/Single bedroom.webp",
-            alt: "Single Bedroom Interior",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/single/lebambou-singleroom-004.webp",
+            ),
+            alt: "Single room view",
         },
     ],
     Triple: [
         {
-            src: "/images/1340973158.jpg",
-            alt: "Triple Bed Room",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/triple/lebambou-tripleroom-001.webp",
+            ),
+            alt: "Triple room interior",
         },
         {
-            src: "/images/rooms/triple/View of the beds in a triple bed room.webp",
-            alt: "Triple Bed Room Interior",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/triple/lebambou-tripleroom-005.webp",
+            ),
+            alt: "Triple room beds",
         },
     ],
     Twin: [
         {
-            src: "/images/rooms/twin/View of the twin bedroom interior with fireplace.webp",
-            alt: "Twin Bedroom with Fireplace",
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
+            ),
+            alt: "Twin room interior",
+        },
+        {
+            src: withGalleryBaseUrl(
+                "/images/gallery/rooms/twin/lebambou-twinroom-005.webp",
+            ),
+            alt: "Twin room details",
         },
     ],
 };

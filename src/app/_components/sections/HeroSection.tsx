@@ -2,8 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const HeroSection = () => {
+  const heroImage = withGalleryBaseUrl(
+    "/images/gallery/lodge/exterior/lebambou-exterior-001.webp",
+  );
+
   const scrollToEvent = () => {
     const eventSection = document.getElementById('kwita-izina-event');
     if (eventSection) {
@@ -19,8 +24,8 @@ export const HeroSection = () => {
   return (
     <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
       <Image
-        src="/images/DSC_3675.jpg"
-        alt="Le Bambou Gorilla Lodge"
+        src={heroImage}
+        alt="Le Bambou lodge exterior"
         fill={true}
         className="opacity-70 object-cover"
         quality={75}

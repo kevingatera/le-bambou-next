@@ -1,19 +1,24 @@
 import React from "react";
 import Image from "next/image";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const AboutUsBannerSection = async () => {
+    const imageSrc = withGalleryBaseUrl(
+        "/images/gallery/lodge/lobby/lebambou-lobby-001.webp",
+    );
+
     return (
         <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
             <Image
-                src="/images/rooms/lobby/View of the main lobby-house lit at night-2.webp"
-                alt="Background Image"
+                src={imageSrc}
+                alt="Lobby view at Le Bambou Gorilla Lodge"
                 fill={true}
                 className="opacity-50 object-cover"
                 quality={90}
                 priority={true}
                 blurDataURL={await dynamicBlurDataUrl(
-                    "/images/rooms/lobby/View of the main lobby-house lit at night-2.webp",
+                    imageSrc,
                 )}
                 placeholder="blur"
             />

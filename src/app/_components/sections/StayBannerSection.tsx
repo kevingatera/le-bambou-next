@@ -1,12 +1,17 @@
 import React from "react";
 import Image from "next/image";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const StayBannerSection = () => {
+  const imageSrc = withGalleryBaseUrl(
+    "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
+  );
+
   return (
     <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
       <Image
-        src="/images/Rooms---Aerial-view.webp"
-        alt="Background Image"
+        src={imageSrc}
+        alt="Twin room at Le Bambou Gorilla Lodge"
         fill={true}
         className="opacity-70 object-cover"
         quality={75}
