@@ -15,48 +15,32 @@ const baseUrl = (() => {
 export async function dynamicBlurDataUrl(url: string) {
   // Support absolute URLs (e.g., Vercel Blob) and local paths
   const isAbsolute = /^https?:\/\//.test(url);
-  const fetchUrl = isAbsolute ? url : `${baseUrl}/${url.startsWith("/") ? url.slice(1) : url}`;
+  const pathOnly = isAbsolute ? url : `/${url.startsWith("/") ? url.slice(1) : url}`;
+  const optimizerUrl = `${baseUrl}/_next/image?url=${encodeURIComponent(pathOnly)}&w=16&q=50`;
 
-  const TWO_MB = 2 * 1024 * 1024;
-  let fetchOptions: RequestInit & { next?: { revalidate: number } } = { cache: "no-store" };
-
+  // Try fetching a tiny optimized image via Next's optimizer (small, cacheable under 2MB)
   try {
-    // Prefer caching sub-2MB responses; avoid caching larger ones to prevent Next data cache errors
-    const headRes = await fetch(fetchUrl, { method: "HEAD", cache: "no-store" });
-    const length = headRes.headers.get("content-length");
-    const contentLength = length ? parseInt(length, 10) : NaN;
-    if (Number.isFinite(contentLength) && contentLength > 0 && contentLength <= TWO_MB) {
-      fetchOptions = { next: { revalidate: 86400 } }; // cache for 1 day
+    const res = await fetch(
+      optimizerUrl,
+      typeof window === "undefined" ? { next: { revalidate: 86400 } } : undefined,
+    );
+    if (res.ok) {
+      const buffer = await res.arrayBuffer();
+      const base64 = Buffer.from(new Uint8Array(buffer)).toString("base64");
+      return `data:image/webp;base64,${base64}`;
     }
   } catch {
-    // Fall back to no-store on any probe failure
-    fetchOptions = { cache: "no-store" };
+    // ignore and fall back
   }
 
-  const base64str = await fetch(fetchUrl, fetchOptions)
-    .then(async (res) => {
-      const arrayBuffer = await res.arrayBuffer();
-      const uint8Array = new Uint8Array(arrayBuffer);
-      return Buffer.from(uint8Array).toString("base64");
-    });
-
-  const blurSvg = `
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'>
-      <filter id='b' color-interpolation-filters='sRGB'>
-        <feGaussianBlur stdDeviation='1' />
-      </filter>
-
-      <image preserveAspectRatio='none' filter='url(#b)' x='0' y='0' height='100%' width='100%' 
-      href='data:image/jpeg;base64,${base64str}' />
-    </svg>
-  `;
-
-  const toBase64 = (str: string) =>
-    typeof window === "undefined"
-      ? Buffer.from(str).toString("base64")
-      : window.btoa(str);
-
-  return `data:image/svg+xml;base64,${toBase64(blurSvg)}`;
+  // Fallback: fetch original with no-store (avoids Next data cache) and inline it
+  const res = await fetch(isAbsolute ? url : `${baseUrl}/${url.startsWith("/") ? url.slice(1) : url}`,
+    { cache: "no-store" },
+  );
+  const buffer = await res.arrayBuffer();
+  const lower = url.toLowerCase();
+  const mime = lower.endsWith(".png") ? "image/png" : lower.endsWith(".webp") ? "image/webp" : "image/jpeg";
+  return `data:${mime};base64,${Buffer.from(new Uint8Array(buffer)).toString("base64")}`;
 }
 
 // import imagemin from "imagemin";
