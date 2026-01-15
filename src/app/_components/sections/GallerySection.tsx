@@ -8,7 +8,7 @@ import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import {
   gallerySections,
   type GalleryImage,
-  type GallerySection,
+  type GallerySectionData,
 } from "~/app/_data/gallerySections";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 import Masonry from "react-masonry-css";
@@ -97,7 +97,7 @@ export const GallerySection = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const sections = useMemo<GallerySection[]>(() => (
+  const sections = useMemo<GallerySectionData[]>(() => (
     gallerySections.map((section) => ({
       ...section,
       images: section.images.map((image) => ({
