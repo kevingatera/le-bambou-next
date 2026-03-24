@@ -1,0 +1,919 @@
+{
+  "images/gallery/lodge/exterior": [
+    {
+      "src": "/images/gallery/lodge/exterior/lebambou-exterior-001.webp",
+      "alt": "Lodge exterior 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/lodge/grounds": [
+    {
+      "src": "/images/gallery/lodge/grounds/lebambou-grounds-001.webp",
+      "alt": "Lodge grounds 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/grounds/lebambou-grounds-002.webp",
+      "alt": "Lodge grounds 2",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/grounds/lebambou-grounds-003.webp",
+      "alt": "Lodge grounds 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/grounds/lebambou-grounds-004.webp",
+      "alt": "Lodge grounds 4",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/lodge/bamboo-garden": [
+    {
+      "src": "/images/gallery/lodge/bamboo-garden/lebambou-bamboogarden-001.webp",
+      "alt": "Bamboo garden 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/bamboo-garden/lebambou-bamboogarden-002.webp",
+      "alt": "Bamboo garden 2",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/lodge/lobby": [
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-001.webp",
+      "alt": "Lobby and lounge 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-002.webp",
+      "alt": "Lobby and lounge 2",
+      "width": 2600,
+      "height": 1951,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-003.webp",
+      "alt": "Lobby and lounge 3",
+      "width": 1951,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-004.webp",
+      "alt": "Lobby and lounge 4",
+      "width": 2235,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-005.webp",
+      "alt": "Lobby and lounge 5",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-006.webp",
+      "alt": "Lobby and lounge 6",
+      "width": 2600,
+      "height": 1652,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-007.webp",
+      "alt": "Lobby and lounge 7",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-008.webp",
+      "alt": "Lobby and lounge 8",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-009.webp",
+      "alt": "Lobby and lounge 9",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-010.webp",
+      "alt": "Lobby and lounge 10",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-011.webp",
+      "alt": "Lobby and lounge 11",
+      "width": 2600,
+      "height": 1289,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-012.webp",
+      "alt": "Lobby and lounge 12",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-013.webp",
+      "alt": "Lobby and lounge 13",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/lodge/lobby/lebambou-lobby-014.webp",
+      "alt": "Lobby and lounge 14",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/dining/restaurant": [
+    {
+      "src": "/images/gallery/dining/restaurant/lebambou-restaurant-001.webp",
+      "alt": "Restaurant dining 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/restaurant/lebambou-restaurant-002.webp",
+      "alt": "Restaurant dining 2",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/dining/food": [
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-001.webp",
+      "alt": "Lodge cuisine 1",
+      "width": 2600,
+      "height": 1832,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-002.webp",
+      "alt": "Lodge cuisine 2",
+      "width": 2600,
+      "height": 1761,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-003.webp",
+      "alt": "Lodge cuisine 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-004.webp",
+      "alt": "Lodge cuisine 4",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-005.webp",
+      "alt": "Lodge cuisine 5",
+      "width": 2600,
+      "height": 2277,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-006.webp",
+      "alt": "Lodge cuisine 6",
+      "width": 2100,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/dining/food/lebambou-food-007.webp",
+      "alt": "Lodge cuisine 7",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/attractions/ellen-campus": [
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-001.webp",
+      "alt": "Ellen DeGeneres Campus 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-002.webp",
+      "alt": "Ellen DeGeneres Campus 2",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-003.webp",
+      "alt": "Ellen DeGeneres Campus 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-004.webp",
+      "alt": "Ellen DeGeneres Campus 4",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-005.webp",
+      "alt": "Ellen DeGeneres Campus 5",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-006.webp",
+      "alt": "Ellen DeGeneres Campus 6",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-007.webp",
+      "alt": "Ellen DeGeneres Campus 7",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-008.webp",
+      "alt": "Ellen DeGeneres Campus 8",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-009.webp",
+      "alt": "Ellen DeGeneres Campus 9",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-010.webp",
+      "alt": "Ellen DeGeneres Campus 10",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-011.webp",
+      "alt": "Ellen DeGeneres Campus 11",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-012.webp",
+      "alt": "Ellen DeGeneres Campus 12",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-013.webp",
+      "alt": "Ellen DeGeneres Campus 13",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-014.webp",
+      "alt": "Ellen DeGeneres Campus 14",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-015.webp",
+      "alt": "Ellen DeGeneres Campus 15",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-016.webp",
+      "alt": "Ellen DeGeneres Campus 16",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/ellen-campus/ellendegenerescampus-017.webp",
+      "alt": "Ellen DeGeneres Campus 17",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/attractions/gorilla-guardians/cultural": [
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-001.webp",
+      "alt": "Gorilla Guardians cultural performance 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-002.webp",
+      "alt": "Gorilla Guardians cultural performance 2",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-003.webp",
+      "alt": "Gorilla Guardians cultural performance 3",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-004.webp",
+      "alt": "Gorilla Guardians cultural performance 4",
+      "width": 2587,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-005.webp",
+      "alt": "Gorilla Guardians cultural performance 5",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-006.webp",
+      "alt": "Gorilla Guardians cultural performance 6",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-007.webp",
+      "alt": "Gorilla Guardians cultural performance 7",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-008.webp",
+      "alt": "Gorilla Guardians cultural performance 8",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-009.webp",
+      "alt": "Gorilla Guardians cultural performance 9",
+      "width": 2132,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-010.webp",
+      "alt": "Gorilla Guardians cultural performance 10",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-011.webp",
+      "alt": "Gorilla Guardians cultural performance 11",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-012.webp",
+      "alt": "Gorilla Guardians cultural performance 12",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-013.webp",
+      "alt": "Gorilla Guardians cultural performance 13",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-014.webp",
+      "alt": "Gorilla Guardians cultural performance 14",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-015.webp",
+      "alt": "Gorilla Guardians cultural performance 15",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-016.webp",
+      "alt": "Gorilla Guardians cultural performance 16",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-017.webp",
+      "alt": "Gorilla Guardians cultural performance 17",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-018.webp",
+      "alt": "Gorilla Guardians cultural performance 18",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-019.webp",
+      "alt": "Gorilla Guardians cultural performance 19",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-020.webp",
+      "alt": "Gorilla Guardians cultural performance 20",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-021.webp",
+      "alt": "Gorilla Guardians cultural performance 21",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-022.webp",
+      "alt": "Gorilla Guardians cultural performance 22",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-023.webp",
+      "alt": "Gorilla Guardians cultural performance 23",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/rooms/double": [
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-001.webp",
+      "alt": "Double room 1",
+      "width": 2532,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-002.webp",
+      "alt": "Double room 2",
+      "width": 2104,
+      "height": 1744,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-003.webp",
+      "alt": "Double room 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-004.webp",
+      "alt": "Double room 4",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-005.webp",
+      "alt": "Double room 5",
+      "width": 2230,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-006.webp",
+      "alt": "Double room 6",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-007.webp",
+      "alt": "Double room 7",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-008.webp",
+      "alt": "Double room 8",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-009.webp",
+      "alt": "Double room 9",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-010.webp",
+      "alt": "Double room 10",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-011.webp",
+      "alt": "Double room 11",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-012.webp",
+      "alt": "Double room 12",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-013.webp",
+      "alt": "Double room 13",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-014.webp",
+      "alt": "Double room 14",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-015.webp",
+      "alt": "Double room 15",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-016.webp",
+      "alt": "Double room 16",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-017.webp",
+      "alt": "Double room 17",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/double/lebambou-doubleroom-018.webp",
+      "alt": "Double room 18",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/rooms/single": [
+    {
+      "src": "/images/gallery/rooms/single/lebambou-singleroom-001.webp",
+      "alt": "Single room 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/single/lebambou-singleroom-002.webp",
+      "alt": "Single room 2",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/single/lebambou-singleroom-003.webp",
+      "alt": "Single room 3",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/single/lebambou-singleroom-004.webp",
+      "alt": "Single room 4",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/single/lebambou-singleroom-005.webp",
+      "alt": "Single room 5",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/rooms/twin": [
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
+      "alt": "Twin room 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-002.webp",
+      "alt": "Twin room 2",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-003.webp",
+      "alt": "Twin room 3",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-004.webp",
+      "alt": "Twin room 4",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-005.webp",
+      "alt": "Twin room 5",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-006.webp",
+      "alt": "Twin room 6",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/twin/lebambou-twinroom-007.webp",
+      "alt": "Twin room 7",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/rooms/triple": [
+    {
+      "src": "/images/gallery/rooms/triple/lebambou-tripleroom-001.webp",
+      "alt": "Triple room 1",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/triple/lebambou-tripleroom-002.webp",
+      "alt": "Triple room 2",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/triple/lebambou-tripleroom-003.webp",
+      "alt": "Triple room 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/triple/lebambou-tripleroom-004.webp",
+      "alt": "Triple room 4",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/triple/lebambou-tripleroom-005.webp",
+      "alt": "Triple room 5",
+      "width": 2600,
+      "height": 2510,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/rooms/family-cottage": [
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-001.webp",
+      "alt": "Family cottage 1",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-002.webp",
+      "alt": "Family cottage 2",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-003.webp",
+      "alt": "Family cottage 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-004.webp",
+      "alt": "Family cottage 4",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-005.webp",
+      "alt": "Family cottage 5",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-006.webp",
+      "alt": "Family cottage 6",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-007.webp",
+      "alt": "Family cottage 7",
+      "width": 2295,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-008.webp",
+      "alt": "Family cottage 8",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-009.webp",
+      "alt": "Family cottage 9",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-010.webp",
+      "alt": "Family cottage 10",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-011.webp",
+      "alt": "Family cottage 11",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-012.webp",
+      "alt": "Family cottage 12",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-013.webp",
+      "alt": "Family cottage 13",
+      "width": 1763,
+      "height": 2552,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-014.webp",
+      "alt": "Family cottage 14",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/rooms/family-cottage/lebambou-familycottage-015.webp",
+      "alt": "Family cottage 15",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    }
+  ],
+  "images/gallery/road-journey": [
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-001.webp",
+      "alt": "Road journey scenery 1",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-002.webp",
+      "alt": "Road journey scenery 2",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-003.webp",
+      "alt": "Road journey scenery 3",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-004.webp",
+      "alt": "Road journey scenery 4",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-005.webp",
+      "alt": "Road journey scenery 5",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-006.webp",
+      "alt": "Road journey scenery 6",
+      "width": 2600,
+      "height": 1950,
+      "blurDataURL": ""
+    },
+    {
+      "src": "/images/gallery/road-journey/roadtolebambou-scenery-007.webp",
+      "alt": "Road journey scenery 7",
+      "width": 1950,
+      "height": 2600,
+      "blurDataURL": ""
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { type Metadata, type Viewport } from "next";
 
 export const sharedMetadata: Partial<Metadata> = {
+  metadataBase: new URL("https://lebambougorillalodge.com"),
   authors: [{ name: "Le Bambou Gorilla Lodge" }],
   creator: "Le Bambou Gorilla Lodge",
   publisher: "Le Bambou Gorilla Lodge",

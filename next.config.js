@@ -10,7 +10,10 @@ const config = {
     'workspace-kg.tail89034.ts.net'
   ],
   images: {
-    imageSizes: [500, 800, 1080, 1600, 2000, 2600],
+    deviceSizes: [480, 640, 768, 1024, 1280, 1536],
+    imageSizes: [16, 32, 48, 64, 96, 160, 240, 360],
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       { protocol: 'https', hostname: '**.vercel-storage.com' },
       { protocol: 'https', hostname: 'blob.vercel-storage.com' },
