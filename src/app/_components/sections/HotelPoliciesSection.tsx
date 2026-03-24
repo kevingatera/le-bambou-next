@@ -8,7 +8,7 @@ export const HotelPoliciesSection = () => {
             <div className="container mx-auto px-4">
                 <div className="center-text">
                     <div className="max-width-text align-center">
-                        <h2 className="policy-heading">Hotel Policy</h2>
+                        <h1 className="policy-heading">Hotel Policy</h1>
                         <div className="small-space"></div>
                         <div className="policy-text">
                             Explore our Hotel Policy Page for essential

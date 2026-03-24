@@ -6,11 +6,11 @@ export const TestimonialSection = () => {
     <div className="testimonial-section wf-section">
       <div className="testimonial-main-container w-container">
         <div className="testimonial-center-heading">
-          <h1 className="testimonial-heading-no-margins">
+          <h2 className="testimonial-heading-no-margins">
             <em className="italic-text">
               Testimonials: &quot;Hear What Our Guests Have to Say&quot;
             </em>
-          </h1>
+          </h2>
         </div>
         <div className="w-layout-grid grid-testimonials">
           <div

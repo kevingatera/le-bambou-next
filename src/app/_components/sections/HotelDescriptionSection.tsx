@@ -5,11 +5,11 @@ export const HotelDescriptionSection = () => {
     <section className="homepage wf-section pt-12 pb-16">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto mb-4">
-          <h1 className="hotel-description mb-6">
+          <h2 className="hotel-description mb-6">
             <em className="italic-text">
               Embrace enchanting moments at our haven of tranquility.
             </em>
-          </h1>
+          </h2>
           <p className="text-[#2c2c2c] font-sans text-lg font-normal">
             Welcome to the exquisite Le Bambou Gorilla Lodge, strategically
             located near Volcanoes National Park, the magnificent home of rare

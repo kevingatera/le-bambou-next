@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     "Experience the pinnacle of luxury at Rwanda's top-rated eco-lodge. Nestled in Kinigi, we offer unparalleled access to gorilla trekking and stunning views of the Virunga mountains.",
   keywords:
     "best hotel Kinigi, top-rated Volcanoes National Park accommodation, luxury eco-lodge Rwanda, premier gorilla trekking base, Virunga mountains view, sustainable tourism, Rwandan hospitality",
+  alternates: {
+    canonical: "https://lebambougorillalodge.com",
+  },
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com",

@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     "Learn about Le Bambou Gorilla Lodge's commitment to sustainable luxury and conservation in Rwanda. Discover our story, values, and dedication to providing unforgettable experiences.",
   keywords:
     "Le Bambou Gorilla Lodge history, eco-lodge Rwanda, sustainable tourism, conservation efforts",
+  alternates: {
+    canonical: "https://lebambougorillalodge.com/about",
+  },
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com/about",

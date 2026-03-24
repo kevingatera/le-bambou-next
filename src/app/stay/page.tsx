@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     "Discover our luxurious rooms and amenities at Le Bambou Gorilla Lodge. Experience comfort and tranquility in the heart of Rwanda's natural beauty.",
   keywords:
     "Le Bambou Gorilla Lodge, accommodation, luxury rooms, amenities, Rwanda lodging",
+  alternates: {
+    canonical: "https://lebambougorillalodge.com/stay",
+  },
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com/stay",

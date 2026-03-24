@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     "Official guidelines for visiting Rwanda's mountain gorillas. Help us keep them healthy and safe during your trek.",
   keywords:
     "gorilla visitation guidelines, gorilla trekking rules, Rwanda gorilla health, Volcanoes National Park gorilla visit",
+  alternates: {
+    canonical: "https://lebambougorillalodge.com/gorilla-visitation-guidelines",
+  },
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com/gorilla-visitation-guidelines",

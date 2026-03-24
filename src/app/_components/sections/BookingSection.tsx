@@ -721,7 +721,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
         : ""
         }`}
     >
-      <div className="container mx-auto py-2 max-w-[80rem] px-0 sm:px-4 md:px-8 lg:px-16">
+      <div className="container mx-auto max-w-[80rem] px-4 py-2 sm:px-4 md:px-8 lg:px-16">
         {submitStatus === "success" ? (
           <BookingSuccessOverlay onDismiss={() => {
             setSubmitStatus("idle");
@@ -729,9 +729,15 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
           }} />
         ) : (
           <>
-            <h2 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">
-              Book Your Stay
-            </h2>
+            {mode === "modal" ? (
+              <h2 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">
+                Book Your Stay
+              </h2>
+            ) : (
+              <h1 className="text-[#2c2c2c] mt-0 mb-4 text-3xl font-normal leading-snug">
+                Book Your Stay
+              </h1>
+            )}
             <Breadcrumbs
               steps={steps}
               currentStep={currentStep}

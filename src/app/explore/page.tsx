@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Explore Rwanda | Le Bambou Gorilla Lodge Activities & Attractions",
   description: "Discover the wonders of Rwanda with Le Bambou Gorilla Lodge. From gorilla trekking to cultural experiences, explore the best activities and attractions near our eco-lodge.",
   keywords: "Rwanda attractions, gorilla trekking, Volcanoes National Park, Rwanda activities, cultural experiences",
+  alternates: {
+    canonical: "https://lebambougorillalodge.com/explore",
+  },
   openGraph: {
     ...sharedMetadata.openGraph,
     url: "https://lebambougorillalodge.com/explore",
@@ -41,7 +44,7 @@ export default async function Home() {
               <div className="py-12">
                 <div className="align-text-center">
                   <a href="https://visitrwandabookings.rdb.rw/rdbportal/web/rdb/home" target="_blank" className="link-block-4 w-inline-block">
-                    <h1 className="learn-more-heading">Learn More</h1>
+                    <h2 className="learn-more-heading">Learn More</h2>
                   </a>
                   <div className="small-space"></div>
                 </div>

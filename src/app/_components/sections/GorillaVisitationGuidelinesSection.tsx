@@ -7,9 +7,9 @@ export const GorillaVisitationGuidelinesSection = () => {
     <section className="homepage wf-section pt-12 pb-16 bg-[#d7dfde]">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="center-text mb-10">
-          <h2 className="policy-heading text-3xl md:text-4xl font-bold text-center">
+          <h1 className="policy-heading text-3xl md:text-4xl font-bold text-center">
             Gorilla Visitation Guidelines
-          </h2>
+          </h1>
           <p className="mt-4 text-lg text-center font-semibold uppercase text-[#2c2c2c]">
             Gorillas are endangered – please help us keep them healthy!
           </p>

@@ -9,9 +9,9 @@ export const ContactSection = async () => {
       <div className="container mx-auto md:px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="contact-form flex flex-col justify-center w-full max-w-2xl mx-auto md:mx-0 px-4 sm:pl-16">
-            <h2 className="text-[#2c2c2c] mt-0 mb-0 text-3xl font-normal leading-snug">
+            <h1 className="text-[#2c2c2c] mt-0 mb-0 text-3xl font-normal leading-snug">
               Contact us
-            </h2>
+            </h1>
             <div className="mb-4"></div>
             <p className="mb-6 text-lg">
               Feel free to contact us anytime through:{" "}
