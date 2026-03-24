@@ -53,3 +53,10 @@ web.archive.org
 
 **/images/**/archive/
 .specstory/
+tmp/
+*.zip
+*.qfx
+*.har
+Trace-*.json.gz
+Screenshot_*.png
+tsconfig.tsbuildinfo

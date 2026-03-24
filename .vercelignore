@@ -1,0 +1,11 @@
+node_modules
+.next
+coverage
+tmp
+*.zip
+*.qfx
+*.har
+Trace-*.json.gz
+Screenshot_*.png
+tsconfig.tsbuildinfo
+web.archive.org
