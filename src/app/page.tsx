@@ -5,7 +5,6 @@ import { BookingCallToActionWithReservationSection } from "./_components/section
 import { TestimonialSection } from "./_components/sections/TestimonialSection";
 import { DiscoverRoomsSection } from "./_components/sections/DiscoverRoomsSection";
 import { EventAnnouncementSection } from "./_components/sections/EventAnnouncementSection";
-import { LocalStorageProvider } from "./_components/LoacalStorageProvider";
 import { type Metadata } from "next";
 import { sharedMetadata } from "./metadata";
 
@@ -30,13 +29,11 @@ export default async function Home() {
     <HydrateClient>
       <main className="flex flex-col flex-grow min-h-screen">
         <HeroSection />
-        <LocalStorageProvider>
-          <BookingCallToActionWithReservationSection />
-          <HotelDescriptionSection />
-          <EventAnnouncementSection />
-          <DiscoverRoomsSection />
-          <TestimonialSection />
-        </LocalStorageProvider>
+        <BookingCallToActionWithReservationSection />
+        <HotelDescriptionSection />
+        <EventAnnouncementSection />
+        <DiscoverRoomsSection />
+        <TestimonialSection />
       </main>
     </HydrateClient>
   );
