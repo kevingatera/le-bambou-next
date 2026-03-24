@@ -1,4 +1,4 @@
-export const roomTypes = ["Double", "Single", "Triple", "Twin"] as const;
+export const roomTypes = ["Double", "Single", "Triple", "Twin", "Family"] as const;
 export type RoomType = typeof roomTypes[number];
 
 export interface RoomSelection {
@@ -50,6 +50,19 @@ export const roomPrices: Record<RoomType, RoomPricing> = {
     halfBoard: 380,
     bedAndBreakfast: 350,
   },
+  Family: {
+    fullBoard: 500,
+    halfBoard: 480,
+    bedAndBreakfast: 450,
+  },
+};
+
+export const roomCapacities: Record<RoomType, number> = {
+  Single: 1,
+  Double: 2,
+  Twin: 2,
+  Triple: 3,
+  Family: 4,
 };
 
 export type BoardType = "fullBoard" | "halfBoard" | "bedAndBreakfast";

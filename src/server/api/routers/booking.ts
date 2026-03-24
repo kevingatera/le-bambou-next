@@ -8,6 +8,7 @@ import {
 import dns from "dns";
 import { promisify } from "util";
 import { isEmail } from "validator";
+import { roomTypes } from "~/types/booking";
 
 const resolveMx = promisify(dns.resolveMx);
 
@@ -23,7 +24,7 @@ async function isEmailValid(email: string): Promise<boolean> {
   }
 }
 
-const roomTypeEnum = z.enum(["Double", "Single", "Triple", "Twin"]);
+const roomTypeEnum = z.enum(roomTypes);
 const boardTypeEnum = z.enum(["fullBoard", "halfBoard", "bedAndBreakfast"]);
 
 export const bookingRouter = createTRPCRouter({

@@ -3,16 +3,17 @@
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { BookingSection } from "./BookingSection";
-import { type RoomType } from "~/types/booking";
+import { roomShowcases } from "~/app/_data/roomShowcase";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
+import { roomPrices, type RoomType } from "~/types/booking";
 import {
     getStoredBookingData,
     setStoredBookingData,
 } from "~/app/_utils/localStorage";
-import { roomPrices } from "~/types/booking";
 import { InfoCircle } from "../icons/InfoCirlce";
 import { DropdownArrow } from "../icons/DropDownArrow";
 import { motion } from "framer-motion";
-import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 const BoardTypeInfo = {
     fullBoard: "Includes breakfast, lunch, and dinner.",
@@ -21,70 +22,28 @@ const BoardTypeInfo = {
     bedAndBreakfast: "Includes overnight stay and breakfast only.",
 };
 
-const roomImages = {
-    Double: [
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/double/lebambou-doubleroom-001.webp",
-            ),
-            alt: "Double room interior",
-        },
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/double/lebambou-doubleroom-005.webp",
-            ),
-            alt: "Double room with cozy lighting",
-        },
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/double/lebambou-doubleroom-010.webp",
-            ),
-            alt: "Double room details",
-        },
-    ],
-    Single: [
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/single/lebambou-singleroom-001.webp",
-            ),
-            alt: "Single room interior",
-        },
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/single/lebambou-singleroom-004.webp",
-            ),
-            alt: "Single room view",
-        },
-    ],
-    Triple: [
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/triple/lebambou-tripleroom-001.webp",
-            ),
-            alt: "Triple room interior",
-        },
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/triple/lebambou-tripleroom-005.webp",
-            ),
-            alt: "Triple room beds",
-        },
-    ],
-    Twin: [
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
-            ),
-            alt: "Twin room interior",
-        },
-        {
-            src: withGalleryBaseUrl(
-                "/images/gallery/rooms/twin/lebambou-twinroom-005.webp",
-            ),
-            alt: "Twin room details",
-        },
-    ],
+type RoomCarouselImage = {
+    src: string;
+    lightboxSrc: string;
+    alt: string;
+    width: number;
+    height: number;
 };
+
+type RoomCard = typeof roomShowcases[number] & {
+    images: RoomCarouselImage[];
+};
+
+const roomCards: RoomCard[] = roomShowcases.map((room) => ({
+    ...room,
+    images: room.images.map((image) => ({
+        ...image,
+        src: withGalleryBaseUrl(getGalleryVariantPath(image.src, "thumb") ?? image.src),
+        lightboxSrc: withGalleryBaseUrl(
+            getGalleryVariantPath(image.src, "lightbox") ?? image.src,
+        ),
+    })),
+}));
 
 const Modal = ({
     image,
@@ -94,7 +53,7 @@ const Modal = ({
     isLoading,
     onLoad,
 }: {
-    image: { src: string; alt: string };
+    image: { src: string; alt: string; width: number; height: number };
     onClose: () => void;
     onPrev: () => void;
     onNext: () => void;
@@ -132,9 +91,10 @@ const Modal = ({
                 <Image
                     src={image.src}
                     alt={image.alt}
-                    width={1000}
-                    height={1000}
+                    width={image.width}
+                    height={image.height}
                     priority
+                    unoptimized
                     className={`object-contain max-h-[calc(100dvh-100px)] max-w-full ${isLoading ? "opacity-0" : "opacity-100"
                         }`}
                     onLoadingComplete={onLoad}
@@ -156,30 +116,14 @@ const Modal = ({
     );
 };
 
-const RoomImageCarousel = ({ images, roomType }: {
-    images: typeof roomImages[keyof typeof roomImages];
-    roomType: string;
+const RoomImageCarousel = ({ images, roomTitle, isPriority = false }: {
+    images: RoomCarouselImage[];
+    roomTitle: string;
+    isPriority?: boolean;
 }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        images.forEach((image) => {
-            const preloadLink = document.createElement("link");
-            preloadLink.rel = "preload";
-            preloadLink.as = "image";
-            preloadLink.href = image.src;
-            document.head.appendChild(preloadLink);
-        });
-
-        return () => {
-            const preloadLinks = document.head.querySelectorAll(
-                'link[rel="preload"][as="image"]',
-            );
-            preloadLinks.forEach((link) => link.remove());
-        };
-    }, [images]);
 
     if (!images || images.length === 0) return null;
 
@@ -197,10 +141,11 @@ const RoomImageCarousel = ({ images, roomType }: {
         );
     };
 
-    const currentImage = images[currentImageIndex] as {
-        src: string;
-        alt: string;
-    };
+    const currentImage = images[currentImageIndex];
+
+    if (!currentImage) {
+        return null;
+    }
 
     return (
         <div className="relative group">
@@ -215,12 +160,14 @@ const RoomImageCarousel = ({ images, roomType }: {
             >
                 <Image
                     src={currentImage.src}
-                    loading="eager"
-                    width={500}
-                    height={500}
-                    sizes="(max-width: 479px) 83vw, (max-width: 767px) 80vw, (max-width: 991px) 78vw, 500.0000305175781px"
+                    loading={isPriority ? "eager" : "lazy"}
+                    fetchPriority={isPriority ? "high" : undefined}
+                    width={currentImage.width}
+                    height={currentImage.height}
+                    sizes="(max-width: 767px) 92vw, (max-width: 991px) 78vw, 500px"
                     alt={currentImage.alt}
                     className="room-image"
+                    unoptimized
                     onLoad={() => setIsLoading(false)}
                 />
             </a>
@@ -229,14 +176,14 @@ const RoomImageCarousel = ({ images, roomType }: {
                     <button
                         onClick={prevImage}
                         className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        aria-label={`Previous ${roomType} room image`}
+                        aria-label={`Previous ${roomTitle} image`}
                     >
                         <DropdownArrow className="w-4 h-4" direction="left" />
                     </button>
                     <button
                         onClick={nextImage}
                         className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        aria-label={`Next ${roomType} room image`}
+                        aria-label={`Next ${roomTitle} image`}
                     >
                         <DropdownArrow className="w-4 h-4" direction="right" />
                     </button>
@@ -256,7 +203,10 @@ const RoomImageCarousel = ({ images, roomType }: {
 
             {isModalOpen && currentImage && (
                 <Modal
-                    image={currentImage}
+                    image={{
+                        ...currentImage,
+                        src: currentImage.lightboxSrc,
+                    }}
                     onClose={() => setIsModalOpen(false)}
                     onPrev={prevImage}
                     onNext={nextImage}
@@ -319,34 +269,25 @@ export const RoomsListSection = () => {
                     </h2>
                 </div>
                 <div className="room-flex-row rounded-lg p-4">
-                    {(["Double", "Single", "Triple", "Twin"] as const).map((
-                        roomType,
+                    {roomCards.map((
+                        room,
+                        index,
                     ) => (
                         <div
-                            key={roomType}
+                            key={room.type}
                             className="room-wrapped-card spaced"
                         >
                             <RoomImageCarousel
-                                images={roomImages[roomType]}
-                                roomType={roomType}
+                                images={room.images}
+                                roomTitle={room.title}
+                                isPriority={index === 0}
                             />
                             <div className="room-details">
                                 <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
-                                    {roomType} Bed Room
+                                    {room.title}
                                 </h4>
                                 <p className="rooms-paragraph">
-                                    Indulge in the comfort and charm of our
-                                    recently decorated {roomType}{" "}
-                                    Bed Room, tucked away in the serene northern
-                                    wing of our property. This cozy retreat
-                                    offers a delightful en-suite bathroom,
-                                    coffee-making facilities for your
-                                    convenience, and a welcoming chimney that
-                                    creates a warm and inviting ambiance.
-                                    Immerse yourself in picturesque views of the
-                                    majestic Sabyinyo Mountain Volcano, adding
-                                    an extra touch of natural beauty to your
-                                    stay.
+                                    {room.description}
                                 </p>
                                 <div className="mt-4 space-y-2">
                                     <p className="font-semibold">
@@ -356,7 +297,7 @@ export const RoomsListSection = () => {
                                         <div className="group relative flex items-center">
                                             Full Board:{" "}
                                             <b>
-                                                ${roomPrices[roomType]
+                                                ${roomPrices[room.type]
                                                     .fullBoard}
                                             </b>
                                             <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
@@ -368,7 +309,7 @@ export const RoomsListSection = () => {
                                         <div className="group relative flex items-center">
                                             Half Board:{" "}
                                             <b>
-                                                ${roomPrices[roomType]
+                                                ${roomPrices[room.type]
                                                     .halfBoard}
                                             </b>
                                             <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
@@ -380,7 +321,7 @@ export const RoomsListSection = () => {
                                         <div className="group relative flex items-center">
                                             Bed & Breakfast:{" "}
                                             <b>
-                                                ${roomPrices[roomType]
+                                                ${roomPrices[room.type]
                                                     .bedAndBreakfast}
                                             </b>
                                             <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
@@ -391,7 +332,7 @@ export const RoomsListSection = () => {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => openBookingModal(roomType)}
+                                    onClick={() => openBookingModal(room.type)}
                                     className="mt-4 px-6 py-2 bg-button text-white rounded-md hover:bg-[#2c2c2c] transition duration-300"
                                 >
                                     Book Now

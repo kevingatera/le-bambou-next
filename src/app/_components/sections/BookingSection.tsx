@@ -11,6 +11,7 @@ import { type BookingEmailData } from "~/server/utils/emailUtils";
 import { api } from "~/trpc/react";
 import {
   additionalServices,
+  roomCapacities,
   roomPrices,
   type RoomSelection,
   type RoomType,
@@ -133,11 +134,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     }
 
     const currentCapacity = roomSelections.reduce((acc, room) => {
-      let capacityPerRoom = 0;
-      if (room.type === "Single") capacityPerRoom = 1;
-      else if (room.type === "Double" || room.type === "Twin") capacityPerRoom = 2;
-      else if (room.type === "Triple") capacityPerRoom = 3;
-      return acc + (capacityPerRoom * room.count);
+      return acc + (roomCapacities[room.type] * room.count);
     }, 0);
 
     // Only auto-adjust if there are no rooms selected OR current rooms can't hold all guests.
@@ -151,7 +148,10 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     const MAX_ROOMS_AUTO_ASSIGN = 5; // Safety break to prevent excessive rooms
 
     while (remainingGuests > 0 && newSelections.length < MAX_ROOMS_AUTO_ASSIGN) {
-      if (remainingGuests >= 3) {
+      if (remainingGuests >= 4) {
+        newSelections.push({ type: "Family", count: 1, boardType: "fullBoard" });
+        remainingGuests -= 4;
+      } else if (remainingGuests === 3) {
         newSelections.push({ type: "Triple", count: 1, boardType: "fullBoard" });
         remainingGuests -= 3;
       } else if (remainingGuests === 2) {
