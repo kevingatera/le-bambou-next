@@ -239,30 +239,30 @@ export const NavigationBar = () => {
             </div>
 
             {/* About Link */}
-            <a
-              href="about"
+            <Link
+              href="/about"
               className={`text-xl mr-4 ${isActive("/about")
                 ? "text-[#2c2c2c] font-bold"
                 : "text-[#2c2c2c]"
                 }`}
             >
               About
-            </a>
+            </Link>
             {/* Contact Link */}
-            <a
-              href="contact"
+            <Link
+              href="/contact"
               className={`text-xl mr-4 ${isActive("/contact")
                 ? "text-[#2c2c2c] font-bold"
                 : "text-[#2c2c2c]"
                 }`}
             >
               Contact
-            </a>
+            </Link>
           </div>
 
           {/* Centered Logo - visible only on desktop */}
           <div className="flex items-center justify-center flex-1">
-            <a
+            <Link
               href="/"
               aria-current="page"
               className="w-nav-brand text-[#2c2c2c] font-bold hidden md:block"
@@ -275,7 +275,7 @@ export const NavigationBar = () => {
                 alt=""
                 className="transition-all duration-300"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Right side navigation items */}
@@ -326,7 +326,7 @@ export const NavigationBar = () => {
         <div className="md:hidden absolute top-0 left-0 w-full h-dvh bg-white z-50 flex flex-col p-4 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             {/* Logo */}
-            <a
+            <Link
               href="/"
               aria-current="page"
               className="w-nav-brand text-[#2c2c2c] font-bold"
@@ -338,7 +338,7 @@ export const NavigationBar = () => {
                 height={100}
                 alt=""
               />
-            </a>
+            </Link>
             {/* Close Button */}
             <button
               className="text-gray-700 focus:outline-none"

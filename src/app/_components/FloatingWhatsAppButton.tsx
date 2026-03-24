@@ -38,20 +38,20 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
   }, []);
 
   const buttonTransition = {
-    type: "spring",
+    type: "spring" as const,
     bounce: 0.2,
-    duration: 0.4
+    duration: 0.4,
   };
 
   const hoverTransition = {
-    type: "tween",
+    type: "tween" as const,
     duration: 0.2,
-    ease: "easeInOut"
+    ease: "easeInOut" as const,
   };
 
   const textTransition = {
     duration: 0.15,
-    ease: "easeOut"
+    ease: "easeOut" as const,
   };
 
   return (
@@ -99,7 +99,7 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
             opacity: 0,
             scale: 0.8,
             y: 100,
-            transition: { duration: 0.3, ease: "easeIn" }
+            transition: { duration: 0.3, ease: "easeIn" as const }
           }}
           transition={buttonTransition}
           style={{ minWidth: '3.5rem' }}

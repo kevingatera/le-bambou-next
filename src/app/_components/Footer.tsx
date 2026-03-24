@@ -23,7 +23,7 @@ export const Footer = () => {
                 <div className="footer-container">
                     <div className="w-layout-grid footer-small-grid">
                         <div className="max-width-416">
-                            <a
+                            <Link
                                 href="/"
                                 aria-current="page"
                                 className="logo spark-margin-bottom-32px w-inline-block text-[#2c2c2c] font-bold"
@@ -35,7 +35,7 @@ export const Footer = () => {
                                     width={200}
                                     height={200}
                                 />
-                            </a>
+                            </Link>
                             <p className="text-[rgba(0,0,0,.76)]">
                                 Nestled at the foothills of Volcanoes National
                                 Park in Kinigi, Rwanda, Le Bambou Gorilla Lodge
