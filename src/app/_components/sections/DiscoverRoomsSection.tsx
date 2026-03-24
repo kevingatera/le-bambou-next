@@ -5,14 +5,14 @@ import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const DiscoverRoomsSection = async () => {
   const imageSrc = withGalleryBaseUrl(
-    "/images/gallery/rooms/double/lebambou-doubleroom-001.webp",
+    "/images/gallery/rooms/double/lebambou-doubleroom-002.webp",
   );
 
   return (
     <section className="discover-rooms-section flex items-center mb-2.5 pt-[140px] font-sans relative">
       <Image
         src={imageSrc}
-        alt="Discover Rooms Background"
+        alt="Le Bambou Gorilla Lodge double room interior"
         fill={true}
         className="opacity-70 object-cover"
         loading="lazy"

@@ -184,7 +184,7 @@ const Modal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/85 p-3 backdrop-blur-sm sm:p-6"
+      className="fixed inset-0 z-50 bg-black/85 p-2 backdrop-blur-sm sm:p-6"
       onClick={onClose}
     >
       <motion.div
@@ -194,7 +194,7 @@ const Modal = ({
         className="mx-auto flex h-full w-full max-w-[min(96vw,1700px)] flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-3 flex items-center justify-between gap-3 text-white">
+        <div className="mb-2 flex items-start justify-between gap-3 px-1 text-white sm:mb-3 sm:items-center sm:px-0">
           <div className="min-w-0">
             <p className="truncate text-sm font-medium sm:text-base">{selectedImage.alt}</p>
             <p className="text-xs text-white/70 sm:text-sm">{currentIndex + 1} / {totalCount}</p>
@@ -207,7 +207,7 @@ const Modal = ({
             Close
           </button>
         </div>
-        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-2xl bg-[#d7dfde] px-4 py-6 sm:px-14 sm:py-8">
+        <div className="relative flex min-h-0 flex-1 items-start justify-center overflow-hidden rounded-2xl bg-[#d7dfde] px-2 py-2 sm:items-center sm:px-14 sm:py-8">
           {isLoading && (
             <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#d7dfde]/65">
               <div className="h-16 w-16 animate-spin rounded-full border-8 border-solid border-blue-400 border-t-transparent" />
@@ -215,12 +215,12 @@ const Modal = ({
           )}
           <button
             onClick={onPrev}
-            className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-gray-900/65 p-3 text-white backdrop-blur transition hover:bg-gray-900/80"
+            className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-gray-900/65 p-2 text-white backdrop-blur transition hover:bg-gray-900/80 sm:left-3 sm:p-3"
             aria-label="Previous image"
           >
             <DropdownArrow className="h-6 w-6" direction="left" />
           </button>
-          <div className="flex h-full w-full items-center justify-center">
+          <div className="flex h-full w-full items-start justify-center sm:items-center">
             <Image
               src={selectedImage.src}
               alt={selectedImage.alt}
@@ -231,14 +231,13 @@ const Modal = ({
               sizes="(max-width: 768px) 92vw, 88vw"
               className={`max-h-full max-w-full object-contain transition-opacity duration-200 ${
                 isLoading ? "opacity-0" : "opacity-100"
-              }`}
-              style={{ maxHeight: "calc(100dvh - 10rem)" }}
+              } max-h-[calc(100dvh-8rem)] sm:max-h-[calc(100dvh-10rem)]`}
               onLoadingComplete={onLoad}
             />
           </div>
           <button
             onClick={onNext}
-            className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-gray-900/65 p-3 text-white backdrop-blur transition hover:bg-gray-900/80"
+            className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-gray-900/65 p-2 text-white backdrop-blur transition hover:bg-gray-900/80 sm:right-3 sm:p-3"
             aria-label="Next image"
           >
             <DropdownArrow className="h-6 w-6" direction="right" />
