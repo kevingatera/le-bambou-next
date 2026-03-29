@@ -151,7 +151,7 @@ const RoomImageCarousel = ({ images, roomTitle, isPriority = false }: {
         <div className="relative group">
             <a
                 href="#"
-                className="w-inline-block"
+                className="inline-block w-full"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsLoading(true);
@@ -166,7 +166,7 @@ const RoomImageCarousel = ({ images, roomTitle, isPriority = false }: {
                     height={currentImage.height}
                     sizes="(max-width: 767px) 92vw, (max-width: 991px) 78vw, 500px"
                     alt={currentImage.alt}
-                    className="room-image"
+                    className="room-image h-auto !w-full max-w-full"
                     unoptimized
                     onLoad={() => setIsLoading(false)}
                 />
@@ -275,14 +275,14 @@ export const RoomsListSection = () => {
                     ) => (
                         <div
                             key={room.type}
-                            className="room-wrapped-card spaced"
+                            className="room-wrapped-card spaced !w-full !flex-col gap-4 sm:!flex-wrap lg:!flex-row"
                         >
                             <RoomImageCarousel
                                 images={room.images}
                                 roomTitle={room.title}
                                 isPriority={index === 0}
                             />
-                            <div className="room-details">
+                            <div className="room-details w-full max-w-full lg:max-w-[590px]">
                                 <h4 className="font-['Varela_Round',sans-serif] rooms-margin-bottom-1rem">
                                     {room.title}
                                 </h4>
@@ -293,7 +293,7 @@ export const RoomsListSection = () => {
                                     <p className="font-semibold">
                                         Pricing Options:
                                     </p>
-                                    <div className="flex space-x-2">
+                                    <div className="flex flex-wrap items-start gap-x-2 gap-y-2">
                                         <div className="group relative flex items-center">
                                             Full Board:{" "}
                                             <b>
@@ -305,7 +305,7 @@ export const RoomsListSection = () => {
                                                 {BoardTypeInfo.fullBoard}
                                             </span>
                                         </div>
-                                        <div>|</div>
+                                        <div className="hidden sm:block">|</div>
                                         <div className="group relative flex items-center">
                                             Half Board:{" "}
                                             <b>
@@ -313,11 +313,11 @@ export const RoomsListSection = () => {
                                                     .halfBoard}
                                             </b>
                                             <InfoCircle className="inline-block w-4 h-4 ml-1 text-gray-500 align-middle" />
-                                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-white text-sm p-2 rounded w-96">
+                                            <span className="absolute bottom-full left-1/2 z-10 hidden w-72 -translate-x-1/2 rounded bg-black p-2 text-sm text-white group-hover:block sm:w-96">
                                                 {BoardTypeInfo.halfBoard}
                                             </span>
                                         </div>
-                                        <div>|</div>
+                                        <div className="hidden sm:block">|</div>
                                         <div className="group relative flex items-center">
                                             Bed & Breakfast:{" "}
                                             <b>

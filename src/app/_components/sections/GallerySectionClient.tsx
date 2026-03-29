@@ -41,14 +41,29 @@ const buildJustifiedRow = (
   const rowAspectSum = images.reduce((sum, image) => sum + getOrientationRatio(image), 0);
   const availableWidth = Math.max(containerWidth - (GALLERY_GAP * Math.max(images.length - 1, 0)), 1);
   const height = Math.max(160, Math.round(availableWidth / Math.max(rowAspectSum, 0.1)));
+  let consumedWidth = 0;
 
   return {
     height,
-    items: images.map((image) => ({
-      image,
-      height,
-      width: Math.max(1, Math.round(height * getOrientationRatio(image))),
-    })),
+    items: images.map((image, index) => {
+      const remainingImages = images.length - index - 1;
+      const remainingMinWidth = Math.max(remainingImages, 0);
+      const proposedWidth = Math.max(
+        1,
+        Math.round(height * getOrientationRatio(image)),
+      );
+      const width = index === images.length - 1
+        ? Math.max(1, availableWidth - consumedWidth)
+        : Math.max(1, Math.min(proposedWidth, availableWidth - consumedWidth - remainingMinWidth));
+
+      consumedWidth += width;
+
+      return {
+        image,
+        height,
+        width,
+      };
+    }),
   };
 };
 
