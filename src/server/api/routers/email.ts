@@ -3,6 +3,9 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import nodemailer from "nodemailer";
 
 const isDevelopment = process.env.NODE_ENV === "development";
+const prodSenderAddress = "noreply@lebambougorillalodge.com";
+const prodInboxAddress = "info@lebambougorillalodge.com";
+const getSmtpPassword = (value: string | undefined) => value?.trim();
 
 const transporter = nodemailer.createTransport(
     isDevelopment
@@ -20,8 +23,8 @@ const transporter = nodemailer.createTransport(
             port: 465,
             secure: true,
             auth: {
-                user: "info@lebambougorillalodge.com",
-                pass: process.env.EMAIL_PASSWORD_PROD,
+                user: prodSenderAddress,
+                pass: getSmtpPassword(process.env.EMAIL_PASSWORD_PROD),
             },
         },
 );
@@ -41,11 +44,13 @@ export const emailRouter = createTRPCRouter({
             const mailOptions = {
                 from: isDevelopment
                     ? "kevin@deployitwith.me"
-                    : "info@lebambougorillalodge.com",
+                    : prodSenderAddress,
                 to: isDevelopment
                     ? "kevin@deployitwith.me"
-                    : "info@lebambougorillalodge.com",
-                replyTo: email,
+                    : prodInboxAddress,
+                replyTo: isDevelopment
+                    ? "kevin@deployitwith.me"
+                    : prodInboxAddress,
                 subject: `New Contact Form Submission from ${name}`,
                 text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
                 html: `

@@ -9,6 +9,9 @@ import dns from "dns";
 import { promisify } from "util";
 
 const isDevelopment = process.env.NODE_ENV === "development";
+const prodSenderAddress = "noreply@lebambougorillalodge.com";
+const prodInboxAddress = "info@lebambougorillalodge.com";
+const getSmtpPassword = (value: string | undefined) => value?.trim();
 
 const transporter = nodemailer.createTransport(
     isDevelopment
@@ -26,8 +29,8 @@ const transporter = nodemailer.createTransport(
             port: 465,
             secure: true,
             auth: {
-                user: "info@lebambougorillalodge.com",
-                pass: process.env.EMAIL_PASSWORD_PROD,
+                user: prodSenderAddress,
+                pass: getSmtpPassword(process.env.EMAIL_PASSWORD_PROD),
             },
         },
 );
@@ -124,8 +127,11 @@ export async function sendBookingConfirmationEmails(
     const guestMailOptions = {
         from: isDevelopment
             ? "kevin@deployitwith.me"
-            : "info@lebambougorillalodge.com",
+            : prodSenderAddress,
         to: booking.guestEmail,
+        replyTo: isDevelopment
+            ? "kevin@deployitwith.me"
+            : prodInboxAddress,
         subject: "Booking Confirmation - Le Bambou Gorilla Lodge",
         html: `
             <!DOCTYPE html>
@@ -286,12 +292,14 @@ export async function sendBookingConfirmationEmails(
     const adminMailOptions = {
         from: isDevelopment
             ? "kevin@deployitwith.me"
-            : "info@lebambougorillalodge.com",
+            : prodSenderAddress,
         to: isDevelopment
             ? "kevin@deployitwith.me"
-            : "info@lebambougorillalodge.com",
+            : prodInboxAddress,
         subject: `New Booking - ${booking.guestName}`,
-        replyTo: booking.guestEmail,
+        replyTo: isDevelopment
+            ? "kevin@deployitwith.me"
+            : prodInboxAddress,
         html: `
             <h2>New Booking Received</h2>
             <p>A new booking has been made with the following details:</p>
