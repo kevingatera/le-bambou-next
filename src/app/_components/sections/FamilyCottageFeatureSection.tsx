@@ -5,7 +5,11 @@ import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 import { PreconfiguredBookingButton } from "../PreconfiguredBookingButton";
 
-const heroImage = familyCottageShowcase.images[0];
+const heroImage =
+  familyCottageShowcase.images[0] ??
+  (() => {
+    throw new Error("Family cottage showcase requires at least one image.");
+  })();
 const supportingImages = familyCottageShowcase.images.slice(1);
 
 export const FamilyCottageFeatureSection = () => {
