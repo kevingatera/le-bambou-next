@@ -4,6 +4,7 @@ import { RoomsListSection } from "../_components/sections/RoomsListSection";
 import { RoomAmenitiesSection } from "../_components/sections/RoomAmenitiesSection";
 import { GallerySection } from "../_components/sections/GallerySection";
 import { FamilyCottageFeatureSection } from "../_components/sections/FamilyCottageFeatureSection";
+import { StaySectionNav } from "../_components/sections/StaySectionNav";
 import { type Metadata } from "next";
 import { sharedMetadata } from "../metadata";
 
@@ -38,28 +39,7 @@ export default async function Home() {
     <HydrateClient>
       <main>
         <StayBannerSection />
-        <nav className="sticky top-0 z-50 min-h-[80px] bg-[#566c6a] px-4 py-4 shadow-md transition-shadow sm:min-h-[7.5rem] sm:py-[45px]">
-          <div className="container mx-auto">
-            <ul className="mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm sm:gap-x-8 sm:text-lg">
-              {[
-                { href: "/family-cottage", label: "Family Cottage" },
-                { href: "#Rooms", label: "Rooms" },
-                { href: "#Amenities", label: "Amenities" },
-                { href: "#Gallery", label: "Gallery" },
-              ].map(({ href, label }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    className="text-white hover:text-[#ebf8f7] transition-colors relative group py-2"
-                  >
-                    {label}
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#ebf8f7] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
+        <StaySectionNav />
         <FamilyCottageFeatureSection />
         <RoomsListSection />
         <RoomAmenitiesSection />

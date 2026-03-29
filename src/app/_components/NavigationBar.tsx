@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { DropdownArrow } from "~/app/_components/icons/DropDownArrow";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -61,6 +61,19 @@ export const NavigationBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const value = window.innerWidth >= 768
+      ? (isScrolled ? "5.5rem" : "7rem")
+      : (isScrolled ? "5rem" : "7rem");
+
+    root.style.setProperty("--navigation-bar-height", value);
+
+    return () => {
+      root.style.removeProperty("--navigation-bar-height");
+    };
+  }, [isScrolled]);
+
   const scrollToHash = useCallback((hash: string) => {
     setIsMobileMenuOpen(false);
 
@@ -104,7 +117,12 @@ export const NavigationBar = () => {
   };
 
   return (
-    <div id="navigation-bar" className="sticky top-0 z-50 flex items-center min-h-[7rem] bg-[#b9c5c4] px-1 md:px-10 lg:px-[95px] shadow-md">
+    <div
+      id="navigation-bar"
+      className={`sticky top-0 z-50 flex items-center bg-[#b9c5c4] px-1 shadow-md transition-all duration-300 ease-out md:px-10 lg:px-[95px] ${
+        isScrolled ? "min-h-[5rem] md:min-h-[5.5rem]" : "min-h-[7rem]"
+      }`}
+    >
       <div className="flex items-center justify-between w-full">
         {/* Logo - visible on mobile, hidden on desktop */}
         <Link
@@ -114,8 +132,8 @@ export const NavigationBar = () => {
         >
           <Image
             src="/images/Asset-34x.png"
-            width={isScrolled ? 50 : 75}
-            height={isScrolled ? 50 : 75}
+            width={isScrolled ? 46 : 75}
+            height={isScrolled ? 46 : 75}
             alt=""
             className="transition-all duration-300"
             priority={true}
@@ -135,7 +153,7 @@ export const NavigationBar = () => {
               <div className="mr-auto pr-8 flex items-center">
                 <a href="stay" className="link-block-2 w-inline-block">
                   <div
-                    className={`text-xl ${isActive("/stay")
+                    className={`${isScrolled ? "text-lg" : "text-xl"} ${isActive("/stay")
                       ? "text-[#2c2c2c] font-bold"
                       : "text-[#2c2c2c]"
                       }`}
@@ -199,7 +217,7 @@ export const NavigationBar = () => {
               <div className="pr-8 flex items-center">
                 <a href="explore" className="link-block-3 w-inline-block">
                   <div
-                    className={`text-xl ${isActive("/explore")
+                    className={`${isScrolled ? "text-lg" : "text-xl"} ${isActive("/explore")
                       ? "text-[#2c2c2c] font-bold"
                       : "text-[#2c2c2c]"
                       }`}
@@ -250,7 +268,7 @@ export const NavigationBar = () => {
             {/* About Link */}
             <Link
               href="/about"
-              className={`text-xl mr-4 ${isActive("/about")
+              className={`${isScrolled ? "text-lg" : "text-xl"} mr-4 ${isActive("/about")
                 ? "text-[#2c2c2c] font-bold"
                 : "text-[#2c2c2c]"
                 }`}
@@ -260,7 +278,7 @@ export const NavigationBar = () => {
             {/* Contact Link */}
             <Link
               href="/contact"
-              className={`text-xl mr-4 ${isActive("/contact")
+              className={`${isScrolled ? "text-lg" : "text-xl"} mr-4 ${isActive("/contact")
                 ? "text-[#2c2c2c] font-bold"
                 : "text-[#2c2c2c]"
                 }`}
@@ -279,8 +297,8 @@ export const NavigationBar = () => {
               <Image
                 src="/images/Asset-34x.png"
                 priority={true}
-                width={isScrolled ? 65 : 90}
-                height={isScrolled ? 65 : 90}
+                width={isScrolled ? 52 : 90}
+                height={isScrolled ? 52 : 90}
                 alt=""
                 className="transition-all duration-300"
               />
@@ -290,7 +308,12 @@ export const NavigationBar = () => {
           {/* Right side navigation items */}
           <div className="flex items-center justify-end flex-1">
             {/* Book Now Button */}
-            <CustomLink href="/stay#Rooms" className="navbarbutton align-end">
+            <CustomLink
+              href="/stay#Rooms"
+              className={`navbarbutton align-end transition-all duration-300 ${
+                isScrolled ? "px-4 py-2 text-base" : ""
+              }`}
+            >
               Book Now
             </CustomLink>
           </div>

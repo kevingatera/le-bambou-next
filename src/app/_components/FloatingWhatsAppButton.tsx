@@ -62,7 +62,7 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:bg-[#1aa350] transition-colors overflow-hidden"
+          className="fixed bottom-4 right-4 z-50 flex items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition-colors hover:bg-[#1aa350] md:bottom-6 md:right-6"
           aria-label="Chat on WhatsApp"
           title="Chat with us on WhatsApp"
           onHoverStart={() => setIsHovered(true)}
@@ -71,8 +71,8 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
             opacity: 0,
             scale: 0.8,
             y: 50,
-            width: '3.5rem',
-            height: '3.5rem',
+            width: '3rem',
+            height: '3rem',
             borderRadius: '9999px',
             paddingLeft: '0rem',
             paddingRight: '0rem'
@@ -81,8 +81,8 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
             opacity: 1,
             y: 0,
             scale: 1,
-            width: '3.5rem',
-            height: '3.5rem',
+            width: '3rem',
+            height: '3rem',
             borderRadius: '9999px',
             paddingLeft: '0rem',
             paddingRight: '0rem'
@@ -102,10 +102,10 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
             transition: { duration: 0.3, ease: "easeIn" as const }
           }}
           transition={buttonTransition}
-          style={{ minWidth: '3.5rem' }}
+          style={{ minWidth: '3rem' }}
         >
           <div className="flex items-center justify-center">
-            <span className="flex-shrink-0 w-6 h-6 z-10">
+            <span className="z-10 h-5 w-5 flex-shrink-0 md:h-6 md:w-6">
               <WhatsAppIcon />
             </span>
             <motion.span
