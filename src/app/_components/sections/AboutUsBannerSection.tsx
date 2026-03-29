@@ -9,7 +9,7 @@ export const AboutUsBannerSection = async () => {
     );
 
     return (
-        <section className="flex items-center min-h-[calc(100dvh-7rem)] relative bg-gray-700">
+        <section className="relative flex min-h-[calc(100dvh-5rem)] items-end overflow-hidden bg-gray-700 sm:min-h-[calc(100dvh-6rem)]">
             <Image
                 src={imageSrc}
                 alt="Lobby view at Le Bambou Gorilla Lodge"
@@ -28,12 +28,12 @@ export const AboutUsBannerSection = async () => {
                 before:bg-[length:16px_16px] 
                 before:opacity-50">
             </div>
-            <div className="max-w-[calc(100vw-2rem)] mx-auto relative z-10">
-                <div className="max-w-[900px] text-center bg-[rgba(121,98,90,.89)] rounded-lg flex flex-col justify-center items-center py-4 px-3">
-                    <h1 className="text-[#ebf8f7] mt-0 mb-8 pt-5 text-[38px] font-normal leading-[1.1]">
+            <div className="relative z-10 mx-auto w-full max-w-[calc(100vw-2rem)] px-2 pb-16 sm:max-w-[calc(100vw-4rem)] sm:px-0 sm:pb-20">
+                <div className="mx-auto max-w-[720px] rounded-[22px] bg-[rgba(121,98,90,0.78)] px-6 py-6 text-center backdrop-blur-[3px] sm:px-10 sm:py-8">
+                    <h1 className="mb-5 text-[2.35rem] font-normal leading-[0.98] text-[#ebf8f7] sm:text-[3.1rem]">
                         The Story of Le Bambou Gorilla Lodge
                     </h1>
-                    <p className="text-[#ebf8f7] mb-0 px-5 pb-5 text-[18px]">
+                    <p className="mx-auto mb-0 max-w-[34ch] text-base leading-7 text-[#ebf8f7] sm:text-[1.1rem]">
                         Rooted in Kinigi and shaped by Rwandan hospitality, Le Bambou offers a quieter, more personal base for guests exploring Volcanoes National Park.
                     </p>
                 </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { DropdownArrow } from "../icons/DropDownArrow";
+import { InteractiveLightboxImage } from "../InteractiveLightboxImage";
 import {
   type GallerySectionClientData,
   type GallerySectionClientImage,
@@ -199,7 +200,7 @@ const Modal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/85 p-2 backdrop-blur-sm sm:p-6"
+      className="fixed inset-0 z-[70] bg-black/85 p-2 backdrop-blur-sm sm:p-6"
       onClick={onClose}
     >
       <motion.div
@@ -222,7 +223,7 @@ const Modal = ({
             Close
           </button>
         </div>
-        <div className="relative flex min-h-0 flex-1 items-start justify-center overflow-hidden rounded-2xl bg-[#d7dfde] px-2 py-2 sm:items-center sm:px-14 sm:py-8">
+        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-2xl bg-black px-1 py-1 sm:bg-[#d7dfde] sm:px-14 sm:py-8">
           {isLoading && (
             <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#d7dfde]/65">
               <div className="h-16 w-16 animate-spin rounded-full border-8 border-solid border-blue-400 border-t-transparent" />
@@ -230,32 +231,43 @@ const Modal = ({
           )}
           <button
             onClick={onPrev}
-            className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-gray-900/65 p-2 text-white backdrop-blur transition hover:bg-gray-900/80 sm:left-3 sm:p-3"
+            className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-gray-900/65 p-3 text-white backdrop-blur transition hover:bg-gray-900/80 sm:block"
             aria-label="Previous image"
           >
             <DropdownArrow className="h-6 w-6" direction="left" />
           </button>
-          <div className="flex h-full w-full items-start justify-center sm:items-center">
-            <Image
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              width={selectedImage.width}
-              height={selectedImage.height}
-              priority
-              unoptimized
-              sizes="(max-width: 768px) 92vw, 88vw"
-              className={`max-h-full max-w-full object-contain transition-opacity duration-200 ${
-                isLoading ? "opacity-0" : "opacity-100"
-              } max-h-[calc(100dvh-8rem)] sm:max-h-[calc(100dvh-10rem)]`}
-              onLoadingComplete={onLoad}
-            />
-          </div>
+          <InteractiveLightboxImage
+            src={selectedImage.src}
+            alt={selectedImage.alt}
+            width={selectedImage.width}
+            height={selectedImage.height}
+            isLoading={isLoading}
+            onLoad={onLoad}
+          />
           <button
             onClick={onNext}
-            className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-gray-900/65 p-2 text-white backdrop-blur transition hover:bg-gray-900/80 sm:right-3 sm:p-3"
+            className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-gray-900/65 p-3 text-white backdrop-blur transition hover:bg-gray-900/80 sm:block"
             aria-label="Next image"
           >
             <DropdownArrow className="h-6 w-6" direction="right" />
+          </button>
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-3 sm:hidden">
+          <button
+            onClick={onPrev}
+            className="flex items-center justify-center gap-2 rounded-full bg-white/12 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+            aria-label="Previous image"
+          >
+            <DropdownArrow className="h-5 w-5" direction="left" />
+            Prev
+          </button>
+          <button
+            onClick={onNext}
+            className="flex items-center justify-center gap-2 rounded-full bg-white/12 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+            aria-label="Next image"
+          >
+            Next
+            <DropdownArrow className="h-5 w-5" direction="right" />
           </button>
         </div>
       </motion.div>
@@ -429,7 +441,7 @@ export const GallerySectionClient = ({
     galleryType: string,
   ) => {
     activateSectionsThrough(galleryType);
-    setIsLoading(true);
+    setIsLoading(false);
     setSelectedImage(image);
     setCurrentIndex(index);
     setCurrentGalleryType(galleryType);

@@ -7,6 +7,7 @@ import { standardRoomShowcases } from "~/app/_data/roomShowcase";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 import { roomPrices, type RoomType } from "~/types/booking";
+import { InteractiveLightboxImage } from "../InteractiveLightboxImage";
 import {
     getStoredBookingData,
     setStoredBookingData,
@@ -47,6 +48,9 @@ const roomCards: RoomCard[] = standardRoomShowcases.map((room) => ({
 
 const Modal = ({
     image,
+    roomTitle,
+    currentIndex,
+    totalCount,
     onClose,
     onPrev,
     onNext,
@@ -54,6 +58,9 @@ const Modal = ({
     onLoad,
 }: {
     image: { src: string; alt: string; width: number; height: number };
+    roomTitle: string;
+    currentIndex: number;
+    totalCount: number;
     onClose: () => void;
     onPrev: () => void;
     onNext: () => void;
@@ -71,46 +78,89 @@ const Modal = ({
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, [handleKeyDown]);
 
+    useEffect(() => {
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+        };
+    }, []);
+
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+            className="fixed inset-0 z-[70] bg-black/85 p-2 backdrop-blur-sm sm:p-6"
             onClick={onClose}
         >
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="relative bg-[#d7dfde] p-2 sm:p-5 rounded-lg max-h-screen overflow-auto min-w-80 min-h-60 md:min-h-[25rem] sm:min-w-[500px]"
+                transition={{ duration: 0.25 }}
+                className="mx-auto flex h-full w-full max-w-[min(96vw,1500px)] flex-col"
                 onClick={(e) => e.stopPropagation()}
             >
-                {isLoading && (
-                    <div className="absolute right-1/2 bottom-1/2 transform translate-x-1/2 translate-y-1/2">
-                        <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-8 h-16 w-16" />
+                <div className="mb-2 flex items-start justify-between gap-3 px-1 text-white sm:mb-3 sm:items-center sm:px-0">
+                    <div className="min-w-0">
+                        <p className="truncate text-sm font-medium sm:text-base">{roomTitle}</p>
+                        <p className="text-xs text-white/70 sm:text-sm">
+                            {currentIndex + 1} / {totalCount}
+                        </p>
                     </div>
-                )}
-                <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    priority
-                    unoptimized
-                    className={`object-contain max-h-[calc(100dvh-100px)] max-w-full ${isLoading ? "opacity-0" : "opacity-100"
-                        }`}
-                    onLoadingComplete={onLoad}
-                />
-                <button
-                    onClick={onPrev}
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full m-2"
-                >
-                    <DropdownArrow className="w-6 h-6" direction="left" />
-                </button>
-                <button
-                    onClick={onNext}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full m-2"
-                >
-                    <DropdownArrow className="w-6 h-6" direction="right" />
-                </button>
+                    <button
+                        onClick={onClose}
+                        className="rounded-full bg-white/12 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/20"
+                        aria-label={`Close ${roomTitle} image viewer`}
+                    >
+                        Close
+                    </button>
+                </div>
+                <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-2xl bg-black px-1 py-1 sm:bg-[#d7dfde] sm:px-14 sm:py-8">
+                    {isLoading && (
+                        <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#d7dfde]/65">
+                            <div className="h-16 w-16 animate-spin rounded-full border-8 border-solid border-blue-400 border-t-transparent" />
+                        </div>
+                    )}
+                    <button
+                        onClick={onPrev}
+                        className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-gray-900/65 p-3 text-white backdrop-blur transition hover:bg-gray-900/80 sm:block"
+                        aria-label={`Previous ${roomTitle} image`}
+                    >
+                        <DropdownArrow className="h-6 w-6" direction="left" />
+                    </button>
+                    <InteractiveLightboxImage
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        isLoading={isLoading}
+                        onLoad={onLoad}
+                    />
+                    <button
+                        onClick={onNext}
+                        className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-gray-900/65 p-3 text-white backdrop-blur transition hover:bg-gray-900/80 sm:block"
+                        aria-label={`Next ${roomTitle} image`}
+                    >
+                        <DropdownArrow className="h-6 w-6" direction="right" />
+                    </button>
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-3 sm:hidden">
+                    <button
+                        onClick={onPrev}
+                        className="flex items-center justify-center gap-2 rounded-full bg-white/12 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+                        aria-label={`Previous ${roomTitle} image`}
+                    >
+                        <DropdownArrow className="h-5 w-5" direction="left" />
+                        Prev
+                    </button>
+                    <button
+                        onClick={onNext}
+                        className="flex items-center justify-center gap-2 rounded-full bg-white/12 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+                        aria-label={`Next ${roomTitle} image`}
+                    >
+                        Next
+                        <DropdownArrow className="h-5 w-5" direction="right" />
+                    </button>
+                </div>
             </motion.div>
         </div>
     );
@@ -154,7 +204,7 @@ const RoomImageCarousel = ({ images, roomTitle, isPriority = false }: {
                 className="inline-block w-full"
                 onClick={(e) => {
                     e.preventDefault();
-                    setIsLoading(true);
+                    setIsLoading(false);
                     setIsModalOpen(true);
                 }}
             >
@@ -166,7 +216,7 @@ const RoomImageCarousel = ({ images, roomTitle, isPriority = false }: {
                     height={currentImage.height}
                     sizes="(max-width: 767px) 92vw, (max-width: 991px) 78vw, 500px"
                     alt={currentImage.alt}
-                    className="room-image h-auto !w-full max-w-full"
+                    className="room-image max-w-full"
                     unoptimized
                     onLoad={() => setIsLoading(false)}
                 />
@@ -207,6 +257,9 @@ const RoomImageCarousel = ({ images, roomTitle, isPriority = false }: {
                         ...currentImage,
                         src: currentImage.lightboxSrc,
                     }}
+                    roomTitle={roomTitle}
+                    currentIndex={currentImageIndex}
+                    totalCount={images.length}
                     onClose={() => setIsModalOpen(false)}
                     onPrev={prevImage}
                     onNext={nextImage}

@@ -6,6 +6,7 @@ import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 import { PreconfiguredBookingButton } from "../PreconfiguredBookingButton";
 
 const heroImage = familyCottageShowcase.images[0];
+const supportingImages = familyCottageShowcase.images.slice(1);
 
 export const FamilyCottageFeatureSection = () => {
   const imageSrc = withGalleryBaseUrl(
@@ -13,55 +14,104 @@ export const FamilyCottageFeatureSection = () => {
   );
 
   return (
-    <section className="px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-6xl gap-6 rounded-lg bg-[#b9c5c4] p-4 sm:p-6 lg:grid-cols-[1.25fr_0.95fr] lg:p-8">
-        <div className="relative min-h-[320px] overflow-hidden rounded-lg bg-[#9caead] sm:min-h-[420px]">
-          <Image
-            src={imageSrc}
-            alt={heroImage.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 58vw"
-            priority={false}
-          />
-        </div>
-        <div className="flex flex-col justify-between gap-6 rounded-lg bg-[#d7dfde] p-5 sm:p-7">
-          <div className="space-y-4">
-            <p className="text-sm font-medium uppercase tracking-[0.08em] text-[#566c6a]">
-              Featured Stay
-            </p>
-            <h2 className="text-3xl leading-tight text-[#2c2c2c] sm:text-4xl">
-              Family Cottage
-            </h2>
-            <p className="text-base leading-7 text-[#2c2c2c] sm:text-lg">
-              A larger standalone cottage for families or longer stays, with more privacy,
-              more room to settle in, and a layout designed around shared time together.
-            </p>
-            <div className="grid grid-cols-2 gap-3 text-sm text-[#2c2c2c] sm:text-base">
-              <div className="rounded-md bg-white/50 p-3">
-                <div className="font-semibold">Full Board</div>
-                <div>$500 / night</div>
+    <section className="px-4 pb-12 pt-16 sm:px-6 sm:pb-16 sm:pt-20 lg:px-8 lg:pb-20 lg:pt-24">
+      <div className="mx-auto max-w-[82rem]">
+        <div className="grid items-center gap-8 rounded-[28px] bg-[#dfe5e4] px-5 py-5 shadow-[0_1px_0_rgba(255,255,255,0.55)_inset] sm:gap-10 sm:px-6 sm:py-6 lg:grid-cols-[1.32fr_0.92fr]">
+          <div className="space-y-7">
+            <div className="inline-flex self-start rounded-full bg-[#748963] px-4 py-2 text-[13px] font-medium uppercase tracking-[0.24em] text-[#f3f7f6] shadow-sm">
+              New cottage
+            </div>
+            <div className="grid gap-3 sm:gap-4 lg:grid-cols-[minmax(0,0.94fr)_232px]">
+              <div className="relative min-h-[360px] overflow-hidden rounded-[22px] bg-[#9caead] sm:min-h-[500px]">
+                <Image
+                  src={imageSrc}
+                  alt={heroImage.alt}
+                  fill
+                  className="object-cover object-[42%_center] transition duration-700 hover:scale-[1.02]"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  priority={false}
+                />
               </div>
-              <div className="rounded-md bg-white/50 p-3">
-                <div className="font-semibold">Capacity</div>
-                <div>Up to 4 guests</div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-1">
+                {supportingImages.map((image) => {
+                  const supportingImageSrc = withGalleryBaseUrl(
+                    getGalleryVariantPath(image.src, "lightbox") ?? image.src,
+                  );
+
+                  return (
+                    <div
+                      key={image.src}
+                      className="relative min-h-[156px] overflow-hidden rounded-[18px] bg-[#9caead] sm:min-h-[200px]"
+                    >
+                      <Image
+                        src={supportingImageSrc}
+                        alt={image.alt}
+                        fill
+                        className="object-cover transition duration-700 hover:scale-[1.02]"
+                        sizes="(max-width: 1024px) 45vw, 220px"
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex h-full flex-col justify-between gap-8 px-2 py-3 sm:px-4">
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#566c6a]/80 sm:text-xs">
+                Family cottage
+              </p>
+              <h2 className="max-w-[12ch] text-[2rem] leading-[0.95] text-[#2c2c2c] sm:text-[2.5rem]">
+                Family Cottage
+              </h2>
+              <p className="max-w-[34ch] text-sm leading-6 text-[#2c2c2c]/82 sm:text-base">
+                A newer standalone cottage designed for families and longer stays, with extra privacy, more space, and a layout made for settling in together.
+              </p>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[#2c2c2c]/72">
+                <span>Full board from $500</span>
+                <span className="hidden h-1 w-1 rounded-full bg-[#566c6a]/45 sm:block" />
+                <span>Up to 4 guests</span>
+                <span className="hidden h-1 w-1 rounded-full bg-[#566c6a]/45 sm:block" />
+                <span>Recently added</span>
+              </div>
+            </div>
+            <div className="grid gap-4 rounded-[20px] border border-[#8ca09f]/35 bg-white/45 p-5 text-sm text-[#2c2c2c]/82">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#566c6a]/75">
+                  Why it stands apart
+                </p>
+                <p className="mt-1 leading-6">
+                  Set slightly apart from the main room mix, the cottage offers a more private footprint and a calmer setup for shared stays.
+                </p>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2">
+                <div>
+                  <p className="font-medium text-[#2c2c2c]">Best for</p>
+                  <p className="mt-1 leading-6">Families, small groups, and longer stays.</p>
+                </div>
+                <div>
+                  <p className="font-medium text-[#2c2c2c]">Feel</p>
+                  <p className="mt-1 leading-6">More private, more spacious, more self-contained.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/family-cottage"
-              className="rounded-md bg-[#79625a] px-5 py-3 text-center text-white transition hover:bg-[#67524c]"
+              className="inline-flex items-center rounded-full bg-[#79625a] px-5 py-2.5 text-sm text-white transition hover:bg-[#67524c]"
             >
-              Explore Family Cottage
+              View cottage
             </Link>
             <PreconfiguredBookingButton
               roomType="Family"
-              className="rounded-md border border-[#79625a] px-5 py-3 text-center text-[#2c2c2c] transition hover:bg-white/50"
+              className="inline-flex items-center rounded-full border border-[#79625a]/35 px-5 py-2.5 text-sm text-[#2c2c2c] transition hover:border-[#79625a] hover:bg-[#d7dfde]/75"
             >
-              Book Family Cottage
+              Book now
             </PreconfiguredBookingButton>
           </div>
+        </div>
         </div>
       </div>
     </section>
