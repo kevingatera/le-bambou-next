@@ -1,9 +1,5 @@
-import preparedImageRecordsJson from "./generated/galleryPreparedImageRecords.json";
 import type { GallerySectionData } from "./galleryTypes";
-
-type PreparedImageRecordMap = Record<string, GallerySectionData["images"]>;
-
-const preparedImageRecords = preparedImageRecordsJson as PreparedImageRecordMap;
+import { getPreparedGalleryImages } from "./galleryPreparedRecords";
 
 const preparedSectionConfig = [
   {
@@ -24,7 +20,6 @@ const preparedSectionConfig = [
     recordKeys: [
       "images/gallery/rooms/single",
       "images/gallery/rooms/double",
-      "images/gallery/rooms/family-cottage",
       "images/gallery/rooms/twin",
       "images/gallery/rooms/triple",
     ],
@@ -57,19 +52,9 @@ const preparedSectionConfig = [
   },
 ] as const;
 
-const getPreparedImages = (recordKey: string) => {
-  const images = preparedImageRecords[recordKey];
-
-  if (!images) {
-    throw new Error(`Missing prepared gallery record: ${recordKey}`);
-  }
-
-  return images;
-};
-
 export const galleryPreparedSections: GallerySectionData[] = preparedSectionConfig.map((section) => ({
   id: section.id,
   title: section.title,
   subtitle: section.subtitle,
-  images: section.recordKeys.flatMap(getPreparedImages),
+  images: section.recordKeys.flatMap(getPreparedGalleryImages),
 }));

@@ -7,7 +7,7 @@ import { DropdownArrow } from "../icons/DropDownArrow";
 import {
   type GallerySectionClientData,
   type GallerySectionClientImage,
-} from "./GallerySection";
+} from "./gallerySectionClientData";
 import "./GallerySection.css";
 
 const INITIAL_BATCH = 24;

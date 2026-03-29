@@ -14,7 +14,7 @@ export type RoomShowcase = {
   images: RoomShowcaseImage[];
 };
 
-export const roomShowcases: RoomShowcase[] = [
+export const standardRoomShowcases: RoomShowcase[] = [
   {
     type: "Double",
     title: "Double Room",
@@ -119,30 +119,36 @@ export const roomShowcases: RoomShowcase[] = [
       },
     ],
   },
-  {
-    type: "Family",
-    title: "Family Cottage",
-    description:
-      "A larger family-friendly cottage with generous sleeping space, a private bathroom, and a more spacious layout that works well for parents, children, or longer stays together.",
-    images: [
-      {
-        src: "/images/gallery/rooms/family-cottage/lebambou-familycottage-015.webp",
-        alt: "Family cottage 15",
-        width: 2600,
-        height: 1950,
-      },
-      {
-        src: "/images/gallery/rooms/family-cottage/lebambou-familycottage-014.webp",
-        alt: "Family cottage 14",
-        width: 1950,
-        height: 2600,
-      },
-      {
-        src: "/images/gallery/rooms/family-cottage/lebambou-familycottage-010.webp",
-        alt: "Family cottage 10",
-        width: 2600,
-        height: 1950,
-      },
-    ],
-  },
+];
+
+export const familyCottageShowcase: RoomShowcase = {
+  type: "Family",
+  title: "Family Cottage",
+  description:
+    "A larger family-friendly cottage with generous sleeping space, a private bathroom, and a more spacious layout that works well for parents, children, or longer stays together.",
+  images: [
+    {
+      src: "/images/gallery/rooms/family-cottage/lebambou-familycottage-015.webp",
+      alt: "Family cottage 15",
+      width: 2600,
+      height: 1950,
+    },
+    {
+      src: "/images/gallery/rooms/family-cottage/lebambou-familycottage-014.webp",
+      alt: "Family cottage 14",
+      width: 1950,
+      height: 2600,
+    },
+    {
+      src: "/images/gallery/rooms/family-cottage/lebambou-familycottage-010.webp",
+      alt: "Family cottage 10",
+      width: 2600,
+      height: 1950,
+    },
+  ],
+};
+
+export const roomShowcases: RoomShowcase[] = [
+  ...standardRoomShowcases,
+  familyCottageShowcase,
 ];

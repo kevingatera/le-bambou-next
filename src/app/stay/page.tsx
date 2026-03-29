@@ -3,6 +3,7 @@ import { StayBannerSection } from "../_components/sections/StayBannerSection";
 import { RoomsListSection } from "../_components/sections/RoomsListSection";
 import { RoomAmenitiesSection } from "../_components/sections/RoomAmenitiesSection";
 import { GallerySection } from "../_components/sections/GallerySection";
+import { FamilyCottageFeatureSection } from "../_components/sections/FamilyCottageFeatureSection";
 import { type Metadata } from "next";
 import { sharedMetadata } from "../metadata";
 
@@ -37,15 +38,16 @@ export default async function Home() {
     <HydrateClient>
       <main>
         <StayBannerSection />
-        <nav className="h-[80px] min-h-[7.5rem] bg-[#566c6a] py-[45px] sticky top-0 z-50 shadow-md transition-shadow">
-          <div className="container mx-auto px-4">
-            <ul className="flex justify-center items-center gap-12 text-lg">
+        <nav className="sticky top-0 z-50 min-h-[80px] bg-[#566c6a] px-4 py-4 shadow-md transition-shadow sm:min-h-[7.5rem] sm:py-[45px]">
+          <div className="container mx-auto">
+            <ul className="mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm sm:gap-x-8 sm:text-lg">
               {[
+                { href: "/family-cottage", label: "Family Cottage" },
                 { href: "#Rooms", label: "Rooms" },
                 { href: "#Amenities", label: "Amenities" },
                 { href: "#Gallery", label: "Gallery" },
               ].map(({ href, label }) => (
-                <li key={href} className="mx-4">
+                <li key={href}>
                   <a
                     href={href}
                     className="text-white hover:text-[#ebf8f7] transition-colors relative group py-2"
@@ -58,6 +60,7 @@ export default async function Home() {
             </ul>
           </div>
         </nav>
+        <FamilyCottageFeatureSection />
         <RoomsListSection />
         <RoomAmenitiesSection />
         <GallerySection />

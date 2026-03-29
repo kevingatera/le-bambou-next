@@ -151,6 +151,15 @@ export const NavigationBar = () => {
               </div>
               <nav className="absolute left-0 top-full transform translate-y-2 z-10 opacity-0 invisible bg-[#b9c5c4] border border-black/75 transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible mt-2">
                 <CustomLink
+                  href="/family-cottage"
+                  className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/family-cottage")
+                    ? "text-[#2c2c2c] font-bold"
+                    : "text-[#2c2c2c]"
+                    }`}
+                >
+                  Family&nbsp;Cottage
+                </CustomLink>
+                <CustomLink
                   href="/stay#Amenities"
                   className={`navbar-dropdown-link block px-6 py-2 hover:bg-[#d7dfde] text-base ${isActive("/stay#Amenities") && activeHash === "#Amenities"
                     ? "text-[#2c2c2c] font-bold"
@@ -384,6 +393,15 @@ export const NavigationBar = () => {
                 </button>
                 {mobileSubMenuOpen === "stay" && (
                   <div className="mt-3 ml-4 flex flex-col space-y-4">
+                    <CustomLink
+                      href="/family-cottage"
+                      className={`text-gray-600 text-base ${isActive("/family-cottage")
+                        ? "text-[#2c2c2c] font-bold"
+                        : "text-[#2c2c2c]"
+                        }`}
+                    >
+                      Family Cottage
+                    </CustomLink>
                     <CustomLink
                       href="/stay#Amenities"
                       className={`text-gray-600 text-base ${isActive("/stay#Amenities")

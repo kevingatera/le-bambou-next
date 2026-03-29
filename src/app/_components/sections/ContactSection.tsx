@@ -1,9 +1,8 @@
 import Image from "next/image";
 import React from "react";
-import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import { ContactForm } from "../ContactForm";
 
-export const ContactSection = async () => {
+export const ContactSection = () => {
   return (
     <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)] py-12">
       <div className="container mx-auto md:px-4">
@@ -28,13 +27,12 @@ export const ContactSection = async () => {
             <Image
               src="/images/DSC_3662.webp"
               alt="Contact image"
-              className="inset-0 w-full 2xl:w-[600px] h-[550px] object-cover rounded-lg"
+              className="inset-0 h-[360px] w-full rounded-lg object-cover sm:h-[460px] xl:h-[550px] 2xl:w-[600px]"
               width={3008}
               height={2000}
               quality={75}
-              priority={true}
-              blurDataURL={await dynamicBlurDataUrl("/images/DSC_3662.webp")}
-              placeholder="blur"
+              priority
+              sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) 50vw, 600px"
             />
           </div>
         </div>

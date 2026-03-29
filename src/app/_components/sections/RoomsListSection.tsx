@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { BookingSection } from "./BookingSection";
-import { roomShowcases } from "~/app/_data/roomShowcase";
+import { standardRoomShowcases } from "~/app/_data/roomShowcase";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 import { roomPrices, type RoomType } from "~/types/booking";
@@ -30,11 +30,11 @@ type RoomCarouselImage = {
     height: number;
 };
 
-type RoomCard = typeof roomShowcases[number] & {
-    images: RoomCarouselImage[];
+type RoomCard = typeof standardRoomShowcases[number] & {
+  images: RoomCarouselImage[];
 };
 
-const roomCards: RoomCard[] = roomShowcases.map((room) => ({
+const roomCards: RoomCard[] = standardRoomShowcases.map((room) => ({
     ...room,
     images: room.images.map((image) => ({
         ...image,
@@ -275,7 +275,7 @@ export const RoomsListSection = () => {
                     ) => (
                         <div
                             key={room.type}
-                            className="room-wrapped-card spaced !w-full !flex-col gap-4 sm:!flex-wrap lg:!flex-row"
+                            className="room-wrapped-card spaced !w-full max-md:!flex-col max-md:gap-4"
                         >
                             <RoomImageCarousel
                                 images={room.images}
