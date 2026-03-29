@@ -60,3 +60,4 @@ tmp/
 Trace-*.json.gz
 Screenshot_*.png
 tsconfig.tsbuildinfo
+AGENTS.md
