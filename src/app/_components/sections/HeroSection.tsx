@@ -2,12 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const HeroSection = () => {
-  const heroImage = withGalleryBaseUrl(
-    "/images/gallery/lodge/exterior/lebambou-exterior-001.webp",
-  );
+  const heroImage = "/images/DSC_3675.jpg";
 
   const scrollToEvent = () => {
     const eventSection = document.getElementById('kwita-izina-event');
@@ -22,10 +19,10 @@ export const HeroSection = () => {
   const shouldShowButton = now < endOf2025;
 
   return (
-    <section className="relative flex min-h-[calc(100dvh-5rem)] items-end overflow-hidden bg-gray-700 sm:min-h-[calc(100dvh-6rem)]">
+    <section className="relative flex min-h-[calc(100dvh-5rem)] items-center overflow-hidden bg-gray-700 sm:min-h-[calc(100dvh-6rem)]">
       <Image
         src={heroImage}
-        alt="Le Bambou lodge exterior"
+        alt="Le Bambou bamboo-lined lodge entrance"
         fill={true}
         className="opacity-70 object-cover"
         quality={75}
@@ -52,8 +49,8 @@ export const HeroSection = () => {
         </div>
       )}
 
-      <div className="relative mx-auto w-full max-w-[calc(100vw-2rem)] px-2 pb-16 sm:max-w-[calc(100vw-4rem)] sm:px-0 sm:pb-20">
-        <div className="mx-auto max-w-[720px] rounded-[22px] bg-[rgba(121,98,90,0.78)] px-6 py-6 text-center backdrop-blur-[3px] sm:px-10 sm:py-8">
+      <div className="relative mx-auto w-full max-w-[calc(100vw-2rem)] px-2 sm:max-w-[calc(100vw-4rem)] sm:px-0">
+        <div className="mx-auto max-w-[720px] rounded-[22px] bg-[rgba(121,98,90,0.78)] px-6 pb-6 pt-3 text-center backdrop-blur-[3px] sm:px-10 sm:pb-8 sm:pt-4">
           <h1 className="mb-5 text-[2.35rem] font-normal leading-[0.98] text-[#ebf8f7] sm:text-[3.1rem]">
             Welcome to Le Bambou Gorilla Lodge
           </h1>
