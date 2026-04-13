@@ -1,8 +1,13 @@
 import Image from "next/image";
 import React from "react";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
+import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
 
 export const HistoryVisionValuesSection = async () => {
+    const aboutImageSrc = withGalleryBaseUrl(
+        "/images/gallery/lodge/lobby/lebambou-lobby-008.webp",
+    );
+
     return (
         <section className="mx-auto max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-4rem)] py-12">
             <div className="px-0 sm:px-4 md:px-8 lg:px-16">
@@ -19,15 +24,15 @@ export const HistoryVisionValuesSection = async () => {
                 <div className="bg-[#b9c5c4] flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-16 rounded-lg items-center p-4 sm:p-8 md:p-10">
                     <div className="w-full md:w-2/3 flex items-center mx-2 max-w-sm">
                         <Image
-                            src="/images/Smiling-Worker.jpg"
+                            src={aboutImageSrc}
                             loading="eager"
                             sizes="(max-width: 479px) 83vw, (max-width: 767px) 81vw, (max-width: 991px) 83vw, 18vw"
-                            alt=""
+                            alt="Le Bambou Gorilla Lodge entrance detail"
                             className="rounded-lg w-full h-[27rem] object-cover object-center md:h-auto"
-                            width={708}
-                            height={472}
+                            width={1950}
+                            height={2600}
                             blurDataURL={await dynamicBlurDataUrl(
-                                "/images/Smiling-Worker.jpg",
+                                aboutImageSrc,
                             )}
                             placeholder="blur"
                         />
