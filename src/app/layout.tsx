@@ -5,8 +5,6 @@ import "~/styles/normalize.css";
 import { type Metadata } from "next";
 import { Varela_Round } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { FloatingWhatsAppButton } from "~/app/_components/FloatingWhatsAppButton";
@@ -134,8 +132,6 @@ export default function RootLayout({
             }}
           />
         </TRPCReactProvider>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

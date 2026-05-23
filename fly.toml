@@ -1,0 +1,25 @@
+app = "le-bambou-next"
+primary_region = "ams"
+
+[build]
+  dockerfile = "Dockerfile"
+  [build.args]
+    NEXT_PUBLIC_SITE_URL = "https://lebambougorillalodge.com"
+    NEXT_PUBLIC_GALLERY_BASE_URL = "https://assets.lebambougorillalodge.com"
+
+[env]
+  NEXT_PUBLIC_SITE_URL = "https://lebambougorillalodge.com"
+  NEXT_PUBLIC_GALLERY_BASE_URL = "https://assets.lebambougorillalodge.com"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
