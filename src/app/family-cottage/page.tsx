@@ -71,6 +71,7 @@ export default function FamilyCottagePage() {
             priority
             className="object-cover opacity-70"
             sizes="100vw"
+            unoptimized
           />
           <div className="relative mx-auto flex min-h-[calc(100dvh-7rem)] max-w-6xl items-end px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
             <div className="max-w-3xl rounded-lg bg-[rgba(121,98,90,0.9)] px-5 py-6 text-[#ebf8f7] sm:px-8 sm:py-8">

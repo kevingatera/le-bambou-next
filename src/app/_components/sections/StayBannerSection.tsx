@@ -1,10 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 
 export const StayBannerSection = () => {
   const imageSrc = withGalleryBaseUrl(
-    "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
+    getGalleryVariantPath(
+      "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
+      "lightbox",
+    ) ?? "/images/gallery/rooms/twin/lebambou-twinroom-001.webp",
   );
 
   return (
@@ -16,6 +20,7 @@ export const StayBannerSection = () => {
         className="object-cover opacity-70"
         quality={75}
         priority={true}
+        unoptimized
       />
       <div className="relative mx-auto w-full max-w-[calc(100vw-2rem)] px-2 pb-16 sm:max-w-[calc(100vw-4rem)] sm:px-0 sm:pb-20">
         <div className="mx-auto max-w-[720px] rounded-[22px] bg-[rgba(121,98,90,0.78)] px-6 pb-6 pt-3 text-center backdrop-blur-[3px] sm:px-10 sm:pb-8 sm:pt-4">

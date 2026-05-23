@@ -34,6 +34,7 @@ export const FamilyCottageFeatureSection = () => {
                   className="object-cover object-[42%_center] transition duration-700 hover:scale-[1.02]"
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   priority={false}
+                  unoptimized
                 />
               </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-1">
@@ -53,6 +54,7 @@ export const FamilyCottageFeatureSection = () => {
                         fill
                         className="object-cover transition duration-700 hover:scale-[1.02]"
                         sizes="(max-width: 1024px) 45vw, 220px"
+                        unoptimized
                       />
                     </div>
                   );

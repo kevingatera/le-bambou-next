@@ -2,16 +2,26 @@ import Image from "next/image";
 import React from "react";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 
 export const CommunitySection = async () => {
   const culturalImage = withGalleryBaseUrl(
-    "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-001.webp",
+    getGalleryVariantPath(
+      "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-001.webp",
+      "thumb",
+    ) ?? "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-001.webp",
   );
   const danceImage = withGalleryBaseUrl(
-    "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-002.webp",
+    getGalleryVariantPath(
+      "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-002.webp",
+      "thumb",
+    ) ?? "/images/gallery/attractions/gorilla-guardians/cultural/gorillaguardiansvillage-culturalperformance-002.webp",
   );
   const drummingImage = withGalleryBaseUrl(
-    "/images/gallery/attractions/gorilla-guardians/drumming/gorillaguardiansvillage-drumming-001.webp",
+    getGalleryVariantPath(
+      "/images/gallery/attractions/gorilla-guardians/drumming/gorillaguardiansvillage-drumming-001.webp",
+      "thumb",
+    ) ?? "/images/gallery/attractions/gorilla-guardians/drumming/gorillaguardiansvillage-drumming-001.webp",
   );
 
   return (
@@ -40,6 +50,7 @@ export const CommunitySection = async () => {
                   alt="Gorilla Guardians cultural performance"
                   width={2600}
                   height={1950}
+                  unoptimized
                   className="community-image object-cover w-full h-full"
                   blurDataURL={await dynamicBlurDataUrl(
                     culturalImage,
@@ -64,6 +75,7 @@ export const CommunitySection = async () => {
                   alt="Gorilla Guardians dance performance"
                   width={2600}
                   height={1950}
+                  unoptimized
                   className="object-cover w-full h-full"
                   blurDataURL={await dynamicBlurDataUrl(
                     danceImage,
@@ -88,6 +100,7 @@ export const CommunitySection = async () => {
                   alt="Gorilla Guardians drumming performance"
                   width={1950}
                   height={2600}
+                  unoptimized
                   className="object-cover w-full h-full"
                   blurDataURL={await dynamicBlurDataUrl(
                     drummingImage,

@@ -2,10 +2,14 @@ import Image from "next/image";
 import React from "react";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 
 export const AttractionsUsBannerSection = async () => {
   const imageSrc = withGalleryBaseUrl(
-    "/images/gallery/attractions/ellen-campus/ellendegenerescampus-001.webp",
+    getGalleryVariantPath(
+      "/images/gallery/attractions/ellen-campus/ellendegenerescampus-001.webp",
+      "lightbox",
+    ) ?? "/images/gallery/attractions/ellen-campus/ellendegenerescampus-001.webp",
   );
 
   return (
@@ -17,6 +21,7 @@ export const AttractionsUsBannerSection = async () => {
         className="opacity-70 object-cover"
         quality={75}
         priority={true}
+        unoptimized
         blurDataURL={await dynamicBlurDataUrl(
           imageSrc,
         )}

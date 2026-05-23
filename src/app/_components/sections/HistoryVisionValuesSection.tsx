@@ -2,10 +2,14 @@ import Image from "next/image";
 import React from "react";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 
 export const HistoryVisionValuesSection = async () => {
     const aboutImageSrc = withGalleryBaseUrl(
-        "/images/gallery/lodge/lobby/lebambou-lobby-008.webp",
+        getGalleryVariantPath(
+            "/images/gallery/lodge/lobby/lebambou-lobby-008.webp",
+            "thumb",
+        ) ?? "/images/gallery/lodge/lobby/lebambou-lobby-008.webp",
     );
 
     return (
@@ -31,6 +35,7 @@ export const HistoryVisionValuesSection = async () => {
                             className="rounded-lg w-full h-[27rem] object-cover object-center md:h-auto"
                             width={1950}
                             height={2600}
+                            unoptimized
                             blurDataURL={await dynamicBlurDataUrl(
                                 aboutImageSrc,
                             )}

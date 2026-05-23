@@ -1,44 +1,10 @@
-const baseUrl = (() => {
-  if (typeof window === "undefined") {
-    // Server-side
-    return process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : process.env.NEXT_PUBLIC_SITE_URL ?? "https://lebambougorillalodge.com";
-  } else {
-    // Client-side
-    return window.location.origin;
-  }
-})();
+const STATIC_BLUR_DATA_URL =
+  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTAnIHZpZXdCb3g9JzAgMCAxNiAxMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cmVjdCB3aWR0aD0nMTYnIGhlaWdodD0nMTAnIGZpbGw9JyNiOWM1YzQnLz48cGF0aCBkPSdNMCwxMCBMMTYsMCBMMTYsMTAgWicgZmlsbD0nI2Q3ZGZkZScgZmlsbC1vcGFjaXR5PScwLjQ1Jy8+PC9zdmc+";
 
 export async function dynamicBlurDataUrl(url: string) {
-  // Support absolute URLs (e.g., Vercel Blob) and local paths
-  const isAbsolute = /^https?:\/\//.test(url);
-  const pathOnly = isAbsolute ? url : `/${url.startsWith("/") ? url.slice(1) : url}`;
-  const optimizerUrl = `${baseUrl}/_next/image?url=${encodeURIComponent(pathOnly)}&w=16&q=50`;
+  void url;
 
-  // Try fetching a tiny optimized image via Next's optimizer (small, cacheable under 2MB)
-  try {
-    const res = await fetch(
-      optimizerUrl,
-      typeof window === "undefined" ? { next: { revalidate: 86400 } } : undefined,
-    );
-    if (res.ok) {
-      const buffer = await res.arrayBuffer();
-      const base64 = Buffer.from(new Uint8Array(buffer)).toString("base64");
-      return `data:image/webp;base64,${base64}`;
-    }
-  } catch {
-    // ignore and fall back
-  }
-
-  // Fallback: fetch original with no-store (avoids Next data cache) and inline it
-  const res = await fetch(isAbsolute ? url : `${baseUrl}/${url.startsWith("/") ? url.slice(1) : url}`,
-    { cache: "no-store" },
-  );
-  const buffer = await res.arrayBuffer();
-  const lower = url.toLowerCase();
-  const mime = lower.endsWith(".png") ? "image/png" : lower.endsWith(".webp") ? "image/webp" : "image/jpeg";
-  return `data:${mime};base64,${Buffer.from(new Uint8Array(buffer)).toString("base64")}`;
+  return STATIC_BLUR_DATA_URL;
 }
 
 // import imagemin from "imagemin";

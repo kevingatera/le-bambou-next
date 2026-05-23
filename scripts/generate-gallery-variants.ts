@@ -1,5 +1,8 @@
 import { spawn } from "node:child_process";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
 import type { S3Client as S3ClientType } from "@aws-sdk/client-s3";
+import type { GalleryImage } from "../src/app/_data/galleryTypes";
 import sharp from "sharp";
 import { galleryPreparedRecords } from "../src/app/_data/galleryPreparedRecords";
 import { gallerySections } from "../src/app/_data/gallerySections";
@@ -179,9 +182,52 @@ const uploadWithWrangler = async (
   });
 };
 
+const collectReferencedImagePaths = async (dir: string): Promise<string[]> => {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const entryPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) return collectReferencedImagePaths(entryPath);
+      if (!/\.(tsx?|jsx?)$/.test(entry.name)) return [];
+
+      const content = await readFile(entryPath, "utf8");
+      return Array.from(
+        content.matchAll(
+          /["'](\/images\/(?:gallery|client_experiences|wildlife)\/[^"']+)["']/g,
+        ),
+      ).flatMap((match) => {
+        const value = match[1];
+        if (
+          !value ||
+          value.includes("/gallery-variants/") ||
+          value.includes("/variants/")
+        ) {
+          return [];
+        }
+
+        return [value];
+      });
+    }),
+  );
+
+  return nested.flat();
+};
+
+const referencedImagePaths = await collectReferencedImagePaths(
+  path.join(process.cwd(), "src/app"),
+);
+const referencedImages: GalleryImage[] = referencedImagePaths.map((src) => ({
+  src,
+  alt: path.basename(src, path.extname(src)).replace(/[-_]/g, " "),
+  width: 0,
+  height: 0,
+  blurDataURL: "",
+}));
+
 const allOriginals = [
   ...gallerySections.flatMap((section) => section.images),
   ...Object.values(galleryPreparedRecords).flat(),
+  ...referencedImages,
 ];
 const originals = Array.from(
   new Map(allOriginals.map((image) => [image.src, image])).values(),
