@@ -1,33 +1,9 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import nodemailer from "nodemailer";
-
-const isDevelopment = process.env.NODE_ENV === "development";
-const prodSenderAddress = "noreply@lebambougorillalodge.com";
-const prodInboxAddress = "info@lebambougorillalodge.com";
-const getSmtpPassword = (value: string | undefined) => value?.trim();
-
-const transporter = nodemailer.createTransport(
-    isDevelopment
-        ? {
-            host: "smtp.zoho.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: "kevin@deployitwith.me",
-                pass: process.env.EMAIL_PASSWORD_DEV,
-            },
-        }
-        : {
-            host: "smtp.purelymail.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: prodSenderAddress,
-                pass: getSmtpPassword(process.env.EMAIL_PASSWORD_PROD),
-            },
-        },
-);
+import {
+    lodgeInboxAddress,
+    sendLodgeEmail,
+} from "~/server/utils/emailDelivery";
 
 export const emailRouter = createTRPCRouter({
     sendContactEmail: publicProcedure
@@ -41,29 +17,20 @@ export const emailRouter = createTRPCRouter({
         .mutation(async ({ input }) => {
             const { name, email, message } = input;
 
-            const mailOptions = {
-                from: isDevelopment
-                    ? "kevin@deployitwith.me"
-                    : prodSenderAddress,
-                to: isDevelopment
-                    ? "kevin@deployitwith.me"
-                    : prodInboxAddress,
-                replyTo: isDevelopment
-                    ? "kevin@deployitwith.me"
-                    : prodInboxAddress,
-                subject: `New Contact Form Submission from ${name}`,
-                text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-                html: `
+            try {
+                await sendLodgeEmail({
+                    to: lodgeInboxAddress,
+                    replyTo: lodgeInboxAddress,
+                    subject: `New Contact Form Submission from ${name}`,
+                    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+                    html: `
           <h2>New Contact Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Message:</strong></p>
           <p>${message}</p>
         `,
-            };
-
-            try {
-                await transporter.sendMail(mailOptions);
+                });
                 return { success: true };
             } catch (error) {
                 console.error("Error sending email:", error);

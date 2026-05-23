@@ -1,4 +1,3 @@
-import nodemailer from "nodemailer";
 import {
     additionalServices,
     roomPrices,
@@ -7,33 +6,10 @@ import {
 import { isEmail } from "validator";
 import dns from "dns";
 import { promisify } from "util";
-
-const isDevelopment = process.env.NODE_ENV === "development";
-const prodSenderAddress = "noreply@lebambougorillalodge.com";
-const prodInboxAddress = "info@lebambougorillalodge.com";
-const getSmtpPassword = (value: string | undefined) => value?.trim();
-
-const transporter = nodemailer.createTransport(
-    isDevelopment
-        ? {
-            host: "smtp.zoho.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: "kevin@deployitwith.me",
-                pass: process.env.EMAIL_PASSWORD_DEV,
-            },
-        }
-        : {
-            host: "smtp.purelymail.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: prodSenderAddress,
-                pass: getSmtpPassword(process.env.EMAIL_PASSWORD_PROD),
-            },
-        },
-);
+import {
+    lodgeInboxAddress,
+    sendLodgeEmail,
+} from "~/server/utils/emailDelivery";
 
 const resolveMx = promisify(dns.resolveMx);
 
@@ -125,13 +101,8 @@ export async function sendBookingConfirmationEmails(
     const grandTotal = roomTotal + servicesTotal;
 
     const guestMailOptions = {
-        from: isDevelopment
-            ? "kevin@deployitwith.me"
-            : prodSenderAddress,
         to: booking.guestEmail,
-        replyTo: isDevelopment
-            ? "kevin@deployitwith.me"
-            : prodInboxAddress,
+        replyTo: lodgeInboxAddress,
         subject: "Booking Confirmation - Le Bambou Gorilla Lodge",
         html: `
             <!DOCTYPE html>
@@ -290,16 +261,9 @@ export async function sendBookingConfirmationEmails(
     };
 
     const adminMailOptions = {
-        from: isDevelopment
-            ? "kevin@deployitwith.me"
-            : prodSenderAddress,
-        to: isDevelopment
-            ? "kevin@deployitwith.me"
-            : prodInboxAddress,
+        to: lodgeInboxAddress,
         subject: `New Booking - ${booking.guestName}`,
-        replyTo: isDevelopment
-            ? "kevin@deployitwith.me"
-            : prodInboxAddress,
+        replyTo: lodgeInboxAddress,
         html: `
             <h2>New Booking Received</h2>
             <p>A new booking has been made with the following details:</p>
@@ -357,6 +321,6 @@ export async function sendBookingConfirmationEmails(
         `,
     };
 
-    await transporter.sendMail(guestMailOptions);
-    await transporter.sendMail(adminMailOptions);
+    await sendLodgeEmail(guestMailOptions);
+    await sendLodgeEmail(adminMailOptions);
 }
