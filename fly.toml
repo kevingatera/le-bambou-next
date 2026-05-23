@@ -1,5 +1,5 @@
 app = "le-bambou-next"
-primary_region = "ams"
+primary_region = "lhr"
 
 [build]
   dockerfile = "Dockerfile"
