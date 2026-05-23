@@ -33,13 +33,45 @@ pnpm dev
 
 ## Deployment
 
-Pre-configured for:
+The production migration target is Fly.io for the Next.js app, Neon for
+Postgres, Resend for transactional email, and Cloudflare R2 for gallery assets.
 
-- [Vercel](https://create.t3.gg/en/deployment/vercel)
-- [Netlify](https://create.t3.gg/en/deployment/netlify)
+Required Fly secrets:
 
-- 
-- [Docker](https://create.t3.gg/en/deployment/docker)
+```bash
+fly secrets set \
+  DATABASE_URL="postgres://..." \
+  RESEND_API_KEY="re_..." \
+  EMAIL_FROM="Le Bambou Gorilla Lodge <noreply@lebambougorillalodge.com>" \
+  EMAIL_TO="info@lebambougorillalodge.com"
+```
+
+Gallery assets are uploaded to R2 with:
+
+```bash
+GALLERY_SOURCE_BASE_URL="https://current-gallery-source.example.com" \
+R2_ACCOUNT_ID="..." \
+R2_ACCESS_KEY_ID="..." \
+R2_SECRET_ACCESS_KEY="..." \
+R2_BUCKET="le-bambou-gallery" \
+pnpm gallery:variants
+```
+
+If Wrangler is already logged in locally, the same migration can run without
+R2 S3 keys:
+
+```bash
+GALLERY_SOURCE_BASE_URL="https://current-gallery-source.example.com" \
+R2_UPLOAD_MODE="wrangler" \
+R2_BUCKET="le-bambou-gallery" \
+pnpm gallery:variants
+```
+
+Deploy with:
+
+```bash
+fly deploy
+```
 
 ---
 
