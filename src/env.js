@@ -12,7 +12,9 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     EMAIL_PASSWORD_DEV: z.string().optional(),
-    EMAIL_PASSWORD_PROD: z.string(),
+    RESEND_API_KEY: z.string().optional(),
+    EMAIL_FROM: z.string().optional(),
+    EMAIL_TO: z.string().optional(),
   },
 
   /**
@@ -21,8 +23,10 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
   */
   client: {
-    NEXT_PUBLIC_DD_CLIENT_APP_ID: z.string(),
-    NEXT_PUBLIC_DD_CLIENT_TOKEN: z.string(),
+    NEXT_PUBLIC_DD_CLIENT_APP_ID: z.string().optional(),
+    NEXT_PUBLIC_DD_CLIENT_TOKEN: z.string().optional(),
+    NEXT_PUBLIC_GALLERY_BASE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
   },
 
   /**
@@ -34,9 +38,13 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     EMAIL_PASSWORD_DEV: process.env.EMAIL_PASSWORD_DEV,
-    EMAIL_PASSWORD_PROD: process.env.EMAIL_PASSWORD_PROD,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    EMAIL_FROM: process.env.EMAIL_FROM,
+    EMAIL_TO: process.env.EMAIL_TO,
     NEXT_PUBLIC_DD_CLIENT_APP_ID: process.env.NEXT_PUBLIC_DD_CLIENT_APP_ID,
     NEXT_PUBLIC_DD_CLIENT_TOKEN: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
+    NEXT_PUBLIC_GALLERY_BASE_URL: process.env.NEXT_PUBLIC_GALLERY_BASE_URL,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

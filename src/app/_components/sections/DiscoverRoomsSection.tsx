@@ -2,10 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 
 export const DiscoverRoomsSection = async () => {
   const imageSrc = withGalleryBaseUrl(
-    "/images/gallery/rooms/single/lebambou-singleroom-001.webp",
+    getGalleryVariantPath(
+      "/images/gallery/rooms/single/lebambou-singleroom-001.webp",
+      "lightbox",
+    ) ?? "/images/gallery/rooms/single/lebambou-singleroom-001.webp",
   );
 
   return (
@@ -16,6 +20,7 @@ export const DiscoverRoomsSection = async () => {
         fill={true}
         className="opacity-70 object-cover object-[50%_78%]"
         loading="lazy"
+        unoptimized
         blurDataURL={await dynamicBlurDataUrl(imageSrc)}
         placeholder="blur"
       />

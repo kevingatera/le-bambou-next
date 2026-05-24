@@ -6,6 +6,7 @@ await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  output: "standalone",
   allowedDevOrigins: [
     'workspace-kg.tail89034.ts.net'
   ],
@@ -17,6 +18,8 @@ const config = {
     remotePatterns: [
       { protocol: 'https', hostname: '**.vercel-storage.com' },
       { protocol: 'https', hostname: 'blob.vercel-storage.com' },
+      { protocol: 'https', hostname: 'assets.lebambougorillalodge.com' },
+      { protocol: 'https', hostname: '**.r2.dev' },
     ],
   },
   async redirects() {

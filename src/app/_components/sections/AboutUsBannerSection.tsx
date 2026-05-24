@@ -2,10 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { dynamicBlurDataUrl } from "~/app/_utils/ImageUtils";
 import { withGalleryBaseUrl } from "~/app/_utils/galleryImages";
+import { getGalleryVariantPath } from "~/app/_utils/galleryImageVariants";
 
 export const AboutUsBannerSection = async () => {
     const imageSrc = withGalleryBaseUrl(
-        "/images/gallery/lodge/lobby/lebambou-lobby-001.webp",
+        getGalleryVariantPath(
+            "/images/gallery/lodge/lobby/lebambou-lobby-001.webp",
+            "lightbox",
+        ) ?? "/images/gallery/lodge/lobby/lebambou-lobby-001.webp",
     );
 
     return (
@@ -17,6 +21,7 @@ export const AboutUsBannerSection = async () => {
                 className="opacity-50 object-cover"
                 quality={90}
                 priority={true}
+                unoptimized
                 blurDataURL={await dynamicBlurDataUrl(
                     imageSrc,
                 )}
