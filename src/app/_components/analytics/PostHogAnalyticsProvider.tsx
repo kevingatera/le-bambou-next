@@ -155,6 +155,9 @@ function PostHogPageView() {
     posthog.capture("$pageview", {
       $current_url: url,
       path: pathname,
+    }, {
+      send_instantly: true,
+      transport: "fetch",
     });
   }, [pathname, posthog, searchParams]);
 
