@@ -1,6 +1,7 @@
 import React from "react";
 import { WhatsAppIcon } from "./icons/social/WhatsAppIcon";
 import { motion } from "framer-motion";
+import { captureAnalyticsEvent } from "./analytics/posthogEvents";
 
 interface WhatsAppButtonProps {
   phoneNumber: string;
@@ -23,6 +24,10 @@ export const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
       rel="noopener noreferrer"
       className={`WhatsAppButton flex items-center justify-center gap-2 bg-[#25D366] text-white py-2 px-4 rounded hover:bg-[#1aa350] transition-colors ${className}`}
       aria-label="Chat on WhatsApp"
+      onClick={() =>
+        captureAnalyticsEvent("whatsapp_click", {
+          placement: "footer",
+        })}
       initial={{ scale: 0.95 }}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}

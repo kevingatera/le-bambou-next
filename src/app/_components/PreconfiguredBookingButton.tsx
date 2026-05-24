@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { type RoomType } from "~/types/booking";
+import { captureAnalyticsEvent } from "./analytics/posthogEvents";
 import { setStoredBookingData } from "~/app/_utils/localStorage";
 
 export const PreconfiguredBookingButton = ({
@@ -19,7 +20,11 @@ export const PreconfiguredBookingButton = ({
     <Link
       href={href}
       className={className}
-      onClick={() =>
+      onClick={() => {
+        captureAnalyticsEvent("room_booking_cta_click", {
+          room_type: roomType,
+          href,
+        });
         setStoredBookingData({
           roomSelections: [
             {
@@ -28,7 +33,8 @@ export const PreconfiguredBookingButton = ({
               boardType: "fullBoard",
             },
           ],
-        })}
+        });
+      }}
     >
       {children}
     </Link>

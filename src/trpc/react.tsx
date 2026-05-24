@@ -10,6 +10,7 @@ import { useReportWebVitals } from "next/web-vitals";
 import type { NextWebVitalsMetric } from "next/app";
 
 import { type AppRouter } from "~/server/api/root";
+import { captureAnalyticsEvent } from "~/app/_components/analytics/posthogEvents";
 import { createQueryClient } from "./query-client";
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
@@ -64,6 +65,15 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 
   // Report web vitals in development mode only if metrics are too high
   useReportWebVitals((metric: NextWebVitalsMetric) => {
+    captureAnalyticsEvent("web_vital_reported", {
+      id: metric.id,
+      name: metric.name,
+      value: metric.value,
+      rating: "rating" in metric ? metric.rating : undefined,
+      navigation_type:
+        "navigationType" in metric ? metric.navigationType : undefined,
+    });
+
     if (process.env.NODE_ENV === "development") {
       const threshold: Record<string, number> = {
         FCP: 2000, // First Contentful Paint

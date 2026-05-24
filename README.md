@@ -21,8 +21,10 @@ Based on [Create T3 App](https://create.t3.gg/)
 - [Drizzle ORM](https://orm.drizzle.team) for PostgreSQL integration
 - [tRPC](https://trpc.io) for end-to-end type safety
 - [Framer Motion](https://www.framer.com/motion/) for animations
-- [Vercel Analytics](https://vercel.com/analytics) & Speed Insights
-- [Google Analytics](https://analytics.google.com) for visitor tracking
+- [PostHog](https://posthog.com) for product analytics, funnels, session replay, UX signals, and light error tracking
+- [Google Analytics](https://analytics.google.com) for continuity with existing visitor tracking
+- [Cloudflare](https://www.cloudflare.com) for DNS, CDN, aggregate traffic analytics, and R2-backed gallery assets
+- Cloudflare Worker first-party proxy for PostHog ingestion at `https://e.lebambougorillalodge.com`
 
 ## Development
 

@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { WhatsAppIcon } from "./icons/social/WhatsAppIcon";
 import { motion, AnimatePresence } from "framer-motion";
+import { captureAnalyticsEvent } from "./analytics/posthogEvents";
 
 interface FloatingWhatsAppButtonProps {
   phoneNumber: string;
@@ -67,6 +68,10 @@ export const FloatingWhatsAppButton: React.FC<FloatingWhatsAppButtonProps> = ({
           title="Chat with us on WhatsApp"
           onHoverStart={() => setIsHovered(true)}
           onHoverEnd={() => setIsHovered(false)}
+          onClick={() =>
+            captureAnalyticsEvent("whatsapp_click", {
+              placement: "floating",
+            })}
           initial={{
             opacity: 0,
             scale: 0.8,

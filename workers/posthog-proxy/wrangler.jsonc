@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "le-bambou-posthog-proxy",
+  "main": "./worker.ts",
+  "compatibility_date": "2026-05-24",
+  "account_id": "d84a8fde275a40a90d5913970d5ac2ff",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "e.lebambougorillalodge.com",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

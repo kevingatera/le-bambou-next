@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { FloatingWhatsAppButton } from "~/app/_components/FloatingWhatsAppButton";
+import { PostHogAnalyticsProvider } from "~/app/_components/analytics/PostHogAnalyticsProvider";
 
 const varelaRound = Varela_Round({
   weight: "400",
@@ -99,10 +100,11 @@ export default function RootLayout({
       />
       <body className="bg-[#d7dfde]">
         <TRPCReactProvider>
-          {/* <InitDataDog /> */}
-          {children}
-          <FloatingWhatsAppButton phoneNumber="+250788307374" />
-          <GoogleAnalytics gaId="G-7PEH6JNLXW" />
+          <PostHogAnalyticsProvider>
+            {children}
+            <FloatingWhatsAppButton phoneNumber="+250788307374" />
+            <GoogleAnalytics gaId="G-7PEH6JNLXW" />
+          </PostHogAnalyticsProvider>
           <Script
             id="adroll-script"
             strategy="beforeInteractive"

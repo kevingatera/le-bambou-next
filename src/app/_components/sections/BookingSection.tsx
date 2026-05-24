@@ -8,6 +8,10 @@ import React, {
   useMemo,
 } from "react";
 import { type BookingEmailData } from "~/server/utils/emailUtils";
+import {
+  captureAnalyticsEvent,
+  captureAnalyticsException,
+} from "~/app/_components/analytics/posthogEvents";
 import { api } from "~/trpc/react";
 import {
   additionalServices,
@@ -232,6 +236,19 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
   const bookRoomMutation = api.booking.create.useMutation({
     onSuccess: () => {
+      captureAnalyticsEvent("booking_submitted", {
+        nights: numberOfNights,
+        rooms_total: roomSelections.reduce(
+          (total, selection) => total + selection.count,
+          0,
+        ),
+        room_types: roomSelections.map((selection) => selection.type),
+        services_count: selectedServices.length,
+        flexible_dates: isFlexibleDates,
+        east_african_resident: isEastAfricanResident,
+        adults,
+        children: children05 + children616,
+      });
       setSubmitStatus("success");
       setIsSubmitting(false);
       // Clear localStorage when booking is successful
@@ -255,7 +272,16 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
         onClose();
       }, 15000);
     },
-    onError: () => {
+    onError: (error) => {
+      captureAnalyticsEvent("booking_error", {
+        step: currentStep,
+        nights: numberOfNights,
+        rooms_total: roomSelections.reduce(
+          (total, selection) => total + selection.count,
+          0,
+        ),
+      });
+      captureAnalyticsException(error, { source: "booking_form" });
       setSubmitStatus("error");
       setIsSubmitting(false);
       setTimeout(() => setSubmitStatus("idle"), 10000);
@@ -278,6 +304,10 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     console.log("checkInDate", checkInDate);
 
     if (checkInDate < today) {
+      captureAnalyticsEvent("booking_validation_error", {
+        field: "check_in",
+        step: currentStep,
+      });
       setErrors((prev) => ({
         ...prev,
         checkIn: "Check-in date cannot be in the past",
@@ -290,6 +320,10 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     minCheckOut.setDate(minCheckOut.getDate() + 1);
 
     if (checkOutDate < minCheckOut) {
+      captureAnalyticsEvent("booking_validation_error", {
+        field: "check_out",
+        step: currentStep,
+      });
       setErrors((prev) => ({
         ...prev,
         checkOut: "Check-out date must be at least one day after check-in",
@@ -299,6 +333,20 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
     }
 
     // Proceed with mutation if validations pass
+    captureAnalyticsEvent("booking_submit_attempt", {
+      nights: numberOfNights,
+      rooms_total: roomSelections.reduce(
+        (total, selection) => total + selection.count,
+        0,
+      ),
+      room_types: roomSelections.map((selection) => selection.type),
+      services_count: selectedServices.length,
+      flexible_dates: isFlexibleDates,
+      east_african_resident: isEastAfricanResident,
+      adults,
+      children: children05 + children616,
+    });
+
     bookRoomMutation.mutate({
       roomSelections,
       checkIn,
@@ -743,7 +791,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               currentStep={currentStep}
               onStepClick={handleStepClick}
             />
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="ph-no-capture space-y-4">
               {renderStepContent()}
             </form>
             {submitStatus === "error" && (

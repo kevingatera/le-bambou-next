@@ -26,6 +26,9 @@ export const env = createEnv({
     NEXT_PUBLIC_DD_CLIENT_APP_ID: z.string().optional(),
     NEXT_PUBLIC_DD_CLIENT_TOKEN: z.string().optional(),
     NEXT_PUBLIC_GALLERY_BASE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+    NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN: z.string().optional(),
+    NEXT_PUBLIC_POSTHOG_UI_HOST: z.string().url().optional(),
     NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
   },
 
@@ -44,6 +47,10 @@ export const env = createEnv({
     NEXT_PUBLIC_DD_CLIENT_APP_ID: process.env.NEXT_PUBLIC_DD_CLIENT_APP_ID,
     NEXT_PUBLIC_DD_CLIENT_TOKEN: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
     NEXT_PUBLIC_GALLERY_BASE_URL: process.env.NEXT_PUBLIC_GALLERY_BASE_URL,
+    NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN:
+      process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
+    NEXT_PUBLIC_POSTHOG_UI_HOST: process.env.NEXT_PUBLIC_POSTHOG_UI_HOST,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   },
   /**

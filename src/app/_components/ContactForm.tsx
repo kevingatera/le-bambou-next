@@ -2,6 +2,10 @@
 
 import React, { useState } from "react";
 import { api } from "~/trpc/react";
+import {
+  captureAnalyticsEvent,
+  captureAnalyticsException,
+} from "./analytics/posthogEvents";
 
 export const ContactForm = () => {
   const [name, setName] = useState("");
@@ -14,6 +18,9 @@ export const ContactForm = () => {
 
   const sendEmailMutation = api.email.sendContactEmail.useMutation({
     onSuccess: () => {
+      captureAnalyticsEvent("contact_form_submitted", {
+        message_length: message.length,
+      });
       setSubmitStatus("success");
       setName("");
       setEmail("");
@@ -21,7 +28,9 @@ export const ContactForm = () => {
       setIsSubmitting(false);
       setTimeout(() => setSubmitStatus("idle"), 5000);
     },
-    onError: () => {
+    onError: (error) => {
+      captureAnalyticsEvent("contact_form_error");
+      captureAnalyticsException(error, { source: "contact_form" });
       setSubmitStatus("error");
       setIsSubmitting(false);
       setTimeout(() => setSubmitStatus("idle"), 5000);
@@ -32,13 +41,16 @@ export const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus("idle");
+    captureAnalyticsEvent("contact_form_submit_attempt", {
+      message_length: message.length,
+    });
 
     sendEmailMutation.mutate({ name, email, message });
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="ph-no-capture space-y-6">
         <div>
           <label htmlFor="Contact-05-name" className="block mb-2 font-medium">
             Name

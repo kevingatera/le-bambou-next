@@ -6,10 +6,16 @@ primary_region = "lhr"
   [build.args]
     NEXT_PUBLIC_SITE_URL = "https://lebambougorillalodge.com"
     NEXT_PUBLIC_GALLERY_BASE_URL = "https://assets.lebambougorillalodge.com"
+    NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN = "phc_p9Hm2JojFufVvA9c4iDbhukuoxCr5X6UuFxbN6YEdLii"
+    NEXT_PUBLIC_POSTHOG_HOST = "https://e.lebambougorillalodge.com"
+    NEXT_PUBLIC_POSTHOG_UI_HOST = "https://us.posthog.com"
 
 [env]
   NEXT_PUBLIC_SITE_URL = "https://lebambougorillalodge.com"
   NEXT_PUBLIC_GALLERY_BASE_URL = "https://assets.lebambougorillalodge.com"
+  NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN = "phc_p9Hm2JojFufVvA9c4iDbhukuoxCr5X6UuFxbN6YEdLii"
+  NEXT_PUBLIC_POSTHOG_HOST = "https://e.lebambougorillalodge.com"
+  NEXT_PUBLIC_POSTHOG_UI_HOST = "https://us.posthog.com"
 
 [http_service]
   internal_port = 3000
