@@ -6,8 +6,8 @@ import posthog from "posthog-js";
 import type { PostHogConfig, Properties } from "posthog-js";
 import {
   PostHogProvider as Provider,
-  usePostHog,
 } from "posthog-js/react";
+import { captureDirectAnalyticsEvent } from "./posthogDirect";
 
 const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
 const posthogHost =
@@ -146,20 +146,15 @@ export function PostHogAnalyticsProvider({
 function PostHogPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const posthog = usePostHog();
-
   useEffect(() => {
     const queryString = searchParams.toString();
     const url = `${window.location.origin}${pathname}${queryString ? `?${queryString}` : ""}`;
 
-    posthog.capture("$pageview", {
+    captureDirectAnalyticsEvent("$pageview", {
       $current_url: url,
       path: pathname,
-    }, {
-      send_instantly: true,
-      transport: "fetch",
     });
-  }, [pathname, posthog, searchParams]);
+  }, [pathname, searchParams]);
 
   return null;
 }
