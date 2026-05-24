@@ -157,6 +157,9 @@ function PostHogPageView() {
   const pageStartedAtRef = useRef<number | null>(null);
   const maxScrollDepthRef = useRef(0);
   const interactionCountRef = useRef(0);
+  const recentClicksRef = useRef<
+    Array<{ x: number; y: number; timestamp: number }>
+  >([]);
   const exitedPageVisitIdsRef = useRef(new Set<string>());
   const currentPageRef = useRef<{
     path: string;
@@ -238,8 +241,48 @@ function PostHogPageView() {
   }, [pathname, searchParams, sendExitEvent, updateScrollDepth]);
 
   useEffect(() => {
-    const recordInteraction = () => {
+    const recordInteraction = (event: Event) => {
       interactionCountRef.current += 1;
+
+      if (!(event instanceof MouseEvent)) return;
+
+      const target =
+        event.target instanceof Element ? event.target : document.body;
+      const isInteractive = Boolean(
+        target.closest(
+          "a, button, input, select, textarea, summary, label, [role='button'], [role='link'], [tabindex]",
+        ),
+      );
+      const currentPage = currentPageRef.current;
+      const clickProperties = {
+        $current_url: currentPage?.url,
+        path: currentPage?.path,
+        page_visit_id: currentPage?.pageVisitId,
+        element: target.tagName.toLowerCase(),
+        text: target.textContent?.trim().slice(0, 80) || undefined,
+      };
+
+      if (!isInteractive) {
+        captureDirectAnalyticsEvent("dead_click_detected", clickProperties);
+      }
+
+      const now = Date.now();
+      recentClicksRef.current = [
+        ...recentClicksRef.current.filter(
+          (click) =>
+            now - click.timestamp < 2_000 &&
+            Math.abs(click.x - event.clientX) <= 40 &&
+            Math.abs(click.y - event.clientY) <= 40,
+        ),
+        { x: event.clientX, y: event.clientY, timestamp: now },
+      ];
+
+      if (recentClicksRef.current.length === 3) {
+        captureDirectAnalyticsEvent("rage_click_detected", {
+          ...clickProperties,
+          click_count: recentClicksRef.current.length,
+        });
+      }
     };
 
     updateScrollDepth();
@@ -264,6 +307,46 @@ function PostHogPageView() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [sendExitEvent, updateScrollDepth]);
+
+  useEffect(() => {
+    const captureClientError = (properties: {
+      error_name: string;
+      error_message: string;
+      source: string;
+    }) => {
+      captureDirectAnalyticsEvent("client_exception_reported", {
+        ...properties,
+        $current_url: currentPageRef.current?.url,
+        path: currentPageRef.current?.path,
+        page_visit_id: currentPageRef.current?.pageVisitId,
+      });
+    };
+
+    const handleError = (event: ErrorEvent) => {
+      captureClientError({
+        error_name: event.error instanceof Error ? event.error.name : "Error",
+        error_message: event.message || "Unhandled client error",
+        source: "window_error",
+      });
+    };
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      const reason: unknown = event.reason;
+      captureClientError({
+        error_name: reason instanceof Error ? reason.name : "UnhandledRejection",
+        error_message:
+          reason instanceof Error ? reason.message : "Unhandled promise rejection",
+        source: "unhandled_rejection",
+      });
+    };
+
+    window.addEventListener("error", handleError);
+    window.addEventListener("unhandledrejection", handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener("error", handleError);
+      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+    };
+  }, []);
 
   return null;
 }
