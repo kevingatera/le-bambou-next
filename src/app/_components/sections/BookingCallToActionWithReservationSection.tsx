@@ -6,6 +6,7 @@ import {
   getStoredBookingData,
   setStoredBookingData,
 } from "~/app/_utils/localStorage";
+import { captureAnalyticsEvent } from "../analytics/posthogEvents";
 
 export const BookingCallToActionWithReservationSection = () => {
   const [checkIn, setCheckIn] = useState("");
@@ -101,6 +102,12 @@ export const BookingCallToActionWithReservationSection = () => {
 
   const handleBookNow = (e: React.FormEvent) => {
     e.preventDefault();
+    captureAnalyticsEvent("booking_bar_submit", {
+      has_check_in: Boolean(checkIn),
+      has_check_out: Boolean(checkOut),
+      adults,
+      children: children05 + children616,
+    });
     setStoredBookingData({
       checkIn,
       checkOut,

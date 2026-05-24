@@ -5,6 +5,7 @@ import { DropdownArrow } from "~/app/_components/icons/DropDownArrow";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { captureAnalyticsEvent } from "./analytics/posthogEvents";
 
 export const NavigationBar = () => {
   const [hoveredDropdown, setHoveredDropdown] = useState<string | null>(null);
@@ -97,6 +98,12 @@ export const NavigationBar = () => {
   ) => {
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
+      if (href === "/stay#Rooms") {
+        captureAnalyticsEvent("booking_nav_click", {
+          href,
+          placement: "navigation",
+        });
+      }
       router.push(href);
       if (href.includes("#")) {
         const hash = href.split("#")[1];

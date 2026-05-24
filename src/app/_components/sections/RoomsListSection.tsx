@@ -15,6 +15,7 @@ import {
 import { InfoCircle } from "../icons/InfoCirlce";
 import { DropdownArrow } from "../icons/DropDownArrow";
 import { motion } from "framer-motion";
+import { captureAnalyticsEvent } from "../analytics/posthogEvents";
 
 const BoardTypeInfo = {
     fullBoard: "Includes breakfast, lunch, and dinner.",
@@ -296,6 +297,10 @@ export const RoomsListSection = () => {
     }, []);
 
     const openBookingModal = (roomType: RoomType) => {
+        captureAnalyticsEvent("room_booking_cta_click", {
+            room_type: roomType,
+            placement: "rooms_list",
+        });
         setSelectedRoomType(roomType);
         setStoredBookingData({
             roomSelections: [{
