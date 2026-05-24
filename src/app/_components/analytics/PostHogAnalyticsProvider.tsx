@@ -114,6 +114,11 @@ const posthogOptions: Partial<PostHogConfig> = {
       url_trigger: true,
       event_trigger: true,
     });
+    window.setTimeout(() => {
+      captureDirectAnalyticsEvent("session_replay_status", {
+        recording_started: posthogInstance.sessionRecordingStarted(),
+      });
+    }, 1_000);
   },
   before_send: (event) => {
     if (!event) return event;
