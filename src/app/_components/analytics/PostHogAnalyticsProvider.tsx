@@ -51,7 +51,8 @@ const posthogOptions: Partial<PostHogConfig> = {
   api_host: posthogHost,
   ui_host: posthogUiHost,
   defaults: "2026-01-30",
-  person_profiles: "identified_only",
+  person_profiles: "always",
+  disable_surveys: true,
   capture_pageview: false,
   capture_pageleave: true,
   request_queue_config: {
