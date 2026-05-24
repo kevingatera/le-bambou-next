@@ -69,7 +69,13 @@ export function captureDirectAnalyticsEvent(
     },
   });
 
-  void fetch(`${posthogHost}/capture/`, {
+  const endpoint = `${posthogHost}/capture/`;
+  if (typeof navigator.sendBeacon === "function" && body.length < 60_000) {
+    const blob = new Blob([body], { type: "application/json" });
+    if (navigator.sendBeacon(endpoint, blob)) return;
+  }
+
+  void fetch(endpoint, {
     method: "POST",
     headers: {
       "content-type": "application/json",

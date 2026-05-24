@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { Suspense, useCallback, useEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import type { PostHogConfig, Properties } from "posthog-js";
@@ -146,15 +146,116 @@ export function PostHogAnalyticsProvider({
 function PostHogPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const pageStartedAtRef = useRef<number | null>(null);
+  const maxScrollDepthRef = useRef(0);
+  const interactionCountRef = useRef(0);
+  const exitedPageVisitIdsRef = useRef(new Set<string>());
+  const currentPageRef = useRef<{
+    path: string;
+    url: string;
+    pageVisitId: string;
+  } | null>(null);
+
+  const updateScrollDepth = useCallback(() => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollDepth =
+      scrollHeight > 0
+        ? Math.min(
+            100,
+            Math.round(((window.scrollY + window.innerHeight) / scrollHeight) * 100),
+          )
+        : 100;
+    maxScrollDepthRef.current = Math.max(
+      maxScrollDepthRef.current,
+      scrollDepth,
+    );
+  }, []);
+
+  const sendExitEvent = useCallback(
+    (exitReason: "route_change" | "pagehide" | "visibility_hidden") => {
+      const currentPage = currentPageRef.current;
+      if (!currentPage || pageStartedAtRef.current === null) return;
+      if (exitedPageVisitIdsRef.current.has(currentPage.pageVisitId)) return;
+
+      updateScrollDepth();
+      exitedPageVisitIdsRef.current.add(currentPage.pageVisitId);
+      captureDirectAnalyticsEvent("page_exit", {
+        $current_url: currentPage.url,
+        path: currentPage.path,
+        page_visit_id: currentPage.pageVisitId,
+        duration_seconds: Math.max(
+          0,
+          Math.round((Date.now() - pageStartedAtRef.current) / 1000),
+        ),
+        max_scroll_depth_percent: maxScrollDepthRef.current,
+        interaction_count: interactionCountRef.current,
+        had_interaction: interactionCountRef.current > 0,
+        exit_reason: exitReason,
+      });
+    },
+    [updateScrollDepth],
+  );
+
   useEffect(() => {
+    sendExitEvent("route_change");
+
     const queryString = searchParams.toString();
     const url = `${window.location.origin}${pathname}${queryString ? `?${queryString}` : ""}`;
+    const landingPage = window.sessionStorage.getItem("lbgl_landing_page");
+    const pageVisitId = crypto.randomUUID();
+
+    pageStartedAtRef.current = Date.now();
+    maxScrollDepthRef.current = 0;
+    interactionCountRef.current = 0;
+    currentPageRef.current = { path: pathname, url, pageVisitId };
+    updateScrollDepth();
 
     captureDirectAnalyticsEvent("$pageview", {
       $current_url: url,
       path: pathname,
+      page_visit_id: pageVisitId,
+      referrer: document.referrer || undefined,
+      landing_page: landingPage ?? url,
     });
-  }, [pathname, searchParams]);
+
+    if (!landingPage) {
+      window.sessionStorage.setItem("lbgl_landing_page", url);
+      captureDirectAnalyticsEvent("session_landed", {
+        landing_page: url,
+        referrer: document.referrer || undefined,
+        path: pathname,
+        page_visit_id: pageVisitId,
+      });
+    }
+  }, [pathname, searchParams, sendExitEvent, updateScrollDepth]);
+
+  useEffect(() => {
+    const recordInteraction = () => {
+      interactionCountRef.current += 1;
+    };
+
+    updateScrollDepth();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") sendExitEvent("visibility_hidden");
+    };
+    const handlePageHide = () => sendExitEvent("pagehide");
+
+    window.addEventListener("scroll", updateScrollDepth, { passive: true });
+    window.addEventListener("pagehide", handlePageHide);
+    document.addEventListener("click", recordInteraction);
+    document.addEventListener("submit", recordInteraction);
+    document.addEventListener("keydown", recordInteraction);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollDepth);
+      window.removeEventListener("pagehide", handlePageHide);
+      document.removeEventListener("click", recordInteraction);
+      document.removeEventListener("submit", recordInteraction);
+      document.removeEventListener("keydown", recordInteraction);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [sendExitEvent, updateScrollDepth]);
 
   return null;
 }
