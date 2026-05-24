@@ -107,6 +107,14 @@ const posthogOptions: Partial<PostHogConfig> = {
       return request;
     },
   },
+  loaded: (posthogInstance) => {
+    posthogInstance.startSessionRecording({
+      sampling: true,
+      linked_flag: true,
+      url_trigger: true,
+      event_trigger: true,
+    });
+  },
   before_send: (event) => {
     if (!event) return event;
 
