@@ -9,6 +9,7 @@ import dns from "dns";
 import { promisify } from "util";
 import { isEmail } from "validator";
 import { roomTypes } from "~/types/booking";
+import { captureServerAnalyticsEvent } from "~/server/utils/posthogServer";
 
 const resolveMx = promisify(dns.resolveMx);
 
@@ -69,10 +70,39 @@ export const bookingRouter = createTRPCRouter({
           message: input.message,
         }).returning();
 
-        // Send confirmation emails
-        await sendBookingConfirmationEmails(booking[0] as BookingEmailData);
+        const createdBooking = booking[0];
+        if (createdBooking) {
+          await captureServerAnalyticsEvent(
+            "booking_created",
+            `booking:${createdBooking.id}`,
+            {
+              booking_id: createdBooking.id,
+              nights: Math.max(
+                0,
+                Math.ceil(
+                  (new Date(input.checkOut).getTime() -
+                    new Date(input.checkIn).getTime()) /
+                    (1000 * 60 * 60 * 24),
+                ),
+              ),
+              rooms_total: input.roomSelections.reduce(
+                (total, selection) => total + selection.count,
+                0,
+              ),
+              room_types: input.roomSelections.map((selection) => selection.type),
+              services_count: input.selectedServices.length,
+              flexible_dates: input.isFlexibleDates,
+              east_african_resident: input.isEastAfricanResident,
+              adults: input.adults,
+              children: input.children05 + input.children616,
+            },
+          );
+        }
 
-        return booking[0];
+        // Send confirmation emails
+        await sendBookingConfirmationEmails(createdBooking as BookingEmailData);
+
+        return createdBooking;
       } catch (error) {
         console.error("Error creating booking", error);
         throw new Error(
