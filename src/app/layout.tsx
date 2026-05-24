@@ -10,6 +10,9 @@ import Script from "next/script";
 import { FloatingWhatsAppButton } from "~/app/_components/FloatingWhatsAppButton";
 import { PostHogAnalyticsProvider } from "~/app/_components/analytics/PostHogAnalyticsProvider";
 
+const cloudflareWebAnalyticsToken =
+  process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
+
 const varelaRound = Varela_Round({
   weight: "400",
   subsets: ["latin"],
@@ -104,6 +107,16 @@ export default function RootLayout({
             {children}
             <FloatingWhatsAppButton phoneNumber="+250788307374" />
             <GoogleAnalytics gaId="G-7PEH6JNLXW" />
+            {cloudflareWebAnalyticsToken ? (
+              <Script
+                id="cloudflare-web-analytics"
+                defer
+                src="https://static.cloudflareinsights.com/beacon.min.js"
+                data-cf-beacon={JSON.stringify({
+                  token: cloudflareWebAnalyticsToken,
+                })}
+              />
+            ) : null}
           </PostHogAnalyticsProvider>
           <Script
             id="adroll-script"

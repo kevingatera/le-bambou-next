@@ -24,7 +24,7 @@ Based on [Create T3 App](https://create.t3.gg/)
 - [PostHog](https://posthog.com) for product analytics, funnels, session replay, UX signals, and light error tracking
 - [Google Analytics](https://analytics.google.com) for continuity with existing visitor tracking
 - [Cloudflare](https://www.cloudflare.com) for DNS, CDN, aggregate traffic analytics, and R2-backed gallery assets
-- Cloudflare Worker first-party proxy for PostHog ingestion at `https://e.lebambougorillalodge.com`
+- PostHog managed first-party proxy for ingestion at `https://e.lebambougorillalodge.com`
 
 ## Development
 
