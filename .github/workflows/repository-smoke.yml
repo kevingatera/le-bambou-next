@@ -6,7 +6,7 @@ on:
 jobs:
   status:
     name: Status
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, le-bambou-next]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
