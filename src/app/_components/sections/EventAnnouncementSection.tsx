@@ -226,16 +226,16 @@ export const EventAnnouncementSection = () => {
                     alt="Young mountain gorilla in the Virunga rainforest"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
+                    className="object-cover object-left"
                   />
                 </picture>
                 <div className="absolute inset-0 bg-gradient-to-l from-[#0d2117]/90 via-[#163022]/45 to-transparent" />
                 <div className="relative z-10 flex min-h-[24rem] items-center justify-end p-8 text-right text-white md:p-10">
-                  <div className="max-w-xs">
+                  <div className="max-w-xs md:max-w-[13rem]">
                     <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#dce8df]">
                       Save the date
                     </p>
-                    <p className="mt-3 text-3xl font-bold leading-tight">
+                    <p className="mt-3 text-3xl font-bold leading-tight md:text-2xl">
                       Gorilla Naming Ceremony
                     </p>
                     <p className="mt-4 text-lg text-[#edf5ef]">
