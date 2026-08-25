@@ -9,7 +9,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "dev": "next dev",
+    "dev": "next dev --port 3007",
     "gallery:variants": "tsx --env-file=.env.local --env-file=.env scripts/generate-gallery-variants.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-pattern next-env.d.ts --ignore-pattern .next",
     "start": "next start"

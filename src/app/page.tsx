@@ -8,6 +8,10 @@ import { EventAnnouncementSection } from "./_components/sections/EventAnnounceme
 import { type Metadata } from "next";
 import { sharedMetadata } from "./metadata";
 
+// The homepage contains the annual Kwita Izina announcement, whose year and
+// confirmed details must be evaluated when the page is requested.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   ...sharedMetadata,
   title: "Le Bambou Gorilla Lodge | #1 Eco-Lodge in Volcanoes National Park",
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   return (
     <HydrateClient>
-      <main className="flex flex-col flex-grow min-h-screen">
+      <main className="flex min-h-screen flex-grow flex-col">
         <HeroSection />
         <BookingCallToActionWithReservationSection />
         <HotelDescriptionSection />
